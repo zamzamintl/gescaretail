@@ -1,0 +1,44 @@
+#product_labels_sheet {
+  .label {
+    height: 176px;
+    width: 265px;
+    padding: 20px 0 0 30px;
+    display: inline-block;
+
+    #barcode, #detail {
+      margin: 0;
+      padding: 0;
+    }
+
+    #barcode {
+      figure {
+        width: 125px;
+
+        figcaption {
+          font-size: 10px;
+          text-align: center;
+        }
+      }
+    }
+
+    #detail {
+      strong {
+        margin-left: 15px;
+      }
+      .size-label {
+        > div:nth-child(1) {
+          padding-right: 15px;
+        }
+      }
+
+      .small {
+        font-size: 10px;
+      }
+
+      .row {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+}

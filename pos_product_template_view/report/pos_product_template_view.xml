@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <template id="report_pos_product_template_view_doc">
+        <main class="container">
+            <div class="page oe_measureproducttemplateview article">
+                <t t-foreach="docs" t-as="o">
+                    <table class="table " style="border:None;">
+                        <tr>
+                            <td colspan="2" style="border: none; " class="text-left table_display" t-if="o.image_medium">
+                               <img  style="max-width: 90px;max-height: 90px;vertical-align: top;border: 1px solid #a8a8a8; " t-att-src="image_data_uri(o.image_medium)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="border: none; " class="text-left table_display">
+                                <t t-esc="o.name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none;" class="text-left">
+                                <t t-if="'product_collections' in is_install and o.collection_id">
+                                    <span style="display:inline-block; color:green"><t t-esc="o.collection_id.name" /></span>
+                                </t>
+                            </td>
+                            <td style="border: none;" class="text-left">
+                                <t t-if="'product_tags' in is_install">
+                                    <t t-foreach="o.tag_ids" t-as="tags">
+                                        <span><t t-esc="tags.name" />,</span>
+                                    </t>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="row table">
+                        <div class="col-xs-6 table">
+                            <div class="row" >
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin div_padding">
+                                        <b>Model Reference</b>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6 table">
+                                    <t t-if="'product_id' in is_install">
+                                        <span class="text-left pos_margin" >
+                                             <t t-esc="o.model_default_code" />
+                                        </span>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin div_padding">
+                                        <b>Variant Reference</b>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <t t-if="'product_id' in is_install">
+                                        <span class="text-left pos_margin">
+                                              <t t-esc="o.model_default_code" />
+                                        </span>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin div_padding">
+                                        <b>Brand</b>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <t t-if="'product_brand' in is_install and o.product_brand_id">
+                                        <span style="color:green" class="text-left pos_margin ">
+                                            <t t-esc='o.product_brand_id.name' />
+                                        </span>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                     <span class="text-left pos_margin div_padding">
+                                        <b>Vendor</b>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <t t-if="'product_brand' in is_install and o.vendor_id">
+                                        <span style="color:green" class="text-left pos_margin ">
+                                            <t t-esc='o.vendor_id.name' />
+                                        </span>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin div_padding">
+                                       <b> Internal Category</b>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <t t-if="o.categ_id">
+                                        <sapn style="color:green" class="text-left pos_margin ">
+                                            <t t-esc='o.categ_id.name' />
+                                        </sapn>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin div_padding">
+                                        <b>Compositions</b>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6 ">
+                                    <sapn style="text-align:left;" class="text-left pos_margin">
+                                        <t t-if="'product_composition' in is_install">
+                                            <t t-foreach="o.composition_tag_ids" t-as="com_tags">
+                                                <t t-esc='com_tags.name' />,
+                                            </t>
+                                        </t>
+                                    </sapn>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin div_padding">
+                                        <b>Gender</b>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <t t-if="'product_gender' in is_install and o.gender">
+                                        <sapn style="color:green" class="text-left pos_margin">
+                                            <t t-esc=" dict(o.fields_get(allfields=['gender'])['gender']['selection'])[o.gender]" />
+                                        </sapn>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin div_padding">
+                                        <b>Parameter Stock</b>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <t t-if="'product_id' in is_install and o.parameter_stock">
+                                        <sapn style="color:green" class="text-left pos_margin">
+                                            <t t-esc="o.parameter_stock" />
+                                        </sapn>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin div_padding">
+                                        <b>Size</b>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin">
+                                        <t t-if="'product_attribute_type' in is_install">
+                                            <t t-foreach="o.attribute_value_ids" t-as="attrs">
+                                                <t t-if="attrs.attribute_id.attribute_type == 'size'">
+                                                     <t t-esc="attrs.name" />
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin div_padding">
+                                        <b>Color</b>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin">
+                                        <t t-if="'product_attribute_type' in is_install">
+                                            <t t-foreach="o.attribute_value_ids" t-as="attrs">
+                                                <t t-if="attrs.attribute_id.attribute_type == 'color'">
+                                                    <t t-esc="attrs.name" />
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin div_padding">
+                                        <b>Price</b>
+                                    </span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <span class="text-left pos_margin">
+                                        <t t-esc="round(o.lst_price,2)" />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-stripedd pos_margin">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Attribute
+                                </th>
+                                <th>
+                                    Attribute Values
+                                </th>
+                            </tr>
+                        </thead>
+                        <t t-foreach="o.attribute_line_ids" t-as="attrs_ids">
+                            <tr>
+                                <td>
+                                    <t t-if="attrs_ids.attribute_id">
+                                        <t t-esc="attrs_ids.attribute_id.name" />
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-foreach="attrs_ids.value_ids" t-as="val_ids">
+                                        <t t-esc="val_ids.name" />,
+                                    </t>
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                </t> 
+           </div>
+       </main>
+    </template>
+     <template id="report_template_docs">
+         <t t-call="pos_product_template_view.report_pos_product_template_view_doc" />
+    </template>
+</odoo>

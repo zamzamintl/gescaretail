@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="PosGiftCardButton">
+        <div class='control-button' title="Gift Card">
+            <span class="icon-button">
+                <i class="fa fa-gift" aria-hidden="true"></i>
+            </span>
+            <div class="icon-btn-str">Gift Card</div>
+        </div>
+    </t>
+
+    <t t-name="PosGiftCardListButton">
+        <div class='control-button' title="Gift Card List">
+            <span class="icon-button">
+                <i class="fa fa-list-alt" aria-hidden="true"></i>
+            </span>
+            <div class="icon-btn-str">Gift Card</div>
+        </div>
+    </t>
+    
+    <t t-extend="PaymentScreenWidget">
+        <t t-jquery=".payment-buttons" t-operation="append">
+            <t t-if="widget.pos.config.enable_gift_card">
+                <div class="button js_gift_card">
+                    <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+                    Gift Card
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <t t-extend="PaymentScreen-Paymentmethods">
+        <t t-jquery='[t-foreach="widget.pos.cashregisters"]' t-operation="replace">
+            <t t-foreach="widget.pos.cashregisters" t-as="cashregister">
+               <t t-if='cashregister.journal.pos_front_display'>
+                    <div class="button paymentmethod" t-att-data-id="cashregister.journal_id[0]">
+                        <t t-esc="cashregister.journal_id[1]" />
+                    </div>
+               </t>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="CreateCardPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput gift_card create_gift_card pos_popup_background">
+                <p class="title pos_popup_title_background">Create Gift Card</p>
+                <div>
+                    <table border="0" align="center" id="table1">
+                        <tr>
+                            <td>Print Giftcard On Ticket</td>
+                            <td>
+                                <input type="checkbox" id="checkbox_print_gift_card" class="checkbox_print_gift_card" style="width:10% !important;"/>
+                            </td>
+                        </tr>
+                        <tr id="card_no_tr">
+                            <td>Card No. </td>
+                            <td>
+                                <input type="text" id="card_no" maxlength="16" />
+                            </td>
+                        </tr>
+                        <tr id="number_of_card" style="display:none;">
+                            <td>Number Of Card </td>
+                            <td>
+                                <input type="text" id="number_of_card_input" maxlength="16" />
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            <td>Customer </td>
+                            <td>
+                                <input type="text" id="select_customer" t-att-value="widget.partner_name"/>
+                            </td>
+                        </tr> -->
+                        <tr>
+                            <td>Expire Date </td>
+                            <td>
+                                <input type="text" id="text_expire_date" class="datetime" placeholder="DD/MM/YYYY" t-att-value="widget.expire_date"/>
+                            </td>
+                        </tr>
+                        <tr id="amount_row">
+                            <td>Card value </td>
+                            <td>
+                                <input type="text" id="text_amount" class="text_amount"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button multiple_card commonbutton pos_popup_footer_button">
+                        Multiple Card
+                    </div>
+                    <div class="button confirm commonbutton pos_popup_footer_button">
+                        Create
+                    </div>
+                    <div class="button cancel commonbutton pos_popup_footer_button">
+                        Cancel 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="RedeemCardPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput gift_card redeem_gift_card pos_popup_background">
+                <p class="title pos_popup_title_background">Gift Card</p>
+                <div>
+                    <table border="0" align="center" id="table_barcode">
+                        <tr>
+                            Enter Barcode : <td colspan="2"><input type="text" id="text_gift_card_no" placeholder="Scan Barcode" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:center !important;"> <label id="lbl_card_no"/> </td>
+                        </tr>
+                        <tr id="in_balance" style="display:none">
+                            <td></td>
+                            <td> <label style="color:red">Insufficient Balance.</label> </td>
+                        </tr>
+                        <tr id="redeem_amount_row">
+                            <td colspan="2"><input type="text" id="text_redeem_amount" placeholder="Enter Amount" /></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button confirm commonbutton pos_popup_footer_button">
+                        Apply
+                    </div>
+                    <div class="button cancel commonbutton pos_popup_footer_button">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- <t t-name="templatebarcode">
+        <table>
+            <tbody>
+                <tr id="barcode1">
+                    <td style='padding:2px 2px 2px 0px; text-align:center;'>
+                        <div id="xml_receipt_barcode" t-att-class='barcode' width='150' height='50'/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </t> -->
+    <t t-name="giftbarcode">
+        <table>
+          <tbody>
+              <tr align="center">
+                  <td style='padding:2px 2px 2px 38px; text-align:center;'>
+                      <div id="barcode_giftcard" width='150' height='50'/>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+    </t>
+
+
+    <t t-name="GiftCardListScreenWidget">
+        <div class="giftcardlist-screen list-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Cancel
+                    </span>
+                    <span class='searchbox'>
+                        <input placeholder='Search gift card' style="width: 164px;" />
+                        <span class='search-clear'></span>
+                    </span>
+                    <span class='searchbox'></span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y giftcard-list-scroll' style="height:auto;max-height: 490px !important;">
+                                    <div>
+                                        <table class='list_table card-table'>
+                                            <thead>
+                                                <tr>
+                                                    <th>Card No</th>
+                                                    <th>Card Value</th>
+                                                    <th>Customer</th>
+                                                    <th>Issue Date</th>
+                                                    <th>Expire Date</th>
+                                                    <th>Print</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody  class='giftcard-list-contents'>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="GiftCardlistLine">
+        <tr class='client-line' t-att-data-id='gift_card.id'>
+            <td><t t-esc='gift_card.card_no' /></td>
+            <td><t t-esc='gift_card.card_value' /></td>
+            <td><t t-esc='gift_card.customer_id[1]' /></td>
+            <td><t t-esc='issue_date_format or ""' /></td>
+            <td><t t-esc='expire_date_format or ""' /></td>
+            <td class="giftcard_operation_button">
+                <span id="print_gift_card" class="fa fa-print" t-att-data-id='gift_card.id'
+                      title="Print Card" style="cursor:pointer">
+                </span>
+            </td>
+        </tr>
+    </t>
+
+    <t t-name="GiftCardReceiptScreenWidget">
+        <div class='receipt-screen screen'>
+            <div class='screen-content'>
+                <div class='top-content'>
+                    <h1>Gift Card Printing</h1>
+                    <span class='button next'>
+                        Ok 
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+                </div>
+                <div class="centered-content">
+                    <div class="button print">
+                        <i class='fa fa-print'></i> Print 
+                    </div>
+                    <div class="pos-receipt-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="PrintGiftCardXmlReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <!--  Gift Card Ticket -->
+            <t t-if="gift_card">
+                <div>
+                    <line>
+                        <left>
+                            <t t-esc="'------------------------'"/>
+                        </left>
+                        <right>
+                            <t t-esc="'------------------------'"/>
+                        </right>
+                    </line>
+                    <div style="text-align:center;"> Card Details </div>
+                    <line>
+                        <left>
+                            <t t-esc="'------------------------'"/>
+                        </left>
+                        <right>
+                            <t t-esc="'------------------------'"/>
+                        </right>
+                    </line>
+                    <line>
+                        <left>Card No.:</left>
+                        <right>
+                            <t t-esc="gift_card.card_no" />
+                        </right>
+                    </line>
+                    <line>
+                        <left>Expire Date:</left>
+                        <right>
+                            <t t-esc="expire_date_format" />
+                        </right>
+                    </line>
+                    <line>
+                        <left>Balance:</left>
+                        <right>
+                            <t t-esc="widget.format_currency(gift_card.card_value)" />
+                        </right>
+                    </line>
+                </div>
+                <t t-if="gift_card_src">
+                    <br/>
+                    <img t-att-src="gift_card_src"/>
+                    <div t-if="gift_card.card_no" align='center'>
+                        <t t-esc="gift_card.card_no"/>
+                    </div>
+                 </t>
+             </t>
+        </receipt>
+    </t>
+
+     <t t-name="PrintGiftCardPosTicket">
+        <div class="pos-sale-ticket">
+            <t t-if="gift_card">
+                <div>
+                    ------------------------------------------
+                    <div style="text-align:center;"> Card Details </div>
+                    ------------------------------------------
+                    <table>
+                        <tr>
+                            <td>Card No.:</td>
+                            <td class="pos-right-align">
+                                <t t-esc="gift_card.card_no" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Expire Date:</td>
+                            <td class="pos-right-align">
+                                <t t-esc="expire_date_format" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Balance:</td>
+                            <td class="pos-right-align">
+                                <t t-esc="widget.format_currency(gift_card.card_value)" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br/>
+                <table>
+                    <tbody>
+                        <tr align="center" t-if="gift_card_src">
+                            <td style='text-align:center;'>
+                                <img style='text-align:center;'
+                                     t-att-src="gift_card_src"
+                                     id="gift_card_barcode_img"/>
+                            </td>
+                            <tr t-if="gift_card.card_no"
+                                id="gift_card_val"
+                                align="center">
+                                <td>
+                                    <t t-esc="gift_card.card_no"/>
+                                </td>
+                            </tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </div>
+     </t>
+
+</templates>

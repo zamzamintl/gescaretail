@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="product_product_form_view" model="ir.ui.view">
+        <field name="name">product.product.price.form.models</field>
+        <field name="model">product.product</field>
+        <field name="priority">5</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="lst_price" position="attributes">
+                <attribute name="attrs"></attribute>
+            </field>
+        </field>
+    </record>
+    <record id="product_product_simple_form_view" model="ir.ui.view">
+        <field name="name">product.product.simple.form.models</field>
+        <field name="model">product.product</field>
+        <field name="priority">5</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <field name="lst_price" position="attributes">
+                <attribute name="attrs"></attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

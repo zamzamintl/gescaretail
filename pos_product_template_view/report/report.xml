@@ -1,0 +1,10 @@
+<odoo>
+     <report
+            id="report_pos_product_template_view"
+            string="Product View"
+            model="product.product"
+            report_type="qweb-pdf"
+            file="pos_product_template_view.report_template_docs"
+            name="pos_product_template_view.report_template_docs"
+        />
+</odoo>

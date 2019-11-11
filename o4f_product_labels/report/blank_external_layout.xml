@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="blank_external_layout">
+
+        <div class="article o_report_layout_blank">
+            <t t-raw="0"/>
+        </div>
+    </template>
+</odoo>

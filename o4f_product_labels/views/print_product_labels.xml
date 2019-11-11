@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <act_window id="print_labels"
+                key2="client_action_multi"
+                name="Print Labels"
+                res_model="print.product.labels"
+                src_model="product.product"
+                view_mode="form"
+                target="new"
+                view_type="form"
+    />
+    <act_window id="print_labels_wh"
+                key2="client_action_multi"
+                name="Print Labels"
+                res_model="print.product.labels"
+                src_model="stock.picking"
+                view_mode="form"
+                target="new"
+                view_type="form"
+    />
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_config_kanban" model="ir.ui.view">
+        <field name="name">pos.config.kanban.view.helper</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_config_kanban"/>
+        <field name="arch" type="xml">
+<xpath expr="//div[hasclass('o_kanban_primary_right')]" position="inside">
+    <div t-if="record.current_session_state.raw_value === 'opened'">
+      <b><a name="open_existing_session_cb" type="object">=> Current Session details</a></b>
+    </div>
+</xpath>          
+        </field>
+    </record>
+</odoo>

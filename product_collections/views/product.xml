@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="product_collection_form" model="ir.ui.view">
+            <field name="name">product.collection.view.form</field>
+            <field name="model">product.collection</field>
+            <field name="arch" type="xml">
+                <form string="Product Collection">
+                    <group col="4">
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_collection_tree" model="ir.ui.view">
+            <field name="name">product.collection.view.tree</field>
+            <field name="model">product.collection</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree toolbar="1" string="Product collection">
+                    <field name="display_name" invisible="1"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_collection_list" model="ir.ui.view">
+            <field name="name">Product Collection</field>
+            <field name="model">product.collection</field>
+            <field eval="6" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Product Collection">
+                    <field name="display_name" invisible="1"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_collection_search" model="ir.ui.view">
+            <field name="name">product.collection.view.search</field>
+            <field name="model">product.collection</field>
+            <field name="arch" type="xml">
+                <search string="Collection">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+        <record id="product_collection_action_form" model="ir.actions.act_window">
+            <field name="name">Product Collection</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.collection</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="product_collection_search"/>
+            <field name="view_id" ref="product_collection_tree"/>
+        </record>
+
+        <record id="product_template_collection_search_inherit" model="ir.ui.view">
+            <field name="name">product.template.collection.view.search</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="collection_id" string="Collection"
+                           filter_domain="[('collection_id','ilike',self)]"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_template_form_inherit" model="ir.ui.view">
+            <field name="name">product.template.view.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="collection_id" placeholder="Collection..."/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="product_template_kanban">
+            <field name="name">Product Template Tag Kanban</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_kanban_view"/>
+            <field name="arch" type="xml">
+                <div name="tags" position="after">
+                    <span class="text-info">Collection</span>
+                    <field name="collection_id" widget="many2one"/>
+                </div>
+            </field>
+        </record>
+
+        <menuitem name="Product Collection"
+                  id="menu_product_collection" parent="sale.prod_config_main" action="product_collection_action_form"
+                  sequence="10"
+        />
+    </data>
+</odoo>

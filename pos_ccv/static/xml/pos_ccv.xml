@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="CCVPaymentPopup">
+     <div class="modal-dialog" id="ccvpaymentpopup">
+        <div class="popup delivery-date-popup" style="height:300px;">
+            <p class="title">Pay with debit/credit card</p>
+            <div class="payment_line_container">
+                <t t-if='widget.lines'>
+                    <table class="table table-striped" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Payment Method</th>
+                            <th>Amount</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach='widget.lines' t-as='line'>
+                            <tr>
+                                <td>
+                                    <span class="spn-payment-type"
+                                          t-att-data-id="line.id">
+                                        <t t-esc="line.name"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    € <t t-esc="widget.getAmountStr(line.amount)"/>
+                                </td>
+                                <td>
+                                    <!-- inline Send Payment because i preserve spaces here -->
+                                    <button class="btn btn-default btn-payment"
+                                            t-att-data-id="line.id" >Send Payment</button>
+                                </td>
+                            </tr>
+                            <tr class="error-row" t-att-data-id="line.id">
+                                <td colspan="3">
+                                    <span class="error-message">
+                                    </span>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                    </table>
+                </t>
+            </div>
+            <div class="footer">
+                <div class="button confirm confirm-payments">
+                    <t>Done</t>
+                </div>
+                <div class="button cancel cancel-payments">
+                    Cancel
+                </div>
+            </div>
+        </div>
+     </div>
+    </t>
+
+</templates>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.form.models</field>
+            <field name="model">product.template</field>
+            <field name="priority">5</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="standard_price" position="replace">
+                    <div invisible="1">
+                        <field name="standard_price" invisible="1" widget='monetary'
+                               options="{'currency_field': 'currency_id'}"/>
+                    </div>
+                </field>
+                <xpath expr="//label[@for='standard_price']" position="replace">
+
+                </xpath>
+                <xpath expr="//page/group" position="after">
+                    <div class="o_horizontal_separator">Cost Caculation</div>
+                    <group>
+                        <field name="ad_margin" string="Margin"/>
+                        <field name="ad_purchase_cost" widget='monetary'/>
+                        <field name="ad_product_cost_ids" string="Other costs">
+                            <tree string="Product costs" editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="name"/>
+                                <field name="value"/>
+                                <field name="is_percent" string="%"/>
+                                <field name="based_on"/>
+                                <!--<field name="calculation"/>-->
+                            </tree>
+                        </field>
+                        <field name="ad_standard_price" widget='monetary'/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

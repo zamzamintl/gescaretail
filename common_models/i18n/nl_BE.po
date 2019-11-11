@@ -1,0 +1,303 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* common_models
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0e+e-latest_20190415-072811-UTC-devel\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-07 08:59+0000\n"
+"PO-Revision-Date: 2019-05-07 11:18+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: nl_BE\n"
+"X-Generator: Poedit 2.2.1\n"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:60
+#, python-format
+msgid "Add Model"
+msgstr "Model Toevoegen"
+
+#. module: common_models
+#: model_terms:ir.ui.view,arch_db:common_models.view_o4f_config_settings
+msgid "Add a stock grid view on products"
+msgstr "Stock grid op product toevoegen"
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_product_product__product_brand_id
+#: model:ir.model.fields,field_description:common_models.field_product_template__product_brand_id
+msgid "Brand"
+msgstr "Merk"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:15
+#, python-format
+msgid "Brand:"
+msgstr "Merk:"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:51
+#, python-format
+msgid "Close"
+msgstr "Sluiten"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:21
+#, python-format
+msgid "Collection:"
+msgstr "Collectie:"
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_product_product__model_color_attribute
+#: model:ir.model.fields,field_description:common_models.field_product_template__model_color_attribute
+msgid "Color grouping"
+msgstr "Kleur groepering"
+
+#. module: common_models
+#: model:ir.model,name:common_models.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configuratie instellingen"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:48
+#, python-format
+msgid "Create Model"
+msgstr "Maak Model"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:45
+#, python-format
+msgid "Create and copy Model"
+msgstr "Maak en kopieer Model"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:106
+#, python-format
+msgid "Discount (%):"
+msgstr "Korting (%):"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:114
+#, python-format
+msgid "Discount:"
+msgstr "Korting:"
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_odoo_fashion_object_line_mixin__display_name
+#: model:ir.model.fields,field_description:common_models.field_odoo_fashion_object_mixin__display_name
+msgid "Display Name"
+msgstr "Schermnaam"
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_res_config_settings__module_product_stock_grid
+msgid "Grid view for stock"
+msgstr "Grid view voor stock"
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_odoo_fashion_object_line_mixin__id
+#: model:ir.model.fields,field_description:common_models.field_odoo_fashion_object_mixin__id
+msgid "ID"
+msgstr ""
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_odoo_fashion_object_line_mixin__ad_is_model_variant
+msgid "Is Model Variant"
+msgstr ""
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_odoo_fashion_object_line_mixin____last_update
+#: model:ir.model.fields,field_description:common_models.field_odoo_fashion_object_mixin____last_update
+msgid "Last Modified on"
+msgstr "Laatst gewijzigd op"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:27
+#, python-format
+msgid "Measurebar:"
+msgstr "Matenbalk:"
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_odoo_fashion_object_line_mixin__order_model_id
+msgid "Model ID Identifier"
+msgstr "Model ID Identificator"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:127
+#, python-format
+msgid "Model Price:"
+msgstr "Model Prijs:"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:6
+#, python-format
+msgid "Model Quick Create"
+msgstr "Model Snel Aanmaken"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:7
+#, python-format
+msgid "Name:"
+msgstr "Naam:"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:79
+#: code:addons/common_models/static/src/xml/models_widget.xml:93
+#, python-format
+msgid "Note:"
+msgstr "Nota:"
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_odoo_fashion_object_mixin__o2m_line_object
+msgid "O2M Line Object"
+msgstr ""
+
+#. module: common_models
+#: model_terms:ir.ui.view,arch_db:common_models.view_o4f_config_settings
+msgid "Odoo 4 Fashion settings"
+msgstr "Odoo 4 Fashion instellingen"
+
+#. module: common_models
+#: model_terms:ir.ui.view,arch_db:common_models.view_o4f_config_settings
+msgid "Odoo 4 fashion"
+msgstr ""
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_odoo_fashion_object_line_mixin__order_note
+msgid "Order Note"
+msgstr "Notitie bestelling"
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_odoo_fashion_object_mixin__order_count
+msgid "Order Quantity"
+msgstr "Bestelde hoeveelheid"
+
+#. module: common_models
+#: model:ir.model,name:common_models.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: common_models
+#: model:ir.model,name:common_models.model_product_template
+msgid "Product Template"
+msgstr "Productsjabloon"
+
+#. module: common_models
+#: model:ir.model,name:common_models.model_product_template_attribute_line
+msgid "Product Template Attribute Line"
+msgstr "Productsjabloon kenmerk lijn"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:10
+#, python-format
+msgid "Product name"
+msgstr "Product naam"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:198
+#, python-format
+msgid "Product quantity"
+msgstr "Product hoeveelheid"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:38
+#, python-format
+msgid "Purchase cost:"
+msgstr "Aankoopprijs:"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:61
+#, python-format
+msgid "Quick Create Model"
+msgstr "Snelle model creatie"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:33
+#, python-format
+msgid "Sales price:"
+msgstr "Verkoopprijs:"
+
+#. module: common_models
+#: model:ir.model.fields,help:common_models.field_product_product__product_brand_id
+#: model:ir.model.fields,help:common_models.field_product_template__product_brand_id
+msgid "Select a brand for this product"
+msgstr "Selecteer een merk voor dit product"
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_product_product__sequence
+#: model:ir.model.fields,field_description:common_models.field_product_template_attribute_line__sequence
+msgid "Sequence"
+msgstr "Reeks"
+
+#. module: common_models
+#: model:ir.model.fields,field_description:common_models.field_product_product__model_size_attribute
+#: model:ir.model.fields,field_description:common_models.field_product_template__model_size_attribute
+msgid "Size grouping"
+msgstr "Maat groepering"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:205
+#, python-format
+msgid "Stock"
+msgstr ""
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:147
+#, python-format
+msgid "Total Price"
+msgstr "Totaalprijs"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:144
+#, python-format
+msgid "Total Quantity"
+msgstr "Totaal Aantal"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:201
+#, python-format
+msgid "Unit Price"
+msgstr "Eenheidsprijs"
+
+#. module: common_models
+#. openerp-web
+#: code:addons/common_models/static/src/xml/models_widget.xml:132
+#, python-format
+msgid "Update"
+msgstr ""
+
+#. module: common_models
+#: model:ir.model,name:common_models.model_odoo_fashion_object_line_mixin
+msgid "odoo.fashion.object.line.mixin"
+msgstr ""
+
+#. module: common_models
+#: model:ir.model,name:common_models.model_odoo_fashion_object_mixin
+msgid "odoo.fashion.object.mixin"
+msgstr ""

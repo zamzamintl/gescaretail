@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+           <script type="text/javascript" src="/pos_special_command/static/src/js/pos_special_command.js"/>
+        </xpath>
+        <xpath expr="//link[@id='pos-stylesheet']" position="after"> 
+            <link rel="stylesheet" href="/pos_special_command/static/src/css/datepicker.css" />
+            <link rel="stylesheet" href="/pos_special_command/static/src/css/pos_special_command.css" />
+        </xpath>
+    </template>
+</odoo>

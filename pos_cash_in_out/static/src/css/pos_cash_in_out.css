@@ -1,0 +1,56 @@
+/* put money in and take money out css */
+.popup.popup-textinput.put-money-in {
+    height: 280px;
+}
+
+.popup.popup-textinput.take-money-out {
+    height: 280px;
+}
+
+.control-button.put_money_in {
+    font-weight: bold;
+}
+
+.control-button.take_money_out {
+    font-weight: bold;
+}
+
+.title_in_out {
+    border-bottom: solid 3px rgb(110, 200, 155) !important;
+}
+
+#tbl_id {
+    width: 100%;
+}
+
+#td_id {
+    padding: 6px;
+}
+.pos .popup-number .title, .pos .popup-textinput .title {
+    margin-bottom: 7px !important;
+}
+.icon-button  i{
+    font-size:14px;
+}
+.icon-btn-str{
+    margin-top: 1px !important;
+    margin-bottom: 3px !important;
+    line-height: 10px;
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+.control-button{
+    width: 50px;
+    padding: 0px 4px !important;
+    padding-top:5px;
+    min-width : 50px !important;
+    max-width : 50px;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: bold;
+}
+.control-buttons {
+    margin-bottom: 0px !important;
+}

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_pos_overview_document">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div class="row col-xl-12">
+                        <h2>
+                            <span>Pos overview:</span>
+                            <span t-field="doc.shop_address_id.name"/>
+                        </h2>
+                    </div>
+                    <div class="row col-xl-12">
+                        <h3>
+                            <span>Date:</span>
+                            <span t-field="doc.wizard_id.date_from"/>
+                        </h3>
+                    </div>
+
+                    <div class="row mt32 mb32" style="display:inline-block;">
+                        <t t-foreach="doc.overview_line_ids_with_turnover" t-as="line">
+                            <t t-if="line.amount!=0">
+                                <div class="row col-xl-12 ">
+                                    <div class="col-xl-4">
+                                        <span t-field="line.journal_ids[0].group_code"></span>
+                                    </div>
+                                    <div class="col-xl-2">
+                                        <span style="float:right;"
+                                              t-field="line.amount"
+                                              t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                        <div class="row col-xl-12">
+                            <div class="col-xl-4">
+                                <span>Netto Turnover</span>
+                            </div>
+                            <div class="col-xl-2" >
+                                <span style="float:right;"
+                                      t-field="doc.netto_turnover"
+                                      t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                            </div>
+                        </div>
+
+                        <div class="row col-xl-12">
+                            <div class="col-xl-4">
+                                <span>Discount</span>
+                            </div>
+                            <div class="col-xl-2" >
+                                <span t-field="doc.amount_discount"
+                                     style="float:right;"
+                                      t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                            </div>
+                        </div>
+                        <t t-foreach="doc.overview_line_ids_with_no_turnover" t-as="line">
+                            <t t-if="line.amount!=0">
+                                <div class="row col-xl-12">
+                                    <div class="col-xl-4">
+                                        <span t-field="line.journal_ids[0].group_code"></span>
+                                    </div>
+                                    <div class="col-xl-2" style="float:right;">
+                                        <span style="float:right;"
+                                              t-field="line.amount"
+                                              t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                        <div class="row col-xl-12">
+                            <div class="col-xl-4">
+                                <span>Sales</span>
+                            </div>
+                            <div class="col-xl-2">
+                                <span t-field="doc.qty_sold" style="float:right;"/>
+                            </div>
+                        </div>
+                        <div class="row col-xl-12">
+                            <div class="col-xl-4">
+                                <span>Total Pieces</span>
+                            </div>
+                            <div class="col-xl-2">
+                                <span t-field="doc.total_pieces" style="float:right;"/>
+                            </div>
+                        </div>
+                        <div class="row col-xl-12">
+                            <div class="col-xl-4">
+                                <span>Invoiced</span>
+                            </div>
+                            <div class="col-xl-2">
+                                <span t-field="doc.amount_invoiced"
+                                      style="float:right;"
+                                      t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                            </div>
+                        </div>
+
+                        <!--<div class="row col-xl-12">-->
+                            <!--<div class="col-xl-4">-->
+                                <!--<span>Opening Balance (Theoretical)</span>-->
+                            <!--</div>-->
+                            <!--<div class="col-xl-2">-->
+                                <!--<span t-field="doc.amount_opening_balance_theoretical"-->
+                                      <!--style="float:right;"-->
+                                      <!--t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="row col-xl-12">-->
+                            <!--<div class="col-xl-4">-->
+                                <!--<span>Opening Balance (Difference)</span>-->
+                            <!--</div>-->
+                            <!--<div class="col-xl-2">-->
+                                <!--<span t-field="doc.amount_opening_balance_diff"-->
+                                      <!--style="float:right;"-->
+                                      <!--t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="row col-xl-12">
+                            <div class="col-xl-4">
+                                <span>Opening Balance (Confirmed)</span>
+                            </div>
+                            <div class="col-xl-2">
+                                <span t-field="doc.amount_opening_balance"
+                                      style="float:right;"
+                                      t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                            </div>
+                        </div>
+
+                        <div class="row col-xl-12">
+                            <div class="col-xl-4">
+                                <strong>
+                                    <span>Total Transfered</span>
+                                </strong>
+                            </div>
+                            <div class="col-xl-2">
+                                <strong>
+                                    <span t-field="doc.amount_bank_transfer"
+                                          style="float:right;"
+                                          t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                                </strong>
+                            </div>
+                        </div>
+                        <t t-foreach="doc.cash_out_ids.filtered(lambda r:r.bank_out)" t-as="cach_out_line">
+                            <div class="row col-xl-12">
+                                <div class="col-xl-4">
+                                    <span style="margin-left:20px;" t-field="cach_out_line.name"></span>
+                                </div>
+                                <div class="col-xl-2">
+                                    <span t-field="cach_out_line.amount"
+                                          style="float:right; margin-right:20px;"
+                                          t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-foreach="doc.cash_in_ids" t-as="cach_in_line">
+                            <div class="row col-xl-12">
+                                <div class="col-xl-4">
+                                    <span style="margin-left:20px;" t-field="cach_in_line.name"></span>
+                                </div>
+                                <div class="col-xl-2">
+                                    <span t-field="cach_in_line.amount"
+                                          style="float:right; margin-right:20px;"
+                                          t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                                </div>
+                            </div>
+                        </t>
+                        <div class="row col-xl-12">
+                            <div class="col-xl-4">
+                                <span>Closing Balance</span>
+                            </div>
+                            <div class="col-xl-2">
+                                <span t-field="doc.amount_closing_balance"
+                                      style="float:right;"
+                                      t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                            </div>
+                        </div>
+                        <div class="row col-xl-12">
+                            <div class="col-xl-4">
+                                <span>Closing Difference</span>
+                            </div>
+                            <div class="col-xl-2">
+                                <span t-field="doc.amount_closing_difference"
+                                      style="float:right;"
+                                      t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                            </div>
+                        </div>
+                        <div t-if="doc.remark" class="row col-xl-12">
+                            <strong>Remarks:</strong>
+                            <br/>
+                            <t t-esc="doc.remark"/>
+                        </div>
+                        <div t-if="doc.users" class="row col-xl-12">
+                            <strong>Users:</strong>
+                            <br/>
+                            <t t-esc="doc.users"/>
+                        </div>
+                        <div class="row col-xl-12" t-if="doc.wizard_id.detail_info">
+                            <div class="row col-xl-8">
+                                <h3>
+                                    <span>Detail</span>
+                                </h3>
+                            </div>
+                            <t t-foreach="doc.overview_line_ids_with_turnover" t-as="line">
+                                <t t-if="line.amount!=0">
+                                    <div class="row col-xl-8">
+                                        <h4>
+                                            <span t-field="line.journal_ids[0].group_code"></span>
+                                        </h4>
+                                    </div>
+                                    <br/>
+                                    <div class="row col-xl-6">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <span>POS afschrift</span>
+                                                    </th>
+                                                    <th>
+                                                        <span>Relatie</span>
+                                                    </th>
+                                                    <th>
+                                                        <span style="float:right;">Bedrag</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <t t-foreach="line.statement_ids" t-as="rec">
+                                                    <tr>
+                                                        <td>
+                                                            <span t-field="rec.name"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-field="rec.partner_id.name"/>
+                                                        </td>
+                                                        <td>
+                                                            <span style="float:right;"
+                                                              t-field="rec.amount"
+                                                              t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <strong>
+                                                            <span style="float:right;">Totaal</span>
+                                                        </strong>
+                                                    </td>
+                                                    <td>
+                                                        <strong>
+                                                            <span style="float:right;"
+                                                                  t-field="line.amount"
+                                                                  t-options='{"widget": "monetary", "display_currency": doc.env.user.company_id.currency_id}'/>
+                                                        </strong>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+             </t>
+        </t>
+    </template>
+    <template id="report_pos_overview">
+        <t t-call="web.html_container">
+            <t t-foreach="docs.overview_config_ids" t-as="doc"> 
+                <t t-call="pos_addons.report_pos_overview_document"/>
+             </t> 
+        </t>
+    </template>
+</odoo>

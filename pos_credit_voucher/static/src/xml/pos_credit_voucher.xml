@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="PaymentScreenWidget">
+        <t t-jquery=".payment-buttons" t-operation="append">
+            <t t-if="widget.pos.config.enable_credit_voucher">
+                <div class="button js_credit_voucher">
+                    <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+                    Credit Voucher
+                </div>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="RedeemCreditvoucherPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput credit_voucher redeem_credit_voucher pos_popup_background">
+                <p class="title pos_popup_title_background">Credit Voucher</p>
+                <div>
+                    <table border="0" align="center" id="table_barcode">
+                        <tr>
+                            Enter Barcode : <td colspan="2"><input type="text" id="text_credit_voucher_no" placeholder="Scan Barcode" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:center !important;"> <label id="lbl_voucher_customer"/> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:center !important;"> <label id="lbl_credit_voucher_no"/> </td>
+                        </tr>
+                        <tr id="in_balance" style="display:none">
+                            <td></td>
+                            <td> <label style="color:red">Insufficient Balance.</label> </td>
+                        </tr>
+                        <tr id="redeem_voucher_amount_row">
+                            <td colspan="2"><input type="text" id="text_voucher_redeem_amount" placeholder="Enter Amount" /></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="button confirm commonbutton pos_popup_footer_button">
+                        Apply
+                    </div>
+                    <div class="button cancel commonbutton pos_popup_footer_button">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+   <!--  <t t-name="templatebarcode">
+        <table>
+            <tbody>
+                <tr id="barcode1">
+                    <td style='padding:2px 2px 2px 0px; text-align:center;'>
+                        <div id="xml_receipt_barcode" t-att-class='barcode' width='150' height='50'/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </t> -->
+
+    <t t-name="credit_voucherbarcode">
+        <table>
+          <tbody>
+              <tr align="center">
+                  <td style='padding:2px 2px 2px 38px; text-align:center;'>
+                      <div id="barcode_credit_voucher" width='150' height='50'/>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+    </t>
+
+    <t t-name="PosCreditVoucherListButton">
+        <div class='control-button' title="Credit Voucher List">
+            <span class="icon-button">
+                <i class="fa fa-list-alt" aria-hidden="true"></i>
+            </span>
+            <div class="icon-btn-str">Credit Voucher</div>
+        </div>
+    </t>
+
+    <t t-name="CreditVoucherListScreenWidget">
+        <div class="creditvoucherlist-screen list-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Cancel
+                    </span>
+                    <span class='searchbox voucher_search pos_search_box'>
+                        <input placeholder='Search Credit Voucher' style="width: 164px;" />
+                        <span class='search-clear'></span>
+                    </span>
+                    <span class='searchbox'></span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y crditvoucher-list-scroll' style="height:auto;max-height: 490px !important;">
+                                    <div>
+                                        <table class='list_table creditvoucher-list'>
+                                            <thead>
+                                                <tr>
+                                                    <th>Voucher No</th>
+                                                    <th>Voucher Value</th>
+                                                    <th>Customer</th>
+                                                    <th>Issue Date</th>
+                                                    <th>Expire Date</th>
+                                                    <th>Print</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody  class='creditvoucher-list-contents'>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="CreditVoucherlistLine">
+        <tr class='credit-voucher-line' t-att-data-id='credit_voucher.id'>
+            <td><t t-esc='credit_voucher.credit_voucher_no' /></td>
+            <td><t t-esc='credit_voucher.credit_voucher_value' /></td>
+            <td><t t-esc='credit_voucher.customer_id[1]' /></td>
+            <td><t t-esc='issue_date_format' /></td>
+            <td><t t-esc='expire_date_format or ""' /></td>
+            <td class="creditvoucher_operation_button">
+                <span id="print_credit_voucher" class="fa fa-print" t-att-data-id='credit_voucher.id'
+                      title="Print Voucher" style="cursor:pointer">
+                </span>
+            </td>
+        </tr>
+    </t>
+
+    <t t-name="CreditVoucherReceiptScreenWidget">
+        <div class='receipt-screen screen'>
+            <div class='screen-content'>
+                <div class='top-content'>
+                    <h1>Voucher Printing</h1>
+                    <span class='button next'>
+                        Ok 
+                        <i class='fa fa-angle-double-right'></i>
+                    </span>
+                </div>
+                <div class="centered-content">
+                    <div class="button print">
+                        <i class='fa fa-print'></i> Print 
+                    </div>
+                    <div class="pos-receipt-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="PrintVoucherXmlReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <!--  Credit Voucher Ticket -->
+            <t t-if="credit_voucher">
+                <div>
+                    <line>
+                        <left>
+                            <t t-esc="'------------------------'"/>
+                        </left>
+                        <right>
+                            <t t-esc="'------------------------'"/>
+                        </right>
+                    </line>
+                    <div style="text-align:center;"> Credit Voucher Details </div>
+                    <line>
+                        <left>
+                            <t t-esc="'------------------------'"/>
+                        </left>
+                        <right>
+                            <t t-esc="'------------------------'"/>
+                        </right>
+                    </line>
+                    <t t-if="credit_voucher.customer_id and credit_voucher.customer_id[1]">
+                        <line>
+                            <left>Customer:</left>
+                            <right>
+                                <t t-esc="credit_voucher.customer_id[1]" />
+                            </right>
+                        </line>
+                    </t>
+                    <line>
+                        <left>Voucher No.:</left>
+                        <right>
+                            <t t-esc="credit_voucher.credit_voucher_no" />
+                        </right>
+                    </line>
+                    <line>
+                        <left>Expire Date:</left>
+                        <right>
+                            <t t-esc="expire_date_format" />
+                        </right>
+                    </line>
+                    <line>
+                        <left>Balance:</left>
+                        <right>
+                            <t t-esc="widget.format_currency(credit_voucher.credit_voucher_value)" />
+                        </right>
+                    </line>
+                </div>
+                <t t-if="credit_voucher_src">
+                    <br/>
+                    <img t-att-src="credit_voucher_src"/>
+                    <div t-if="credit_voucher.credit_voucher_no" align='center'>
+                        <t t-esc="credit_voucher.credit_voucher_no"/>
+                    </div>
+                 </t>
+             </t>
+        </receipt>
+    </t>
+
+     <t t-name="PrintVoucherPosTicket">
+        <div class="pos-sale-ticket">
+            <t t-if="credit_voucher">
+                <div>
+                    ------------------------------------------
+                    <div style="text-align:center;"> Credit Voucher Details </div>
+                    ------------------------------------------
+                    <table>
+                        <t t-if="credit_voucher.customer_id and credit_voucher.customer_id[1]">
+                            <tr>
+                                <td>Customer:</td>
+                                <td class="pos-right-align">
+                                    <t t-esc="credit_voucher.customer_id[1]" />
+                                </td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td>Voucher No.:</td>
+                            <td class="pos-right-align">
+                                <t t-esc="credit_voucher.credit_voucher_no" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Expire Date:</td>
+                            <td class="pos-right-align">
+                                <t t-esc="expire_date_format" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Balance:</td>
+                            <td class="pos-right-align">
+                                <t t-esc="widget.format_currency(credit_voucher.credit_voucher_value)" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br/>
+                <table>
+                    <tbody>
+                        <tr align="center" t-if="credit_voucher_src">
+                            <td style='text-align:center;'>
+                                <img style='text-align:center;'
+                                     t-att-src="credit_voucher_src"
+                                     id="credit_voucher_barcode_img"/>
+                            </td>
+                            <tr t-if="credit_voucher.credit_voucher_no"
+                                id="credit_voucher_val"
+                                align="center">
+                                <td>
+                                    <t t-esc="credit_voucher.credit_voucher_no"/>
+                                </td>
+                            </tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </div>
+     </t>
+
+</templates>

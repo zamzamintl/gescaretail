@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template_pos_view" xml:space="preserve">
+
+    <t t-extend="UsernameWidget">
+        <t t-jquery=".username" t-operation="after">
+            <span class="username" id="disable_cancel" style="margin-right: 10px;">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+            </span>
+        </t>
+    </t>
+
+    <t t-extend="SelectionPopupWidget">
+        <t t-jquery=".popup-selection .footer .cancel" t-operation="replace">
+            <div class="button cancel" t-if="! widget.options or ! widget.options.disable_cancel">
+                Cancel
+            </div>
+        </t>
+    </t>
+
+</templates>

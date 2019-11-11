@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="OrderDiscountInput">
+       <div class="col-md-12"  style="text-align:left;padding: 8px 16px 0px 18px;font-size: 16px;font-weight: bold;">
+           <t t-if="widget.pos.get('cashier') and widget.pos.get('cashier').pos_discount_allowed">
+                Order Discount <input type="text" id="order_discount" class="order_discount" style="height: 25px;"></input>
+           </t>
+       </div>
+    </t>
+
+    <t t-extend='ClientLine'>
+        <t t-jquery='.client-line' t-operation='append'>
+            <td>
+                <t t-esc='widget.format_currency_no_symbol(partner.pos_fixed_discount || 0.00)' />
+            </td>
+        </t>
+    </t>
+
+    <t t-extend='ClientDetails'>
+        <t t-jquery='.client-details-right' t-operation='prepend'>
+            <div class='client-detail'>
+                <span class='label'>Discount</span>
+                <span class='detail client-fixed-discount'>
+                    <t t-esc='widget.format_currency_no_symbol(partner.pos_fixed_discount || 0.00)' />
+                </span>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend='ClientListScreenWidget'>
+       <t t-jquery='.client-list thead tr' t-operation='append'>
+            <th>Discount Amounts</th>
+        </t> 
+    </t>
+
+    <t t-name="PosClearDiscount">
+        <div class='control-button' title="Discount">
+            <span class="icon-button">
+                <i class="fa fa-close" aria-hidden="true"></i>
+            </span>
+            <div class="icon-btn-str">Discount</div>
+        </div>
+    </t>
+
+    <t t-extend="NumpadWidget">
+        <t t-jquery="button[data-mode='quantity']" t-operation="replace">
+            <button class="mode-button numpad_price" data-mode='price'>€</button>
+        </t>
+        <t t-jquery="button[data-mode='discount']" t-operation="replace">
+            <button class="mode-button numpad_disc" data-mode='discount'>%</button>
+        </t>
+        <t t-jquery="button[data-mode='price']:last" t-operation="replace">
+            <button class="mode-button" data-mode='quantity'>Qty</button>
+        </t>
+    </t>
+ 
+</templates>

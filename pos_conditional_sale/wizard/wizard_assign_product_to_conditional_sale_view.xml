@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wizard_assign_product_to_conditional_sale_form" model="ir.ui.view">
+            <field name="name">wizard_assign_product_to_conditional_sale_form</field>
+            <field name="model">wizard.assign.product.to.conditional.sale</field>
+            <field name="arch" type="xml">
+                <form string="Assign product to contional sale">
+                    <group>
+                        <field name="product_conditional_discount_id"/>
+                    </group>
+                    <footer>
+                        <button string="Assign" name="assign" type="object"
+                                default_focus="1"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window id="action_wizard_assign_product_to_conditional_sale"
+                    multi="False"
+                    key2="client_action_multi"
+                    name="Assign conditional sale"
+                    res_model="wizard.assign.product.to.conditional.sale"
+                    src_model="product.template"
+                    view_mode="form"
+                    target="new"
+                    view_type="form"
+        />
+</odoo>

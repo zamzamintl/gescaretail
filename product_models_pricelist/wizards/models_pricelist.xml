@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--   Models Price List -->
+
+        <record id="view_product_price_list" model="ir.ui.view">
+            <field name="name">Price per unit</field>
+            <field name="model">product.template.model.pricelist</field>
+            <field name="arch" type="xml">
+                <form string="Price List">
+                    <group string="Calculate Product Price per Unit Based on Pricelist Version.">
+                        <field name="price_list"/>
+                    </group>
+                    <group string="Report options.">
+                        <field name="show_image"/>
+                    </group>
+                    <group string="Report output format.">
+                        <field name="report_format"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_product_models_pricelist"
+                    multi="True"
+                    key2="client_action_multi"
+                    name="Price List"
+                    res_model="product.template.model.pricelist"
+                    src_model="product.template"
+                    view_mode="form"
+                    target="new"
+                    view_id="view_product_price_list"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="report_invoice_document" inherit_id="account.report_invoice_document">
+            <xpath expr="//thead" position="replace">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th class="text-right">Quantity</th>
+                        <th class="text-right">Unit Price</th>
+                        <th class="text-right">Taxes</th>
+                        <t t-if="True in [l.discount &gt; 0 for l in o.invoice_line_ids]">
+                            <th class="text-right">Discount (%)</th>
+                        </t>
+                        <th class="text-right">Price</th>
+                    </tr>
+                </thead>
+            </xpath>
+            <xpath expr="//tbody[hasclass('invoice_tbody')]" position="replace">
+                <tbody class="invoice_tbody">
+
+                    <t t-foreach="o.get_model_lines_report()['lines']" t-as="m">
+
+                        <t t-if="len(m['variant_lines'][0])==1">
+                            <tr>
+                                <td>
+                                    <t t-if="m['comment']!='' and m['comment']!=False">
+                                        <span style="font-weight:bold;">(<t t-esc="m['comment']"/>)
+                                        </span>
+                                    </t>
+                                    <t t-esc="m['product'].product_id.product_tmpl_id.display_name"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="int(m['variant_lines'][0][0]['quantity'])"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-esc="m['variant_lines'][0][0]['price_unit']"
+                                       t-options='{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="', '.join(map(lambda x: x.name, m['variant_lines'][0][0]['tax_id']))"/>
+                                </td>
+                                <t t-if="True in [l.discount &gt; 0 for l in o.invoice_line_ids]">
+                                    <td class="text-right">
+                                        <t t-esc="m['variant_lines'][0][0]['discount']"/>
+                                    </td>
+                                </t>
+                                <td class="text-right">
+                                    <t t-esc="m['variant_lines'][0][0]['price_subtotal']"
+                                       t-options='{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}'/>
+                                </td>
+                            </tr>
+                        </t>
+                        <t t-if="len(m['variant_lines'][0])&gt;1">
+                            <t t-foreach="m['variant_lines'][0]" t-as="p">
+                                <tr>
+                                    <td>
+                                        <t t-if="m['comment']!='' and m['comment']!=False">
+                                            <span style="font-weight:bold;">(<t t-esc="m['comment']"/>)
+                                            </span>
+                                        </t>
+                                        <t t-esc="p['product_name']"/>
+                                        <br/>
+
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-esc="int(p['quantity'])"/>
+                                        <br/>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-esc="p['price_unit']"
+                                           t-options='{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}'/>
+                                        <br/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="', '.join(map(lambda x: x.name, p['tax_id']))"/>
+                                        <br/>
+                                    </td>
+                                    <t t-if="True in [l.discount &gt; 0 for l in o.invoice_line_ids]">
+                                        <td class="text-right">
+                                            <t t-esc="p['discount']"/>
+                                        </td>
+                                    </t>
+                                    <td class="text-right">
+                                        <t t-esc="p['price_subtotal']"
+                                           t-options='{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}'/>
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </t>
+                    <t t-foreach="o.invoice_line_ids" t-as="l">
+                        <t t-if="not l.ad_is_model_variant">
+                            <tr>
+                                <td>
+                                    <span t-field="l.name"/>
+                                </td>
+
+                                <td class="text-right">
+                                    <span t-field="l.quantity"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.price_unit"
+                                          t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="', '.join(map(lambda x: x.name, l.invoice_line_tax_ids))"/>
+                                </td>
+                                <t t-if="True in [l.discount &gt; 0 for l in o.invoice_line_ids]">
+                                    <td class="text-right">
+                                        <t t-esc="l.discount"/>
+                                    </td>
+                                </t>
+                                <td class="text-right">
+                                    <span t-field="l.price_subtotal"
+                                          t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                </tbody>
+            </xpath>
+
+            <xpath expr="//div[hasclass('page')]" position="inside">
+                <p style="page-break-before:always;"></p>
+
+                <t t-foreach="o.get_model_lines_report()['measurebars']" t-as="bar">
+                    <div class="prevent-page-break">
+
+                        <table class="table table-bordered no-bottom-margin">
+                            <thead>
+                                <tr>
+                                    <th width="12%">Name</th>
+                                    <th>
+                                        <span t-esc="bar['name']"/>
+                                    </th>
+                                    <th>&amp;nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="3" width="12%">
+                                        <image t-attf-src="data:image/png;base64,{{ bar['image'] }}"/>
+                                    </td>
+                                    <td width="22%">
+                                        Total quantity
+                                    </td>
+                                    <td width="22%" class="text-right">
+                                        <t t-if="bar['total_quantity'] &gt; 0.0">
+                                            <span t-esc="bar['total_quantity']"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Note
+                                    </td>
+                                    <td>
+                                        <t if="bar['comment']!='' and bar['comment']!='false'" t-esc="bar['comment']"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Total price
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="bar['total_price']"
+                                              t-options='{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <t t-if="bar['attributes'][0][0]!=0 and len(bar['attributes'][0])>1">
+                            <table class="table table-bordered"
+                                   style="table-layout: fixed; border-top:transparent 0px;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th t-foreach="bar['attributes'][0]" t-as="value">
+                                            <span t-esc="value['name']"/>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="height:40px;" t-foreach="bar['attributes'][1]" t-as="t"
+                                        t-attf-class="oe_model_row">
+                                        <td>
+                                            <t t-if="t!=0">
+                                                <span t-esc="t['name']"/>
+                                            </t>
+                                        </td>
+                                        <t t-foreach="bar['products'][t_index]" t-as="product">
+                                            <t t-if="product!=0">
+                                                <td class="text-center measure-report-cell">
+                                                    <span t-esc="int(product['line']['quantity'])"/>
+                                                    <p t-esc="product['line']['price_unit']"
+                                                       t-options='{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}'/>
+                                                </td>
+                                            </t>
+                                            <t t-else="0">
+                                                <td class="hatch"></td>
+                                            </t>
+                                        </t>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                    </div>
+                </t>
+            </xpath>
+
+        </template>
+    </data>
+</openerp>

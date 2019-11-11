@@ -1,0 +1,24 @@
+.pagebreak {
+    display: block;
+    clear: both;
+    overflow: visible !important;
+    page-break-before:always;
+}
+.prevent-page-break {
+    page-break-inside:  avoid;
+}
+.hatch {
+    background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQIW2NkQAJ37979zwjjgzjKysqMYAEYB8RmROaABAAFug+bVs5NCQAAAABJRU5ErkJggg==) repeat;
+}
+.no-bottom-margin {
+    margin-bottom: 0px !important;
+}
+
+hr.black {
+    background: #000;
+}
+
+.measure-report-cell span{
+    display: block;
+    width: 100%;
+}

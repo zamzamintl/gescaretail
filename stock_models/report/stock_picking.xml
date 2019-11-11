@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_picking" inherit_id="stock.report_picking">
+            <xpath expr="//div[hasclass('page')]" position="inside">
+                <p style="page-break-before:always;"></p>
+
+                <t t-foreach="o.get_model_lines_report()['measurebars']" t-as="bar">
+                    <div class="prevent-page-break">
+
+                        <table class="table table-bordered no-bottom-margin">
+                            <thead>
+                                <tr>
+                                    <th width="12%">Name</th>
+                                    <th colspan="100">
+                                        <span t-esc="bar['name']"/>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="3" width="12%">
+                                        <image t-attf-src="data:image/png;base64,{{ bar['image'] }}"/>
+                                    </td>
+                                    <td width="22%">
+                                        Total quantity
+                                    </td>
+                                    <td width="22%" class="text-right">
+                                        <t t-if="bar['total_quantity'] &gt; 0.0">
+                                            <span t-esc="bar['total_quantity']"
+                                                  t-options='{"widget": "float", "precision": 2}'/>
+                                        </t>
+                                    </td>
+                                    <td width="22%" id="empty_cell_one_name">
+                                    </td>
+                                    <td width="22%" id="empty_cell_one_value">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Note
+                                    </td>
+                                    <td>
+                                        <t t-if="bar['comment']!='' and bar['comment']!='false'"
+                                           t-esc="bar['comment']"/>
+                                    </td>
+                                    <td id="empty_cell_two_name">
+                                    </td>
+                                    <td id="empty_cell_two_value">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <t t-if="bar['attributes'][0][0]!=0 and len(bar['attributes'][0])>1">
+                            <table class="table table-bordered"
+                                   style="table-layout: fixed; border-top:transparent 0px;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th t-foreach="bar['attributes'][0]" t-as="value">
+                                            <span t-esc="value['name']"/>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="height:40px;" t-foreach="bar['attributes'][1]" t-as="t"
+                                        t-attf-class="oe_model_row">
+                                        <td>
+                                            <t t-if="t!=0">
+                                                <span t-esc="t['name']"/>
+                                            </t>
+                                        </td>
+                                        <t t-foreach="bar['products'][t_index]" t-as="product">
+                                            <t t-if="product!=0">
+                                                <td class="text-center measure-report-cell">
+                                                    <t t-esc="product['line']['product_uom_qty']"/>
+                                                </td>
+                                            </t>
+                                            <t t-else="0">
+                                                <td class="hatch"/>
+                                            </t>
+                                        </t>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                    </div>
+                </t>
+
+            </xpath>
+        </template>
+        <template id="report_picking_deliveryslip" inherit_id="stock.report_delivery_document">
+            <xpath expr="//div[hasclass('page')]" position="inside">
+                <p style="page-break-before:always;"></p>
+                <t t-foreach="o.get_model_lines_report()['measurebars']" t-as="bar">
+                    <div class="prevent-page-break">
+
+                        <table class="table table-bordered no-bottom-margin">
+                            <thead>
+                                <tr>
+                                    <th width="12%">Name</th>
+                                    <th>
+                                        <span t-esc="bar['name']"/>
+                                    </th>
+                                    <th>&amp;nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="3" width="12%">
+                                        <image t-attf-src="data:image/png;base64,{{ bar['image'] }}"/>
+                                    </td>
+                                    <td width="22%">
+                                        Total quantity
+                                    </td>
+                                    <td width="22%" class="text-right">
+                                        <t t-if="bar['total_quantity'] &gt; 0.0">
+                                            <span t-esc="'%.0f'%bar['total_quantity']"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Note
+                                    </td>
+                                    <td>
+                                        <t t-if="bar['comment']!='' and bar['comment']!='false'"
+                                           t-esc="bar['comment']"/>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <t t-if="bar['attributes'][0][0]!=0 and len(bar['attributes'][0])>1">
+                            <table class="table table-bordered"
+                                   style="table-layout: fixed; border-top:transparent 0px;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th t-foreach="bar['attributes'][0]" t-as="value">
+                                            <span t-esc="value['name']"/>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="height:40px;" t-foreach="bar['attributes'][1]" t-as="t"
+                                        t-attf-class="oe_model_row">
+                                        <td>
+                                            <t t-if="t!=0">
+                                                <span t-esc="t['name']"/>
+                                            </t>
+                                        </td>
+                                        <t t-foreach="bar['products'][t_index]" t-as="product">
+                                            <t t-if="product!=0">
+                                                <td class="text-center measure-report-cell">
+                                                    <t t-esc="product['line']['quantity_done']"/>
+                                                </td>
+                                            </t>
+                                            <t t-else="0">
+                                                <td class="hatch"></td>
+                                            </t>
+                                        </t>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                    </div>
+                </t>
+
+            </xpath>
+        </template>
+    </data>
+</odoo>

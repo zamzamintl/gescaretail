@@ -1,0 +1,115 @@
+/*The Gift Card OrderList List Screen */
+/*The Gift Card OrderList List Screen */
+.checkbox_print_gift_card{
+    box-shadow: none !important;
+    vertical-align: middle;
+}
+.gift_card table{
+    border-spacing: 10px;
+    border-collapse: separate;
+}
+.gift_card table tr td{
+    font-weight: normal;
+    text-align: left !important;
+    font-size: 18px;
+}
+.gift_card table tr td:last-child *{
+    width: 100% !important;
+}
+.gift_card table tr td input{
+    min-height: 0px !important;
+    height: 30px !important;
+    font-size: 18px !important;
+    padding: 0px !important;
+    padding-left: 10px !important;
+}
+.create_gift_card{
+    width: 500px !important;
+    height: 435px !important;
+}
+.create_gift_card tr td{
+    font-weight: normal;
+    text-align: left !important;
+    font-size: 18px;
+    line-height: 40px;
+}
+.redeem_gift_card table{
+    border-spacing: 22px;
+}
+object{
+    margin-left: 0px !important;
+}
+.ui-menu .ui-menu-item a{
+    height: auto !important;
+    padding: 1px 16px !important;
+    width: 100% !important;
+    word-wrap: break-word !important;
+}
+.ui-autocomplete {
+    max-height: 150px;
+    height: auto;
+    min-height:0px;
+    width: 100px;
+    background: #ffffff;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1000;
+    /* padding: 0px 21px 0px 0px !important; */
+/*     padding:5px !important; */
+    line-height:1.3;
+    border-color:#39dbc2;
+    border:1px solid;
+    border-radius:3px;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial !important;
+    font-size: 13px !important;
+    padding:0px 0px !important;
+    color: #08a28b;
+    list-style-type: none;
+/*     box-shadow: 0px 0px 0px 2px rgb(153, 153, 255) inset; */
+    margin:0px !important;
+}
+.ui-autocomplete li{
+    padding:3px;
+    padding-left:0px !important;
+}
+.ui-menu .ui-menu-item a{
+    width:100% !important;
+}
+.ui-state-focus{
+    border-color:lightblue;
+    border: 1px solid;
+    background: #EAFAF1;
+    font-weight: bold;
+    color: #08a28b;
+}
+.icon-button  i{
+    font-size:14px;
+}
+.icon-btn-str{
+    margin-top: 1px !important;
+    margin-bottom: 3px !important;
+    line-height: 10px;
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+.control-button{
+    width: 50px;
+    padding: 0px 4px !important;
+    padding-top:5px;
+    min-width : 50px !important;
+    max-width : 50px;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: bold;
+}
+.control-buttons {
+    margin-bottom: 0px !important;
+}
+.pos .giftcardlist-screen .searchbox {
+    right: auto;
+    margin-left: -90px;
+    margin-top: 8px;
+    left: 50%;
+}

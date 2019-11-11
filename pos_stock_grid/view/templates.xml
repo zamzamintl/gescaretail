@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_stock_grid/static/src/js/tableHeadFixer.js"/>
+            <script type="text/javascript" src="/pos_stock_grid/static/src/js/pos_stock_grid.js"/>
+        </xpath>
+       <xpath expr="//link[@id='pos-stylesheet']" position="after">
+            <link rel="stylesheet" href="/pos_stock_grid/static/src/css/pos_stock_grid.css"/>
+            <link rel="stylesheet" href="/pos_stock_grid/static/src/css/style.css"/>
+        </xpath>
+    </template>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/pos_stock_grid/static/src/css/base_stock_grid.css"/>
+            <script type="text/javascript" src="/pos_stock_grid/static/src/js/tableHeadFixer.js"/>
+            <script type="text/javascript" src="/pos_stock_grid/static/src/js/base_stock_grid.js"/>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim:fdl=1:
+-->
+<templates xml:space="preserve">
+
+    <t t-extend="ProductCategoriesWidget">
+        <t t-jquery="header.rightpane-header .searchbox" t-operation="replace">
+            <div class="searchbox">
+                <input placeholder="Search Products" />
+                <span class="search-clear"></span>
+                <div class="pos_product_view_switch_buttons">
+                    <button type="button" class="pos_product_view_button  pos_product_kanban_view active">
+                        <i class="fa fa-lg fa-th-large"/>
+                    </button>
+                    <button type="button" class="pos_product_view_button  pos_product_list_view">
+                        <i class="fa fa-lg fa-list-ul"/>
+                    </button>
+                </div>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="ProductListWidget">
+        <t t-jquery=".product-list" t-operation="replace">
+            <div class="product-list" t-if="!tree_view"></div>
+            <table class="product-list" id="jqGrid" t-if="tree_view">
+            </table>
+        </t>
+    </t>
+
+</templates>

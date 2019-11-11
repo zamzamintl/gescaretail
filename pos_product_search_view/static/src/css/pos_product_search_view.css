@@ -1,0 +1,99 @@
+.pos_product_search{
+    position: relative !important;
+}
+.pos_col_xs_6{
+    display: flex;
+}
+#select_gender_box{
+    outline:none;
+}
+.ui-autocomplete {
+    max-height: 150px;
+    height: auto;
+    min-height:0px;
+    width: 100px;
+    background: #ffffff;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1000;
+    /* padding: 0px 21px 0px 0px !important; */
+/*     padding:5px !important; */
+    line-height:1.3;
+    border-color:#39dbc2;
+    border:1px solid;
+    border-radius:3px;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial !important;
+    font-size: 13px !important;
+    padding:0px 0px !important;
+    color: #08a28b;
+    list-style-type: none;
+/*     box-shadow: 0px 0px 0px 2px rgb(153, 153, 255) inset; */
+    margin:0px !important;
+}
+.ui-autocomplete li{
+    padding:3px;
+    padding-left:0px !important;
+}
+.ui-menu .ui-menu-item a{
+    width:100% !important;
+    color: black !important;
+}
+.ui-state-focus{
+	border-color:lightblue !important;
+    border: 1px solid !important;
+    background: #EAFAF1 !important;
+    font-weight: bold !important;
+    color: #08a28b !important;
+}
+.search_box_select{
+    width: 100px;
+    border: 1px solid #cecbcb;
+    padding: 10px 10px;
+    padding-left: 20px;
+    margin: 6px;
+    background: url("/point_of_sale/static/src/css/../img/search.png") no-repeat 4px;
+    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    background-color: white;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-size: 11px;    
+}
+.search_clear_button{
+    position: relative;
+    top: 0px;
+    line-height: 47px;
+    padding: 10px 20px;
+    font-size: 20px;
+    background: rgb(230, 230, 230);
+    margin: 12px;
+    margin-left: 12px;
+    border-radius: 3px;
+    border: solid 1px rgb(209, 209, 209);
+    cursor: pointer;
+    transition: all 150ms linear;    
+}
+.search_input{
+    width: 75px !important;
+    background: url(/point_of_sale/static/src/img/search.png) no-repeat 4px !important;
+    font-size: 11px !important;
+    background-color: white !important;
+    border-radius: 0px !important;
+    padding-left: 20px !important;
+}
+
+.product_filter{
+    width:15px !important;
+}
+.pos_product_view_button{
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    line-height: 1.5;
+}
+.pos_product_view_switch_buttons{
+    margin-top:10px;
+}
+.pos_product_view_switch_buttons{
+    float:right;
+    padding-left: 5px;
+    padding-right: 5px;
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="ProductScreenWidget">
+        <div class="product-screen screen">
+            <div class="leftpane">
+                <div class='window'>
+                    <div class='subwindow collapsed' >
+                        <div class='subwindow-container' style="height: 3rem;">
+                            <div class='subwindow-container-fix'>
+                                 <div class="control-buttons oe_hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='subwindow collapsed'>
+                        <div class='subwindow-container' style="height:100%">
+                            <div class='subwindow-container-fix'>
+                                <div class="placeholder-OrderWidget"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='subwindow collapsed'>
+                        <div class='subwindow-container'>
+                            <div class='subwindow-container-fix pads'>
+                                <div class="placeholder-ActionpadWidget"></div>
+                                <div class="placeholder-NumpadWidget"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rightpane">
+                <table class="layout-table">
+                    <tr class="header-row">
+                        <td class="header-cell">
+                            <span class="placeholder-ProductCategoriesWidget" />
+                        </td>
+                    </tr>
+                    <tr class="content-row">
+                        <td class="content-cell">
+                            <div class="content-container">
+                                <span class="placeholder-ProductListWidget" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_quickly_clear_orderline/static/src/js/pos_quickly_clear_orderline.js"/>
+        </xpath>
+        <xpath expr="//link[@id='pos-stylesheet']" position="after">
+            <link rel="stylesheet" href="/pos_quickly_clear_orderline/static/src/css/pos_quickly_clear_orderline.css"/>
+        </xpath>
+    </template>
+</odoo>

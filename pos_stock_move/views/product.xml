@@ -1,0 +1,57 @@
+<odoo>
+
+    <record id="stock_move_tree_view" model="ir.ui.view">
+        <field name="name">stock.move.tree.view</field>
+        <field name="model">stock.move</field>
+        <field name="arch" type="xml">
+            <tree default_order='date desc'>
+                <field name="color_attribute_id" />
+                <field name="date" />
+                <field name="size_attribute_id" />
+                <field name="location_id" />
+                <field name="location_dest_id" />
+                <field name="product_uom_qty" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+   <record id="stock_move_search_inherit_view" model="ir.ui.view">
+        <field name="name">stock.move.search.inherit.view</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id"
+               ref="stock.view_move_search"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <!-- <field name="color_attribute_id" /> -->
+                <filter name="state" string="Done" domain="[('state','=','done')]"/>
+            </field> 
+            <xpath expr="//group" postion="inside">
+                <filter string="Color Attribute" name="groupby_colorattribute" domain="[]" context="{'group_by':'color_attribute_id'}"/>
+            </xpath> 
+        </field>
+    </record>
+ 
+    <record id="product_template_only_inherit_view" model="ir.ui.view">
+        <field name="name">product.template.product.inheri.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id"
+               ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='toggle_active']" position="before">
+                <button class="oe_stat_button"
+                        name="action_stock_moves_views"
+                        icon="fa-th"
+                        type="object"
+                        string="Stock Move">
+                </button>
+                <button string="Traceability" type="object"
+                        name= "action_view_stock_moves"
+                        attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}"
+                        class="oe_stat_button" icon="fa-arrows-v"
+                        groups="stock.group_stock_user"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

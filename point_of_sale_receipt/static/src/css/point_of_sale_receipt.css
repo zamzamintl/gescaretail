@@ -1,0 +1,6 @@
+#barcode_div,#barcode_img,#gift_barcode_img,#recharge_barcode_img,#redeem_barcode_img{
+    width:245px !important;
+}
+#barcode_div object{
+    width:245px !important;
+}

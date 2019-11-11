@@ -1,0 +1,57 @@
+.pos_product_view_button{
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    line-height: 1.5;
+}
+.pos_product_view_switch_buttons{
+    margin-top:10px;
+}
+.pos_product_view_switch_buttons{
+    float:right;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.pos_product_view_button.active{
+    color: #ffffff;
+    background-color: #6ec89b;
+}
+.ui-icon, .ui-widget-content .ui-icon{
+    display: inline-block;
+}
+
+.ui-jqgrid-hdiv{
+    height:52px;
+}
+
+.ui-jqgrid .ui-jqgrid-btable tbody tr.jqgrow td, .ui-jqgrid tr.jqgroup td{
+    white-space: inherit;
+    word-break: break-all;
+}
+.ui-jqgrid-bdiv
+{
+    overflow-x : hidden !important;
+}
+.hidden_scroll{
+    overflow: hidden !important;
+    overflow-y: hidden !important;
+}
+
+.jqGridghead_0{
+    background:#dddddd;
+}
+.jqGridghead_1{
+    background:#eeeeee;
+}
+.jqGridghead_1{
+    background:#eeeeee;
+}
+.jqGridghead_2{
+    background:#ffffff;
+}
+.jqGridghead_1 td:first-child{
+    padding-left : 40px !important;
+}
+.jqGridghead_2 td:first-child{
+    padding-left : 80px !important;
+}

@@ -1,0 +1,229 @@
+/* .pos-message{
+    color:#fff;
+} */
+.pos .message-box{
+    position: absolute;
+    right: -350px;
+    top: 50px;
+    width: 100%;
+    height:100%;
+    background-color: rgba(0,0,0,0);
+    z-index:1000;
+}
+/* v12 changes */
+.o_mail_preview_image {
+  width: 40px;
+  height: 40px;
+}
+.o_preview_info {
+  margin-left: 10px;
+  padding-top: 2px;
+  margin-left: 10px;
+}
+.o_preview_title {
+  margin-left: 10px;
+  padding-top: 2px;
+  font-size: small;
+  margin-left: 10px;
+}
+.o_mail_preview {
+  min-width: 50px;
+  padding: 5px;
+}
+.o_last_message_date{
+    margin-left: 10px;
+    padding-top: 2px;
+    font-size: x-small;
+    margin-left: 10px;
+}
+.o_last_message_preview {
+  font-size: small;
+  margin-left: 8px;
+  margin-top:2px;
+}
+.text-muted {
+    color: #adb5bd !important;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+.o_input {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 2px 4px;
+    color: #1f1f1f;
+}
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1.08333333rem;
+    line-height: 1.5;
+    border-radius: 3px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.btn-secondary {
+    color: #212529;
+    background-color: #fff;
+    border-color: #fff;
+}
+.btn-secondary {
+    border-color: #dee2e6;
+}
+.d-none {
+    display: none !important;
+}
+.o_thread_composer.o_chat_mini_composer .o_composer .o_mail_emoji_container {
+    position: absolute;
+    top: auto;
+    left: 0;
+    bottom: 100%;
+    right: 0;
+    border-bottom-width: 1px;
+}
+.o_thread_composer .o_composer .o_mail_emoji_container {
+    padding: 0 10px 10px 0;
+    border: 1px solid #dee2e6;
+    border-width: 1px 0 0 0;
+    background-color: #f8f9fa;
+}
+.btn-link {
+    font-weight: 400;
+    color: #7C7BAD;
+    background-color: transparent;
+}
+.o_mail_emoji {
+    display: inline-block;
+    padding: 0;
+    font-size: 1.3rem;
+    font-family: emojifont;
+    height: 25px;
+    width: 22px;
+}
+.btn-link {
+    font-weight: 400;
+    color: #7C7BAD;
+    background-color: transparent;
+}
+a {
+    text-decoration: none;
+    background-color: transparent;
+}
+.o_mail_user_status {
+  font-size: initial;
+}
+.o_mail_preview_mark_as_read {
+    margin-left: 10px;
+    font-size: medium;
+}
+.o_no_activity {
+    cursor: initial;
+    align-items: center;
+    color: grey;
+    opacity: 0.5;
+    padding: 3px !important;
+    text-align: center !important;
+    font-size: medium;
+}
+.o_mail_navbar_dropdown_channels {
+   min-height: 50px;
+}
+.o_composer_input {
+    height: 40px;
+}
+/*.o_thread_window_header {
+    background-color : #875A7B !important;
+}*/
+.o_composer_button_emoji {
+    outline: none;
+}
+.o_composer_text_field {
+    outline: none;
+}
+.btn-secondary:hover {
+    color: rgb(33, 37, 41);
+    background-color: rgb(236, 236, 236);
+    border-color: rgb(230, 229, 229);
+}
+.o_composer_button_add_attachment {
+  outline: none;
+}
+/* v12 changes end */
+.pos .message-box .message{
+    position:relative;
+    top:0;left: 0; right: 0; bottom:0;
+    margin: auto;
+    width:350px;
+    font-size:22px;
+    background-color: #F0EEEE;
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.4);
+    z-index:1200;
+    font-family: 'Lato';
+    font-family: Lato;
+}
+.pos .message .title {
+/*     background: #6ec89b; */
+    margin: 0;
+    padding: 4px;
+    border-bottom: solid 1px rgba(60,60,60,0.1);
+}
+.pos .pos-new_message{
+    margin-left :90px;
+    color: #7f82ac;
+}
+.pos .message a {
+    text-decoration: none;
+    font-size: 11px;
+    cursor: pointer;
+    padding: 4px 10px;
+}
+.pos .message a:hover {
+    color: #7f82ac;
+}
+.pos .pos-selected {
+    font-weight: bold;
+    color : #7f82ac;
+    }
+
+.pos .fa-close {
+    margin-right: 10px;
+    cursor: pointer;
+}
+.ui-widget{
+    font-family: "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
+    background:#FFFFFF;
+    font-size: 13px;
+    width:200px;
+    z-index: 10000;
+}
+.ui-menu{
+    padding: 2px 0;
+    margin-top: 4px;
+}
+.ui-menu-item{
+    display: block;
+    background:#FFFFFF;
+    color: #000000; :
+}
+.ui-menu-item:hover{
+    display: block;
+    background:#7f82ac;
+    color:#FFFFFF;
+}
+.ui-menu .ui-menu-item a{
+    height:15px;
+    padding: 1px 16px;
+}
+.hide {
+  display: none !important;
+}
+.o_chat_composer .o_composer .o_mail_emoji_container .o_mail_emoji {
+    background-color: #eeeeee;
+    border: none;
+    font-size: 23px;
+}

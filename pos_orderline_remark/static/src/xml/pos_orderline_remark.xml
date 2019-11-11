@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template_pos_view" xml:space="preserve">
+    <t t-extend="Orderline">
+        <t t-jquery=".info-list" t-operation="append">
+            <t t-if="! line.is_pos_restaurant_install and line.get_remark()">
+                <li class="info orderline-remark">
+                    <i class='fa fa-tag'/><t t-esc="line.get_remark()" />
+                </li>
+            </t>
+        </t>
+    </t>
+    <t t-name="OrderlineRemarkButton">
+        <div class='control-button' title="Remark">
+            <t t-if="widget.pos.config.orderline_remark">
+                <span class="icon-button" id="Remark">
+                    <i class="fa fa-tag" aria-hidden="true"></i>
+                 </span>
+                <div class="icon-btn-str">Remark</div>
+            </t>
+        </div>
+    </t>
+</templates>

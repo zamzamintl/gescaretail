@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* princess_product_brand
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0e+e-latest_20181015-051922-UTC-latest_staging_20181015-164259-UTC\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-17 10:02+0000\n"
+"PO-Revision-Date: 2018-10-17 12:02+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: en\n"
+"X-Generator: Poedit 2.2\n"
+
+#. module: princess_product_brand
+#: model:ir.model.fields,field_description:princess_product_brand.field_res_partner_brand_id
+#: model:ir.model.fields,field_description:princess_product_brand.field_res_users_brand_id
+msgid "Brand"
+msgstr "Merk"
+
+#. module: princess_product_brand
+#: model:ir.model,name:princess_product_brand.model_res_partner
+msgid "Partner"
+msgstr "Relatie"
+
+#. module: princess_product_brand
+#: code:addons/princess_product_brand/models/product_template.py:23
+#, python-format
+msgid "Product %s has no supplier!"
+msgstr "Product %s has no supplier!"
+
+#. module: princess_product_brand
+#: model:ir.model,name:princess_product_brand.model_product_template
+msgid "Product Template"
+msgstr "Productsjabloon"
+
+#. module: princess_product_brand
+#: model:ir.model.fields,field_description:princess_product_brand.field_delivery_carrier_brand_vendor_ids
+#: model:ir.model.fields,field_description:princess_product_brand.field_product_brand_vendor_ids
+#: model:ir.model.fields,field_description:princess_product_brand.field_product_product_brand_vendor_ids
+#: model:ir.model.fields,field_description:princess_product_brand.field_product_template_brand_vendor_ids
+#: model:ir.model.fields,field_description:princess_product_brand.field_winkelstraat_product_product_brand_vendor_ids
+msgid "Supplier"
+msgstr "Supplier"
+
+#. module: princess_product_brand
+#: model:ir.model.fields,field_description:princess_product_brand.field_delivery_carrier_vendor_id
+#: model:ir.model.fields,field_description:princess_product_brand.field_product_product_vendor_id
+#: model:ir.model.fields,field_description:princess_product_brand.field_product_template_vendor_id
+#: model:ir.model.fields,field_description:princess_product_brand.field_winkelstraat_product_product_vendor_id
+msgid "Vendor"
+msgstr "Fabrikant"
+
+#. module: princess_product_brand
+#: model:ir.model,name:princess_product_brand.model_product_brand
+msgid "product.brand"
+msgstr "product.brand"

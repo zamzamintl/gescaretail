@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_quotation_tree_clients" model="ir.ui.view">
+            <field name="name">sale.client.tree</field>
+            <field name="model">sale.order</field>
+            <field name="priority">4</field>
+            <field name="arch" type="xml">
+                <tree string="Order by Client">
+                    <field name="name" string="Quotation Number"/>
+                    <field name="date_order"/>
+                    <field name="state" invisible="1"/>
+                    <field name="id" widget="model_widget_tree"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="group_by_partner" model="ir.actions.act_window">
+            <field name="name">Orders By Client</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="context">{'group_by':['partner_id']}</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('state','=','sale')]</field>
+            <field name="view_id" ref="sale.view_quotation_tree"/>
+        </record>
+        <menuitem name="Client Order History"
+                  id="menu_sale_client_history" parent="sale.sale_menu_root" action="group_by_partner"
+                  sequence="10"/>
+
+
+        <record id="sale_order_order_history" model="ir.actions.act_window">
+            <field name="name">Order History</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="domain">[('state','=','sale')]</field>
+            <field name="view_id" ref="sale.view_quotation_tree"/>
+        </record>
+        <record id="sale_order_view_buttons" model="ir.ui.view">
+            <field name="name">sale.order.view.buttons</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <div name="button_box" position="inside">
+                    <button attrs="{'invisible': [('state', 'not in', ('draft', 'sent', 'sale', 'done', 'cancel'), ('partner_id', '=', False))]}"
+                            class="pull-left oe_stat_button" type="action"
+                            name="%(client_sale_history.sale_order_order_history)d"
+                            icon="fa-usd"
+                            string="Sales History">
+                    </button>
+                </div>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="pos_conditional_sale_assets_backend" name="pos_conditional_sale assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_conditional_sale/static/src/js/pos_conditional_sale.js"/>
+        </xpath>
+    </template>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_conditional_sale/static/src/js/web_warning.js"/>
+        </xpath>
+    </template>
+</odoo>

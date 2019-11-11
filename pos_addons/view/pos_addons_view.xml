@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="cash_register_sequence"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="point_of_sale.menu_pos_products" model="ir.ui.menu">
+        <field name="action" ref="product.product_template_action"/>
+    </record>
+
+    <record id="point_of_sale.pos_config_menu_action_product_product" model="ir.ui.menu">
+        <field name="action" ref="product.product_normal_action"/>
+    </record>
+
+    <record id="view_pos_session_form" model="ir.ui.view">
+        <field name="name">pos.session.form.view.remark</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" name="print_sale_overview" type="object" icon="fa-print">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_text">Print</span>
+                        <span class="o_stat_text">Overview</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='statement_ids']" position="before">
+                <label for="remark">Remark</label>
+                <field name="remark"/>
+                <field name="show_close_and_book" invisible="True"/>
+            </xpath>
+            <xpath expr="//button[@name='action_pos_session_validate']" position="attributes">
+                 <attribute name="attrs">{'invisible' : ['|', ('show_close_and_book', '=', False),('state', '!=', 'closing_control')]}</attribute>
+                 <attribute name="states"/>
+            </xpath>
+            <xpath expr="(//button[@name='open_cashbox'])[last()]/span" position="attributes">
+                <attribute name="style">color:red</attribute>
+            </xpath>
+            <xpath expr="(//button[@name='open_cashbox'])[last()]" position="attributes">
+                <attribute name="attrs">{'invisible':['|',('cash_control', '=', False), ('state', '!=', 'closing_control')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='cash_register_difference']/.." position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('cash_control', '=', False), ('state', 'not in', ['closing_control','closing'])]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_pos_session_closing_control'][2]" position="attributes">
+                <attribute name="class"></attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_journal_tree" model="ir.ui.view">
+        <field name="name">account.journal.tree</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_tree"/>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="group_code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_journal_search" model="ir.ui.view">
+        <field name="name">account.journal.search</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_search"/>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="group_code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_journal_form" model="ir.ui.view">
+        <field name="name">account.journal.form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="group_code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_report_pos_order_search" model="ir.ui.view">
+        <field name="name">report.pos.order.search</field>
+        <field name="model">report.pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <filter name="done_paid_invoiced" string="Done/Paid/Invoiced" domain="[('state','in',('done','paid','invoiced'))]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="point_of_sale.action_report_pos_order_all" model="ir.actions.act_window">
+        <field name="name">Orders Analysis</field>
+        <field name="res_model">report.pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.action_report_pos_order_all"/>
+        <field name="context">{'group_by_no_leaf':1,'group_by':[],'search_default_done_paid_invoiced':1}</field>
+    </record>
+
+       <!--  <record id="princess_pos_point_of_sale_view_pos_pos_form" model="ir.ui.view">
+        <field name="name">princess.pos.point.of.sale.view.pos.pos.form</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lines']/tree/field[@name='product_id']" position="after">
+                <field name="collection_id"/>
+            </xpath>
+            <xpath expr="//field[@name='lines']/form/group/field[@name='product_id']" position="after">
+                <field name="collection_id"/>
+            </xpath>
+        </field>
+    </record> -->
+
+    <record id="view_bank_statement_line_search" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.search</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="inherit_id"
+               ref="account.view_bank_statement_line_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="bank_out"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_bank_statement_line_form" model="ir.ui.view">
+        <field name="name">bank.statement.line.form</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="inherit_id" ref="account.view_bank_statement_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="bank_out"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_bank_statement_line_tree" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.tree</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="inherit_id" ref="account.view_bank_statement_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="bank_out"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="assets_backend" name="pos_chat assets"
+              inherit_id="point_of_sale.index">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/mail/static/src/js/services/mail_service.js"/>
+            <script type="text/javascript"
+                    src="/pos_chat/static/src/js/chat_pos.js"/>
+        </xpath>
+    </template>
+
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet"
+                  href="/web/static/lib/bootstrap/scss/_functions.scss"/>
+            <link rel="stylesheet"
+                  href="/web/static/lib/bootstrap/scss/_variables.scss"/>
+            <link rel="stylesheet"
+                  href="/web/static/lib/bootstrap/scss/mixins/_size.scss"/>
+            <link rel="stylesheet"
+                  href="/web/static/src/scss/utils.scss"/>
+            <link rel="stylesheet"
+                  href="/web/static/src/scss/mimetypes.scss"/>
+            <link rel="stylesheet"
+                  href="/web/static/src/scss/primary_variables.scss"/>
+            <link rel="stylesheet"
+                  href="/web_tour/static/src/scss/tip.scss"/>
+            <link rel="stylesheet"
+                  href="/web/static/lib/bootstrap/scss/mixins/_breakpoints.scss"/>
+            <link rel="stylesheet"
+                  href="/web/static/src/scss/secondary_variables.scss"/>
+            <link rel="stylesheet"
+                  href="/mail/static/src/scss/variables.scss"/>
+            <link rel="stylesheet"
+                  href="/mail/static/src/scss/abstract_thread_window.scss"/>
+            <link rel="stylesheet"
+                  href="/mail/static/src/scss/thread.scss"/>
+            <link rel="stylesheet"
+                  href="/mail/static/src/scss/composer.scss"/>
+            <link rel="stylesheet"
+                  href="/mail/static/src/scss/discuss.scss"/>
+             <link rel="stylesheet"
+                   href="/mail/static/src/scss/systray.scss"/>
+             <link rel="stylesheet"
+                   href="/mail/static/src/scss/abstract_thread_window.scss"/>
+             <link rel="stylesheet"
+                   href="/mail/static/src/scss/thread_window.scss"/>
+            <link rel="stylesheet"
+                  href="/pos_chat/static/src/css/message.css"
+                  type="text/css"/>
+        </xpath>
+    </template>
+
+    <template id="_web_assets_backend" name="mail assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/pos_chat/static/src/js/mail_chat.js"/>
+        </xpath>
+    </template>
+
+</odoo>

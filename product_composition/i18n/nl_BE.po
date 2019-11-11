@@ -1,0 +1,94 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* princess_product_composition
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0e+e-latest_20181015-051922-UTC-latest_staging_20181015-164259-UTC\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-17 10:05+0000\n"
+"PO-Revision-Date: 2018-10-17 12:07+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: nl\n"
+"X-Generator: Poedit 2.2\n"
+
+#. module: princess_product_composition
+#: model:ir.actions.act_window,name:princess_product_composition.princess_action_product_composition_tag_form
+#: model:ir.ui.view,arch_db:princess_product_composition.princess_view_product_composition_tag_form
+msgid "Composition Tag"
+msgstr "Label samenstelling"
+
+#. module: princess_product_composition
+#: model:ir.ui.menu,name:princess_product_composition.princess_menu_product_composition_tag
+#: model:ir.ui.view,arch_db:princess_product_composition.princess_view_product_composition_tag_search
+#: model:ir.ui.view,arch_db:princess_product_composition.princess_view_product_composition_tag_tree
+msgid "Composition Tags"
+msgstr "Label samenstelling"
+
+#. module: princess_product_composition
+#: model:ir.ui.view,arch_db:princess_product_composition.princess_view_product_composition_tag_search
+msgid "Composition name"
+msgstr "Naam samenstelling"
+
+#. module: princess_product_composition
+#: model:ir.model.fields,field_description:princess_product_composition.field_delivery_carrier_composition_tag_ids
+#: model:ir.model.fields,field_description:princess_product_composition.field_product_product_composition_tag_ids
+#: model:ir.model.fields,field_description:princess_product_composition.field_product_template_composition_tag_ids
+#: model:ir.model.fields,field_description:princess_product_composition.field_winkelstraat_product_product_composition_tag_ids
+msgid "Compositions"
+msgstr "Samenstellingen"
+
+#. module: princess_product_composition
+#: model:ir.model.fields,field_description:princess_product_composition.field_product_composition_tag_create_uid
+msgid "Created by"
+msgstr "Aangemaakt door"
+
+#. module: princess_product_composition
+#: model:ir.model.fields,field_description:princess_product_composition.field_product_composition_tag_create_date
+msgid "Created on"
+msgstr "Aangemaakt op"
+
+#. module: princess_product_composition
+#: model:ir.model.fields,field_description:princess_product_composition.field_product_composition_tag_display_name
+msgid "Display Name"
+msgstr "Weergave naam"
+
+#. module: princess_product_composition
+#: model:ir.model.fields,field_description:princess_product_composition.field_product_composition_tag_id
+msgid "ID"
+msgstr "ID"
+
+#. module: princess_product_composition
+#: model:ir.model.fields,field_description:princess_product_composition.field_product_composition_tag___last_update
+msgid "Last Modified on"
+msgstr "Laatst gewijzigd op"
+
+#. module: princess_product_composition
+#: model:ir.model.fields,field_description:princess_product_composition.field_product_composition_tag_write_uid
+msgid "Last Updated by"
+msgstr "Laatst bijgewerkt door"
+
+#. module: princess_product_composition
+#: model:ir.model.fields,field_description:princess_product_composition.field_product_composition_tag_write_date
+msgid "Last Updated on"
+msgstr "Laatst bijgewerkt op"
+
+#. module: princess_product_composition
+#: model:ir.model.fields,field_description:princess_product_composition.field_product_composition_tag_name
+msgid "Name"
+msgstr "Naam"
+
+#. module: princess_product_composition
+#: model:ir.model,name:princess_product_composition.model_product_template
+msgid "Product Template"
+msgstr "Productsjabloon"
+
+#. module: princess_product_composition
+#: model:ir.model,name:princess_product_composition.model_product_composition_tag
+msgid "product.composition.tag"
+msgstr "product.composition.tag"

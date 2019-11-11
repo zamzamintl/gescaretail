@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="pos_client_list_assets_backend" name="pos_client_list assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_client_list/static/src/js/pos_client_list.js"/>
+        </xpath>
+        <xpath expr="//link[@id='pos-stylesheet']" position="after">
+            <link rel="stylesheet" href="/pos_client_list/static/src/css/pos_client_list.css"/>
+        </xpath>
+    </template>
+</odoo>

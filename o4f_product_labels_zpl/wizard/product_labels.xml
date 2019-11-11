@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="o4f_print_product_labels_view_form" model="ir.ui.view">
+        <field name="name">print.product.labels.view.form</field>
+        <field name="model">print.product.labels</field>
+        <field name="inherit_id" ref="o4f_product_labels.o4f_print_product_labels_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pricelist_id']" position="before">
+                <field name="label_type"/>
+                <field name="printer_id" attrs="{'invisible':[('label_type','!=','zpl')],'required':[('label_type','=','zpl')]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

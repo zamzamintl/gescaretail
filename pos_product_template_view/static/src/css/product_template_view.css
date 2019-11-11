@@ -1,0 +1,123 @@
+.oe_measureproducttemplateview .col-xs-6 {
+  position: relative;
+  min-height: 1px;
+  width: 50%;
+  float: left;
+}
+.pos .table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+.pos .table > thead > tr > th,
+.pos .table > tbody > tr > th,
+.pos .table > tfoot > tr > th,
+.pos .table > thead > tr > td,
+.pos .table > tbody > tr > td,
+.pos .table > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+}
+.pos .table > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #ddd;
+}
+.pos .table_display{
+  font-size:x-large; 
+  line-height:12px !important;
+}
+.pos .pos_back_ground_color{
+  background : darkgray;
+}
+.pos .table > caption + thead > tr:first-child > th,
+.pos .table > colgroup + thead > tr:first-child > th,
+.pos .table > thead:first-child > tr:first-child > th,
+.pos .table > caption + thead > tr:first-child > td,
+.pos .table > colgroup + thead > tr:first-child > td,
+.pos .table > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+.pos td.o_readonly  {
+  background-color: lightgray;
+}
+.pos .pos_margin_bottam{
+  margin-bottom: 0px !important;
+}
+.pos .table .table {
+  background-color: #fff;
+}
+.pos .table_width{
+    width : 131px;
+}
+.oe_measureproducttemplateview .div_padding{
+  /*padding: 4px;*/
+  margin-left: 9px;
+}
+.pos
+.pos .table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #eef0f0;
+}
+.pos .pos_margin{
+  margin-bottom: 6px;
+}
+.pos .pos_table_height{
+  height: 200px;
+  overflow: auto;
+}
+.table-stripedd> tbody > tr:nth-of-type(odd) {
+  background-color: #eef0f0;
+}
+.oe_measureproducttemplateview .row {
+  display: flex;
+  margin-left:0px;
+}
+.pos .font_size{
+    font-size : 11px;
+}
+.pos .display_table{
+    display: flex;
+}
+.pos .oe_measureproducttemplateview{
+    max-height: 63vh;
+    overflow: auto;
+    margin-left:5px;
+    margin-right:5px;
+    font-size: 11px;
+
+}
+.oe_measureproducttemplateview .text-left{
+    float: left;
+}
+.pos_popup_background{
+    background: white;
+}/*
+.pos .pos_background_td{
+    background: #eef0f0;
+}*/
+.icon-button  i{
+    font-size:14px;
+}
+.icon-btn-str{
+    margin-top: 1px !important;
+    margin-bottom: 3px !important;
+    line-height: 10px;
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+.control-button{
+    width: 50px;
+    padding: 0px 4px !important;
+    padding-top:5px;
+    min-width : 50px !important;
+    max-width : 50px;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: bold;
+}
+.control-buttons {
+    margin-bottom: 0px !important;
+}

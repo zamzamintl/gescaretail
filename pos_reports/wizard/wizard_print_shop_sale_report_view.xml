@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wizard_print_shop_sale_report_form" model="ir.ui.view">
+            <field name="name">wizard.print.shop.sale.report.form</field>
+            <field name="model">wizard.print.shop.sale.report</field>
+            <field name="arch" type="xml">
+                <form string="Print shop SALE report">
+                    <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="with_prices"/>
+                            <field name="shop_address_ids" widget="many2many_checkboxes"
+                                   domain="[('id','in',allowed_shop_address_ids)]"
+                                   context="{'order':'cash_register_sequence'}"/>
+                            <field name="allowed_shop_address_ids" invisible="1" context="{'order':'cash_register_sequence'}"/>
+                    </group>
+                    <footer>
+                        <button string="Print report"
+                                name="print_report"
+                                type="object"
+                                default_focus="1"
+                                class="btn-primary"/>
+                        <button string="Cancel"
+                                class="btn-default"
+                                special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    <record id="action_wizard_print_shop_sale_report_form" model="ir.actions.act_window">
+        <field name="name">POS Sales</field>
+        <field name="res_model">wizard.print.shop.sale.report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_print_shop_sale_report_form"/>
+        <field name="target">new</field>
+        <field name="context" eval="{}"/>
+    </record>
+
+    <menuitem id="menu_print_shop_sale_report"
+              name="POS Sale Report"
+              action="action_wizard_print_shop_sale_report_form"
+              parent="point_of_sale.menu_point_rep"/>
+</odoo>

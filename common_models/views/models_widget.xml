@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="common models assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet"
+                      href="/common_models/static/src/css/models_widget.css"/>
+                <script type="text/javascript"
+                        src="/common_models/static/src/js/models.js"></script>
+                <script type="text/javascript"
+                        src="/common_models/static/src/js/models_widget_o4f.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

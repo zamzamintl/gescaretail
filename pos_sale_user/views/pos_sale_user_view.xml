@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="pos_sale_user_inheirt_pos_form_view" model="ir.ui.view">
+            <field name="name">view.pos.order.form.extended</field>
+            <field name="model">pos.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="sale_user_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="pos_sale_user_inheirt_pos_tree_view" model="ir.ui.view">
+            <field name="name">view.pos.order.tree.extended</field>
+            <field name="model">pos.order</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="sale_user_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="pos_sale_user_inherit_pos_order_filter_view" model="ir.ui.view">
+            <field name="name">pos.order.list.select.inherit</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_filter" />
+            <field name="arch" type="xml">
+                <xpath expr="//group" postion="inside">
+                    <filter string="Sale User" name="sale_user_id" domain="[]" context="{'group_by':'sale_user_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

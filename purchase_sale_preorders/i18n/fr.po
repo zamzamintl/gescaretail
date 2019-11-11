@@ -1,0 +1,139 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* o4f_preorders
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20161228\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-12 13:35+0000\n"
+"PO-Revision-Date: 2017-07-12 13:35+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: o4f_preorders
+#: model:ir.ui.view,arch_db:o4f_preorders.preorder_popup_view
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: o4f_preorders
+#: model:ir.model.fields,field_description:o4f_preorders.field_purchase_preorder_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: o4f_preorders
+#: model:ir.model.fields,field_description:o4f_preorders.field_purchase_preorder_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: o4f_preorders
+#: model:ir.model.fields,field_description:o4f_preorders.field_purchase_preorder_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: o4f_preorders
+#: model:ir.model.fields,field_description:o4f_preorders.field_purchase_preorder_end_date
+msgid "End date"
+msgstr "Au"
+
+#. module: o4f_preorders
+#: model:ir.ui.view,arch_db:o4f_preorders.preorder_popup_view
+msgid "Generate Pre-orders"
+msgstr "Générer de pré-commandes"
+
+#. module: o4f_preorders
+#: model:ir.model,name:o4f_preorders.model_purchase_preorder
+msgid "Generate purchase orders"
+msgstr "Générer des demandes de prix"
+
+#. module: o4f_preorders
+#: model:ir.model.fields,field_description:o4f_preorders.field_purchase_preorder_id
+msgid "ID"
+msgstr ""
+
+#. module: o4f_preorders
+#: code:addons/o4f_preorders/models/sale.py:9
+#: model:ir.model.fields,field_description:o4f_preorders.field_sale_order_is_preorder
+#, python-format
+msgid "Is a Pre-order"
+msgstr "Est une pré-commande"
+
+#. module: o4f_preorders
+#: model:ir.model.fields,field_description:o4f_preorders.field_purchase_preorder___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: o4f_preorders
+#: model:ir.model.fields,field_description:o4f_preorders.field_purchase_preorder_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: o4f_preorders
+#: model:ir.model.fields,field_description:o4f_preorders.field_purchase_preorder_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: o4f_preorders
+#: code:addons/o4f_preorders/models/sale.py:11
+#: model:ir.model.fields,field_description:o4f_preorders.field_sale_order_preorder_complete
+#, python-format
+msgid "Pre-order Processed"
+msgstr "Pré-commande traitée"
+
+#. module: o4f_preorders
+#: code:addons/o4f_preorders/models/purchase.py:9
+#: model:ir.model.fields,field_description:o4f_preorders.field_purchase_order_preorder_ref
+#, python-format
+msgid "Pre-order reference"
+msgstr "Référence de pré-commande"
+
+#. module: o4f_preorders
+#: model:ir.actions.act_window,name:o4f_preorders.action_preordergen
+#: model:ir.ui.menu,name:o4f_preorders.menu_preorder
+msgid "Pre-orders"
+msgstr "Pré-commandes"
+
+#. module: o4f_preorders
+#: code:addons/o4f_preorders/wizard/preorder_gen.py:12
+#: model:ir.model.fields,field_description:o4f_preorders.field_purchase_preorder_order_errors
+#, python-format
+msgid "Products without suppliers"
+msgstr "Produits sans fournisseurs"
+
+#. module: o4f_preorders
+#: model:ir.model,name:o4f_preorders.model_purchase_order
+msgid "Purchase Order"
+msgstr "Commande fournisseur"
+
+#. module: o4f_preorders
+#: code:addons/o4f_preorders/models/sale.py:10
+#: model:ir.model.fields,field_description:o4f_preorders.field_sale_order_ad_po_date
+#, python-format
+msgid "Estimated delivery date"
+msgstr "Date de livraison prévue"
+
+#. module: o4f_preorders
+#: model:ir.ui.view,arch_db:o4f_preorders.o4f_preorders_report_saleorder_document
+msgid "<strong>Estimated delivery date:</strong>"
+msgstr "<strong>Date de livraison prévue:</strong>"
+
+#. module: o4f_preorders
+#: model:ir.model,name:o4f_preorders.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: o4f_preorders
+#: model:ir.model.fields,field_description:o4f_preorders.field_purchase_preorder_start_date
+msgid "Start date"
+msgstr "Du"
+
+#. module: o4f_preorders
+#: model:ir.ui.view,arch_db:o4f_preorders.preorder_popup_view
+msgid "The selected order will receive a purchase order"
+msgstr "La commande sélectionnée recevra une demande de prix"
+

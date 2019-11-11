@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="ClientInvoiceAddress">
+        <t t-if="invoice_partner">
+            <div class='client-name'>
+                <t t-esc='invoice_partner.name'/>
+            </div>
+            <div class='client-details-box clearfix'>
+                <div class='client-details-left'>
+                    <div class='client-detail'>
+                        <span class='label'>Address</span>
+                        <t t-if='invoice_partner.address'>
+                            <span class='invoice_detail client-address'>
+                                <t t-esc='invoice_partner.address'/>
+                            </span>
+                        </t>
+                        <t t-if='!invoice_partner.address'>
+                            <span class='invoice_detail client-address empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Email</span>
+                        <t t-if='invoice_partner.email'>
+                            <span class='invoice_detail client-email'>
+                                <t t-esc='invoice_partner.email'/>
+                            </span>
+                        </t>
+                        <t t-if='!invoice_partner.email'>
+                            <span class='invoice_detail client-email empty'>N/A</span>
+                        </t>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Phone</span>
+                        <t t-if='invoice_partner.phone'>
+                            <span class='invoice_detail client-phone'>
+                                <t t-esc='invoice_partner.phone'/>
+                            </span>
+                        </t>
+                        <t t-if='!invoice_partner.phone'>
+                            <span class='invoice_detail client-phone empty'>N/A</span>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="ClientDetails">
+        <t t-jquery=".client-details-box" t-operation="after">
+            <t t-if="partner_invoice_links">
+                <h2>
+                    Factuuradres
+                    <select id="invoice_address_selection">
+                        <option value='0'></option>
+                        <t t-foreach="partner_invoice_links" t-as="pid">
+                            <option t-att-value="pid.id"><t t-esc="pid.name"/></option>
+                        </t>
+                    </select>
+                </h2>
+            </t>
+            <div class="client_invoice_adrees_container">
+                <t t-call="ClientInvoiceAddress"/>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend="ClientDetailsEdit">
+        <t t-jquery=".client-details-box" t-operation="after">
+            <h2>Factuuradres <button id="new_invoice_address">ADD New Address</button></h2>
+            <input class='invoice_detail client-name' name='name' t-att-value='invoice_partner.name'
+                   placeholder='Name'></input>
+            <div class='client-details-box clearfix'>
+                <div class='client-details-left'>
+                    <input class='invoice_detail' type="hidden" name="id" t-att-value='invoice_partner.id || ""'/>
+                    <div class='client-detail'>
+                        <span class='label'>Street</span>
+                        <input class='invoice_detail client-address-street' name='street'
+                               t-att-value='invoice_partner.street || ""'
+                               placeholder='Street'></input>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>City</span>
+                        <input class='invoice_detail client-address-city' name='city'
+                               t-att-value='invoice_partner.city || ""'
+                               placeholder='City'></input>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Postcode</span>
+                        <input class='invoice_detail client-address-zip' name='zip'
+                               t-att-value='invoice_partner.zip || ""'
+                               placeholder='ZIP'></input>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Country</span>
+                        <select class='invoice_detail client-address-country needsclick' name='country_id'>
+                            <option value=''>None</option>
+                            <t t-foreach='widget.pos.countries' t-as='country'>
+                                <option t-att-value='country.id'
+                                        t-att-selected="invoice_partner.country_id ? ((country.id === invoice_partner.country_id[0]) ? true : undefined) : undefined">
+                                    <t t-esc='country.name'/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+                <div class='client-details-right'>
+                    <div class='client-detail'>
+                        <span class='label'>Email</span>
+                        <input class='invoice_detail client-email' name='email' type='email'
+                               t-att-value='invoice_partner.email || ""'></input>
+                    </div>
+                    <div class='client-detail'>
+                        <span class='label'>Phone</span>
+                        <input class='invoice_detail client-phone' name='phone' type='tel'
+                               t-att-value='invoice_partner.phone || ""'></input>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </t>
+
+</templates>

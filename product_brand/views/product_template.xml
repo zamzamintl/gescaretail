@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="product_template_form_brand_add" model="ir.ui.view">
+        <field name="name">product.template.product.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="product_brand_id" placeholder="Brand"/>
+                <field name="brand_vendor_ids" invisible="1"/>
+                <field name="vendor_id"
+                       attrs="{
+                            'invisible': [('brand_vendor_ids', '=', [])],
+                            'required': [('brand_vendor_ids', '!=', [])]
+                       }"/>
+                <div/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_product_template_tree_brand" model="ir.ui.view">
+        <field name="name">product tree view brand</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="product_brand_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_template_brand_search_inherit" model="ir.ui.view">
+        <field name="name">product.template.collection.view.search</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="product_brand_id" string="Brand"
+                       filter_domain="[('product_brand_id','ilike',self)]"/>
+            </field>
+        </field>
+    </record>
+</odoo>

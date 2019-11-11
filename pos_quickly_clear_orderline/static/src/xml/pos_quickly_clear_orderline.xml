@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-extend="Orderline">
+        <t t-jquery=".product-name" t-operation="append">
+            <i class="line-remove-icon fa fa-times-circle"/>
+        </t>
+    </t>
+</templates>

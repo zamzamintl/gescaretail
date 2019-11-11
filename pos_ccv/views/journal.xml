@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_ccv_ace_view_account_journal_form" model="ir.ui.view">
+        <field name="name">pos.ccv.account.journal.form.view.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="priority">20</field>
+        <field name="inherit_id" ref="point_of_sale.view_account_journal_pos_user_form"/>
+        <field name="arch" type="xml">
+            <field name="journal_user" position="after">
+                <field name="is_ccv_interim_journal"/>
+                <field name="is_ccv_journal"/>
+                <field name="ccv_terminal_code"
+                       attrs="{
+                            'required':[('is_ccv_journal', '=', True)],
+                            'invisible':[('is_ccv_journal', '=', False)]
+                       }"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>

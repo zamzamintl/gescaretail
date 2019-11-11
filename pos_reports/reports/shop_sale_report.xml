@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_shop_sale_document">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <style>
+                        .text-right{text-align: right;}
+                    </style>
+                    <div class="row col-xs-12">
+                        <p>
+                            <h3>Overzicht kassa verkopen per winkel:
+                                <span t-field="location.shop_address_id.name"></span>
+                            </h3>
+                        </p>
+                    </div>
+                    <div class="row col-xs-12">
+                        <span>Periode:</span>
+                        <span t-field="doc.date_from"/>
+                        -0
+                        <span t-field="doc.date_to"/>
+                    </div>
+                    <div class="row col-xs-12">
+                        <table class="table table-bordered table-condensed">
+                            <thead style="display: table-header-group" class="thead-light">
+                                <tr>
+                                    <th>
+                                        <span>Verzameling</span>
+                                    </th>
+                                    <th>
+                                        <span>Geslacht</span>
+                                    </th>
+                                    <th>
+                                        <span>Merk</span>
+                                    </th>
+                                    <th>
+                                      <span>Groep</span>
+                                    </th>
+                                    <th>
+                                      <span>Omschrijving</span>
+                                    </th>
+                                    <th>
+                                        <span>Kleur</span>
+                                    </th>
+                                    <th>
+                                        <span>Maat</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span>Aantal</span>
+                                    </th>
+                                    <th>
+                                        <span>Datum</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span t-field="location.shop_address_id.name"></span>
+                                        <span>STOCK</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span>Korting</span>
+                                    </th>
+                                    <th t-if="doc.with_prices" class="text-right">
+                                        <span>PRIJS</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span>Type</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="location.order_line_ids" t-as="loc_order_line">
+                                    <tr style="page-break-inside: avoid;">
+                                        <td>
+                                          <t t-if="doc.check_module_install('product_collections')">
+                                            <span t-field="loc_order_line.product_id.product_tmpl_id.collection_id.name"/>
+                                          </t>
+                                        </td>
+                                        <td>
+                                          <t t-if="doc.check_module_install('product_gender')">
+                                            <span t-field="loc_order_line.product_id.product_tmpl_id.gender"/>
+                                          </t>
+                                        </td>
+                                        <td>
+                                          <t t-if="doc.check_module_install('product_brand')">
+                                            <span t-field="loc_order_line.product_id.product_tmpl_id.product_brand_id.name"/>
+                                          </t>
+                                        </td>
+                                        <td>
+                                          <span t-field="loc_order_line.product_id.categ_id.name"/>
+                                        </td>
+                                        <td>
+                                          <span t-field="loc_order_line.product_id.product_tmpl_id.name"/>
+                                        </td>
+                                        <td>
+                                          <t t-if="doc.check_module_install('product_attribute_type')">
+                                            <span t-field="loc_order_line.product_id.color_attribute"/>
+                                          </t>
+                                        </td>
+                                        <td>
+                                          <t t-if="doc.check_module_install('product_attribute_type')">
+                                            <span t-field="loc_order_line.product_id.size_attribute"/>
+                                          </t>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="loc_order_line.qty"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="loc_order_line.order_id.date_order"
+                                                  t-options='{"widget": "date"}'/>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-if="doc.check_module_install('pos_addons')">
+                                              <span t-field="loc_order_line.qty_left_on_location"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="loc_order_line.discount"/>
+                                        </td>
+                                        <td t-if="doc.with_prices" class="text-right">
+                                            <span t-field="loc_order_line.price_unit"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-if="doc.check_module_install('pos_special_command') and len(loc_order_line.order_id.reservation_order_pay_history_ids) > 0 and not loc_order_line.order_id.internal_reservation">
+                                              <span>Reservation</span>
+                                            </t>
+                                            <t t-if="doc.check_module_install('pos_special_command') and len(loc_order_line.order_id.reservation_order_pay_history_ids) > 0 and loc_order_line.order_id.internal_reservation">
+                                              <span>Special Command</span>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <span t-field="location.total_sold"></span>
+                                    </td>
+                                    <td></td>
+                                    <td class="text-right">
+                                      <t t-if="doc.check_module_install('pos_addons')">
+                                        <span t-field="location.total_qty_left_on_location"></span>
+                                      </t>
+                                    </td>
+                                    <td></td>
+                                    <td t-if="doc.with_prices"></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="report_shop_sale">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-foreach="doc.line_ids" t-as="location">
+                    <t t-call="pos_reports.report_shop_sale_document"/>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

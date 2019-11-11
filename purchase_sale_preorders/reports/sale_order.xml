@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="o4f_preorders_report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@id='informations']" position="inside">
+            <div t-if="doc.ad_po_date" class="col-xs-3">
+                <strong>Estimated delivery date:</strong>
+                <p t-field="doc.ad_po_date" t-field-options="{'format': 'dd/MM/YYYY'}"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

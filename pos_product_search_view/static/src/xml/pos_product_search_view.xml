@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="ProductCategoriesWidget">
+        <t t-jquery="header.rightpane-header" t-operation="after">
+            <header class='rightpane-header rightpane-header2'>
+                <div class="pos_col_xs_6">
+                    <div class="searchbox pos_product_search" id="pos_product_search">
+                        <input placeholder="Products" id="input_product_box" class="search_input"/>
+                        <span class="search-clear product_filter"></span>
+                    </div>
+                    <div class="searchbox pos_product_search" id="pos_brand_search">
+                        <input placeholder="Brand"  id="input_brand_box" class="search_input"/>
+                        <span class="search-clear product_filter"></span>
+                    </div>
+                    <div class="searchbox pos_product_search" id="pos_collection_search">
+                        <input placeholder="collection" id="input_collection_box" class="search_input"/>
+                        <span class="search-clear product_filter"></span>
+                    </div>
+                    <div class="searchbox pos_product_search" id="pos_model_code_search">
+                        <input placeholder="Model Reference" id="input_model_code_box" class="search_input" />
+                        <span class="search-clear product_filter"></span>
+                    </div>
+                    <div class="searchbox pos_product_search" id="pos_varint_code_search">
+                        <input placeholder="Varint Reference" id="input_varint_code_box" class="search_input"/>
+                        <span class="search-clear product_filter"></span>
+                    </div>
+                    <div class="searchbox pos_product_search" id="pos_gender_search">
+                        <select placeholder="Gender" id="select_gender_box" class="search_box_select"> 
+                            <option value=""></option>
+                            <option value="men">Men</option>
+                            <option value="women">Women</option>
+                            <option value="unisex">Unisex</option>
+                            <option value="boys">Boys</option>
+                            <option value="girls">Girls</option>
+                            <option value="baby">Babies</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <span class="search-clear product_filter"></span>
+                    </div> 
+                    <div class="pos_product_view_switch_buttons">
+                        <button style="background: #6ec89b;color:white;font-weight: bold;" 
+                               type="button" class="pos_product_view_button  pos_product_kanban_view" id="button_clear_search">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+            </header>
+        </t>
+    </t>
+
+</templates>

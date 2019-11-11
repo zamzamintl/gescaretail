@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ReturnOrderButton">
+        <div class='control-button js_return_order' title="Return Order">
+            <span class="icon-button">
+                <i class="fa fa-reply-all" aria-hidden="true"></i>
+            </span>
+            <div class="icon-btn-str" title="Return Order">Return</div>
+        </div>
+    </t>
+
+    <t t-name="ResetOrderButton">
+        <div class='control-button js_reset_order' title="Reset Order">
+            <span class="icon-button">
+                <i class="fa fa-times-circle" aria-hidden="true"></i>
+            </span>
+            <div class="icon-btn-str" title="Reset Order">Reset</div>
+        </div>
+    </t>
+
+    <t t-name="PosReturnOrderOption">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput pos_popup_background" style="height:200px;">
+               <p class="title pos_popup_title_background">
+                    Select Operation
+                    <i class="fa fa-times close_btn" aria-hidden="true" style="float:right; cursor:pointer;"></i>
+               </p>
+                <div id="pos_return_choice">
+                    <div style="width:50%" id="choice_without_receipt">
+                        <div class='return_btn' style="cursor:pointer;">
+                            <img src="/pos_rma/static/src/img/order_return_without_recipt.png" 
+                                id="missing_receipt_return" /><br />
+                            <span for="missing_receipt_return">Without Receipt</span>
+                        </div>
+                    </div>
+                    <div style="width:50%" id="choice_with_receipt">
+                        <div class='return_btn' style="cursor:pointer;" align="center">
+                            <img src="/pos_rma/static/src/img/order_return_with_receipt.png" 
+                                id="with_receipt_return" /><br />
+                            <span for="with_receipt_return">With Receipt</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="PosReturnOrder">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput return-popup pos_popup_background" style="height:85% !important;width:70% !important;">
+                <p class="title pos_popup_title_background">Return Order</p>
+                <div align="left" class="content">
+                    <p>Scan Barcode For Return Product</p>
+                    <div class="pos_search_box">
+                        <input type="text" id="return_order_number"/>
+                    </div>
+                    <br />
+                    <div class="whole_order">
+                        <label style="float:left;">Return All Products </label>
+                        <label style="float:left;" class="switch">
+                          <input type="checkbox" id="return_whole_order" disabled="true"/>
+                          <div class="slider round"></div>
+                        </label>
+                    </div>
+                </div>
+                <br />
+                 <div class="ac_return_product_list" align="left" style="float:left">
+                    <t t-if='widget.lines'>
+                        <t t-foreach='widget.lines' t-as='line'>
+                            <t t-set="product" t-value="widget.pos.db.get_product_by_id(line.product_id[0])" />
+                            <span class='product' t-att-data-product-id="product.id">
+                                <div class="product-img">
+                                    <img t-att-src='widget.get_product_image_url(product.id)' />
+                                    <t t-if="!product.to_weight">
+                                        <span class="price-tag">
+                                            <t t-esc="widget.format_currency(line.price_unit,'Product Price')" />
+                                        </span>
+                                    </t>
+                                    <t t-if="product.to_weight">
+                                        <span class="price-tag">
+                                            <t t-esc="widget.format_currency(line.price_unit,'Product Price')+'/Kg'" />
+                                        </span>
+                                    </t>
+                                    <span class="check_box_tag">
+                                        <input class="ac_selected_product" t-att-data-name="line.id" t-att-data-product="product.id" type="checkbox" />
+                                    </span>
+                                </div>
+                                <div class="product-name">
+                                    <t t-esc="product.display_name" /><br />
+                                        <div class="input-group oe_website_spinner" style="margin: auto;margin-left: 20px;">
+                                            <span class="input-group-addon" style="background: none; border: none;">
+                                                <a t-attf-href="#" class="mb8 js_qty">
+                                                    <i class="fa fa-minus"></i>
+                                                </a>
+                                            </span>
+                                            <input type="text" class="js_quantity form-control" data-min="1" t-att-data-max="line.return_qty" t-att-name="line.id" t-att-value="line.return_qty"/>
+                                            <span class="input-group-addon" style="background: none; border: none;">
+                                                <a t-attf-href="#" class="mb8 float_left js_qty">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                            </span>
+                                        </div>
+                                </div>
+                            </span>
+                        </t>
+                    </t>
+                 </div>
+                <div class="footer">
+                    <div class="button confirm pos_popup_footer_button">
+                        Validate
+                    </div>
+                    <div class="button cancel pos_popup_footer_button">
+                        Cancel 
+                    </div>
+                    <div class="button paste" id="paste">
+                        paste
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

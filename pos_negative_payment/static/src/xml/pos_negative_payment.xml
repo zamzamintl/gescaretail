@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template_pos_view" xml:space="preserve">
+    <t t-extend="PaymentScreen-Numpad">
+        <t t-jquery="button[data-action='+10']" t-operation="replace">
+            <button class="mode-button" data-action='-'>-</button>
+        </t>
+    </t>
+</templates>

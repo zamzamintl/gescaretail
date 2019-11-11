@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="models_pricelist">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Price List</h2>
+                        <div class="row mt32 mb32">
+
+                        </div>
+                        <t t-foreach="docs" t-as="measurebar">
+                            <t t-set="bar" t-value="measurebar['measurebar']"/>
+
+                            <table class="table table-bordered prevent-page-break">
+                                <thead>
+                                    <tr>
+                                        <th t-if="show_image"
+                                            width="11%">Image
+                                        </th>
+                                        <th width="20%">Model</th>
+                                        <t t-if="len(bar['attributes']) &gt; 1">
+                                            <th>Color</th>
+                                        </t>
+                                        <t t-if="len(bar['attributes'])>0">
+                                            <t t-foreach="bar['attributes'][0]"
+                                               t-as="value">
+                                                <th t-esc="value['name']"/>
+                                            </t>
+                                        </t>
+                                        <t t-else="0">
+                                            <th>Price</th>
+                                        </t>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-if="len(bar['attributes'])&gt;0">
+                                        <tr style="height:40px;"
+                                            t-foreach="bar['attributes'][1]"
+                                            t-as="t"
+                                            t-attf-class="oe_model_row">
+                                            <td t-if="show_image">
+                                                <image t-attf-src="data:image/png;base64,{{ bar.get('image') }}"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="bar.get('name')"/>
+                                            </td>
+                                            <td>
+                                                <t t-if="t!=0">
+                                                    <span t-esc="t.get('name')"/>
+                                                </t>
+                                            </td>
+                                            <t t-foreach="bar.get('products')[t_index]"
+                                               t-as="product">
+                                                <t t-if="product!=0">
+                                                    <td class="text-center measure-report-cell">
+                                                        <t t-esc="product.get('price')"/>
+                                                    </td>
+                                                </t>
+                                                <t t-if="product==0">
+                                                    <td class="hatch"></td>
+                                                </t>
+                                            </t>
+
+                                        </tr>
+                                    </t>
+                                    <t t-else="0">
+                                        <tr>
+                                            <td t-if="show_image">
+                                                <image t-attf-src="data:image/png;base64,{{ str(bar['image']) }}"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="bar.get('name')"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="bar.get('template_price')"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+        <report
+                id="report_models_pricelist"
+                string="Pricelist"
+                model="product.template.model.pricelist"
+                report_type="qweb-pdf"
+                name="product_models_pricelist.models_pricelist"
+                file="product_models_pricelist.models_pricelist"
+                menu="False"
+        />
+        <report
+                id="report_models_pricelists_xlsx"
+                string="Export Pricelist"
+                model="product.template"
+                report_type="xlsx"
+                file="product_models_pricelist.product_pricelist_xlsx"
+                attachment_use="False"
+                name="product_models_pricelist.product_pricelist_xlsx"
+                menu="False"
+        />
+
+    </data>
+</odoo>

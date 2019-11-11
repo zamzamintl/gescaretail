@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="princess_view_move_search" model="ir.ui.view">
+            <field name="name">princess.stock.move.search</field>
+            <field name="model">stock.move</field>
+            <field name="priority">5</field>
+            <field name="inherit_id" ref="stock.view_move_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="inside">
+                    <filter name="group_color_attribute" string="Product Color" domain="[]"
+                            context="{'group_by':'color_attribute_id'}"/>
+                    <filter name="group_size_attribute" string="Product Size" domain="[]"
+                            context="{'group_by':'size_attribute_id'}"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="stock.act_product_stock_move_open" model="ir.actions.act_window">
+            <field name="context">{'search_default_product_id': active_id, 'default_product_id': active_id, 'search_default_group_color_attribute': 1,'search_default_group_size_attribute': 1}
+            </field>
+        </record>
+        <record id="stock.stock_move_action" model="ir.actions.act_window">
+            <field name="context">{'search_default_group_color_attribute': 1,'search_default_group_size_attribute': 1}
+            </field>
+        </record>
+    </data>
+</odoo>
+

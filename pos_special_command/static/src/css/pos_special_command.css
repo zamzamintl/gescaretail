@@ -1,0 +1,8 @@
+.tbl td {
+    padding: 5px !important;
+}
+
+.tbl select {
+    width: 260px !important;
+    height: 35px !important;
+}

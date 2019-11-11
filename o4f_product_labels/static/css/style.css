@@ -1,0 +1,24 @@
+#product_labels_sheet .label {
+  height: 176px;
+  width: 265px;
+  padding: 20px 0 0 30px;
+  display: inline-block; }
+  #product_labels_sheet .label #barcode, #product_labels_sheet .label #detail {
+    margin: 0;
+    padding: 0; }
+  #product_labels_sheet .label #barcode figure {
+    width: 125px; }
+    #product_labels_sheet .label #barcode figure figcaption {
+      font-size: 10px;
+      text-align: center; }
+  #product_labels_sheet .label #detail strong {
+    margin-left: 15px; }
+  #product_labels_sheet .label #detail .size-label > div:nth-child(1) {
+    padding-right: 15px; }
+  #product_labels_sheet .label #detail .small {
+    font-size: 10px; }
+  #product_labels_sheet .label #detail .row {
+    margin: 0;
+    padding: 0; }
+
+/*# sourceMappingURL=style.css.map */

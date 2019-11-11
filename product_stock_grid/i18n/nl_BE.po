@@ -1,0 +1,147 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_stock_o4f
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0e+e-latest_20181015-051922-UTC-latest_staging_20181015-164259-UTC\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-17 11:42+0000\n"
+"PO-Revision-Date: 2018-10-17 13:44+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: nl\n"
+"X-Generator: Poedit 2.2\n"
+
+#. module: product_stock_o4f
+#: model:ir.ui.view,arch_db:product_stock_o4f.report_stock_grid
+msgid "Available Quantity"
+msgstr "Aantal in voorraad"
+
+#. module: product_stock_o4f
+#: model:ir.model.fields,field_description:product_stock_o4f.field_product_stock_location_grid_create_uid
+msgid "Created by"
+msgstr "Aangemaakt door"
+
+#. module: product_stock_o4f
+#: model:ir.model.fields,field_description:product_stock_o4f.field_product_stock_location_grid_create_date
+msgid "Created on"
+msgstr "Aangemaakt op"
+
+#. module: product_stock_o4f
+#: model:ir.ui.view,arch_db:product_stock_o4f.report_stock_grid
+msgid "Cummulated Stock Value:"
+msgstr "Algemeen voorraadwaarde:"
+
+#. module: product_stock_o4f
+#: model:ir.model.fields,field_description:product_stock_o4f.field_product_stock_location_grid_display_name
+msgid "Display Name"
+msgstr "Weergave naam"
+
+#. module: product_stock_o4f
+#: model:ir.model.fields,field_description:product_stock_o4f.field_product_stock_location_grid_id
+msgid "ID"
+msgstr "ID"
+
+#. module: product_stock_o4f
+#: model:ir.model.fields,field_description:product_stock_o4f.field_product_stock_location_grid___last_update
+msgid "Last Modified on"
+msgstr "Laatst gewijzigd op"
+
+#. module: product_stock_o4f
+#: model:ir.model.fields,field_description:product_stock_o4f.field_product_stock_location_grid_write_uid
+msgid "Last Updated by"
+msgstr "Laatst bijgewerkt door"
+
+#. module: product_stock_o4f
+#: model:ir.model.fields,field_description:product_stock_o4f.field_product_stock_location_grid_write_date
+msgid "Last Updated on"
+msgstr "Laatst bijgewerkt op"
+
+#. module: product_stock_o4f
+#: model:ir.model.fields,field_description:product_stock_o4f.field_product_stock_location_grid_name
+msgid "Name"
+msgstr "Naam"
+
+#. module: product_stock_o4f
+#: model:ir.ui.view,arch_db:product_stock_o4f.report_stock_grid
+msgid "Price"
+msgstr "Bedrag"
+
+#. module: product_stock_o4f
+#: model:ir.ui.view,arch_db:product_stock_o4f.view_stock_product_grid_location_form
+msgid "Product & Warehouse"
+msgstr "Product & Magazijn"
+
+#. module: product_stock_o4f
+#: model:ir.ui.view,arch_db:product_stock_o4f.view_stock_product_grid
+msgid "Product Stock"
+msgstr "Product Stock"
+
+#. module: product_stock_o4f
+#: model:ir.actions.act_window,name:product_stock_o4f.stock_by_grid_reports
+#: model:ir.ui.view,arch_db:product_stock_o4f.view_stock_product_grid_location_tree
+msgid "Product Stock Report Grid"
+msgstr "Product Stock Report Grid"
+
+#. module: product_stock_o4f
+#: model:ir.model,name:product_stock_o4f.model_product_template
+msgid "Product Template"
+msgstr "Productsjabloon"
+
+#. module: product_stock_o4f
+#: model:ir.model.fields,field_description:product_stock_o4f.field_product_stock_location_grid_product_tmpl_ids
+msgid "Product tmpl ids"
+msgstr "Product tmpl ids"
+
+#. module: product_stock_o4f
+#: model:ir.ui.view,arch_db:product_stock_o4f.view_stock_product_grid_location_form
+msgid "Products"
+msgstr "Producten"
+
+#. module: product_stock_o4f
+#: model:ir.model.fields,field_description:product_stock_o4f.field_product_stock_location_grid_stock_report
+msgid "Result"
+msgstr "Resultaat"
+
+#. module: product_stock_o4f
+#: model:ir.actions.act_window,name:product_stock_o4f.stock_by_grid
+#: model:ir.ui.menu,name:product_stock_o4f.menu_sale_client_history
+#: model:ir.ui.view,arch_db:product_stock_o4f.view_stock_product_grid_location_form
+msgid "Stock Grid"
+msgstr "Stock Grid"
+
+#. module: product_stock_o4f
+#: model:ir.ui.menu,name:product_stock_o4f.menu_stock_product_grid_report
+msgid "Stock Grid Reports"
+msgstr "Stock Grid rapport"
+
+#. module: product_stock_o4f
+#: model:ir.model.fields,field_description:product_stock_o4f.field_product_stock_location_grid_stock_location_ids
+msgid "Stock location ids"
+msgstr "Stock locatie ids"
+
+#. module: product_stock_o4f
+#: model:ir.actions.report.xml,name:product_stock_o4f.print_stock_by_grid
+#: model:ir.ui.view,arch_db:product_stock_o4f.report_stock_grid
+msgid "Stock quants|value|Grid"
+msgstr "Stock quants|value|Grid"
+
+#. module: product_stock_o4f
+#: model:ir.ui.view,arch_db:product_stock_o4f.report_stock_grid
+msgid "Total:"
+msgstr "Totaal:"
+
+#. module: product_stock_o4f
+#: model:ir.ui.view,arch_db:product_stock_o4f.view_stock_product_grid_location_form
+msgid "Warehouse Locations"
+msgstr "Magazijn locaties"
+
+#. module: product_stock_o4f
+#: model:ir.model,name:product_stock_o4f.model_product_stock_location_grid
+msgid "product.stock.location.grid"
+msgstr "product.stock.location.grid"

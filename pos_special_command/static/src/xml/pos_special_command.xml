@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template_pos_view" xml:space="preserve">
+
+    <t t-name="DeliveryDatePopup">
+         <div class="modal-dialog">
+            <div class="popup delivery-date-popup" >
+                <p class="title">Delivery Date</p>
+                <div style="margin-top: 15px;">
+                    <input placeholder="yyyy-mm-dd" type="text" id="delivery_datepicker" />
+                </div>
+                <div style="font-size: 15px;" t-if="widget.new_date">
+                    <input type="checkbox" id="special_command" 
+                        style="width:5%;box-shadow: none;vertical-align: middle;min-height: 25px;"/>
+                    Special Command
+                </div>
+                <div style="font-size: 15px;text-align: left;" t-if="widget.new_date">
+                    <t t-call="InternalTransferReservationPopupWidget"/>
+                </div>
+                <div class="footer">
+                    <div class="button confirm">
+                        <t t-if="widget.new_date">Done</t>
+                        <t t-if="!widget.new_date">Update</t>
+                    </div>
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+         </div>
+    </t>
+
+    <t t-name="InternalTransferReservationPopupWidget">
+        <table align='center' class="tbl internal_resrvation_transfer" style="display:none;">
+            <tr style="display:none">
+                <td>Picking Type</td>
+                <td>
+                    <select id="res_pick_type">
+                        <t t-if="widget.picking_types">
+                            <t t-foreach="widget.picking_types" t-as="type">
+                                <option t-att-value="type.id"><t t-esc="type.display_name"/></option>
+                           </t>
+                        </t>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Source Location</td>
+                <td>
+                    <select id="res_src_loc">
+                        <t t-if="widget.location">
+                            <t t-foreach="widget.location" t-as="loc">
+                                <option t-att-value="loc.id"><t t-esc="loc.display_name"/></option>
+                           </t>
+                        </t>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Destination Location</td>
+                <td>
+                    <select id="res_dest_loc">
+                        <t t-if="widget.location">
+                            <t t-foreach="widget.location" t-as="loc">
+                                <option t-att-value="loc.id"><t t-esc="loc.display_name"/></option>
+                           </t>
+                        </t>
+                    </select>
+                </td>
+            </tr>
+            <tr style="display:none">
+                <td>State</td>
+                <td>
+                    <select id="res_state">
+                        <option value="confirmed"> Mark as Todo </option>
+                        <option value="done"> Validate </option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </t>
+
+    <t t-extend="ReservedOrderlistLine">
+        <t t-jquery="#type_of_reservation" t-operation="replace">
+            <t t-if="order.internal_reservation">
+                <td id="type_of_reservation">Special Command</td>
+            </t>
+            <t t-if="!order.internal_reservation">
+                <td id="type_of_reservation">Reservation</td>
+            </t>
+        </t>
+    </t>
+
+</templates>

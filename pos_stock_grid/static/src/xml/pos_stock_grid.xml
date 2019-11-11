@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim:fdl=1:
+-->
+<templates xml:space="preserve">
+
+    <t t-name="PosStockGridButton">
+        <div class='control-button' title="Stock Grid">
+            <span class="icon-button">
+                <i class="fa fa-th" aria-hidden="true"></i>
+            </span>
+            <div class="icon-btn-str">Stock Grid</div>
+        </div>
+    </t>
+    <t t-name="StockGridPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput stock_grid pos_popup_background"  style='height: 85%;width: 50%;background:white;'>
+                <p class="title pos_popup_title_background">Stock Grid</p>
+                <div t-if="widget.prod"  >
+                    <div id="stock_grid_id"></div>
+                </div>
+                <div class="footer">
+                    <div class="button cancel commonbutton pos_popup_footer_button">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

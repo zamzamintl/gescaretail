@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_preorder_sale" model="ir.ui.view">
+        <field name="name">sale.preorder.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Pre-Order" name="pre_orders">
+                    <group>
+                        <field name="collection_id"/>
+                        <field name="ad_po_date"/>
+                        <field name="preorder_complete"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//header//button[@name='action_confirm']" position="after">
+                <button name="set_pre_order" type="object" string="Confirm Pre-Order"
+                        attrs="{'invisible': [('state', 'not in', ['draft','sent'])]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

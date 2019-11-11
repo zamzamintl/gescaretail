@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.ui.view" id="pos_loyalty_points_pos_config_form">
+        <field name="name">pos.config.form.view.inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <div id="posbox_reference" position="after">
+                <h2>Loyalty Amounts</h2>
+                <div class="row mt16 o_settings_container" id="loyalty_amount">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="enable_loyalty"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="enable_loyalty"/>
+                            <div class="content-group" attrs="{'invisible':[('enable_loyalty','=',False)]}">
+                                <div class="row mt16">
+                                    <label for="loyalty_journal" class="col-lg-3 o_light_label"/>
+                                    <field name="loyalty_journal" attrs="{'required': [('enable_loyalty','=',True)]}"
+                                                                  context="{'journal_ids': journal_ids, 'pos_journal': True}"
+                                                                  options="{'no_create':True}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+
+    <record id="loyalty_inherited_form_view_of_pos_order" model="ir.ui.view">
+        <field name="name">pos.order.inherited.view</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='extra']" position="after">
+                <page name="Loyalty" string="Loyalty Amount">
+                    <group>
+                        <group>
+                            <field name="won_loyalty_amounts"/>
+                        </group>
+                        <group>
+                            <field name="redeem_loyalty_amount"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="loyalty_inherited_res_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']/group">
+                <group name="loyalty" string="Loyalty Amount">
+                    <field name="loyalty_amounts" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_company_form_loyalty" model="ir.ui.view">
+        <field name="name">res.company.form.loyalty</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Loyalty Configuration">
+                    <group>
+                        <group>
+                            <field name="loyalty_percentage" />
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="loyalty_account_journal_form" model="ir.ui.view">
+        <field name="name">loyalty.account.journal.form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="point_of_sale.view_account_journal_pos_user_form"/>
+        <field name="arch" type="xml">
+            <field name="journal_user" position="after">
+                <field name="is_loyalty_journal"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="loyalty_product_template_form" model="ir.ui.view">
+        <field name="name">loyalty.product.template.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="point_of_sale.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="available_in_pos" position="after">
+                <field name="ignor_for_loyalty"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

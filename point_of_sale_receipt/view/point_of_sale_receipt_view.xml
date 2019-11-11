@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_pos_config_form_for_shop" model="ir.ui.view">
+        <field name="name">pos.config.form.view</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='posbox_reference']" position="after">
+                <h2>Shop Configuration</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <div class="row">
+                                <label  for="shop_address_id" class="col-md-3 o_light_label"/>
+                                <field name="shop_address_id"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_filter" model="ir.ui.view">
+        <field name="name">pos.point.of.sale.view.pos.order.filter</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="before">
+                <field name="shop_id"/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter string="Shop" name="shop_id" domain="[]" context="{'group_by': 'shop_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_tree" model="ir.ui.view">
+        <field name="name">pos.point.of.sale.view.pos.order.tree</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="shop_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_config_tree_for_shop" model="ir.ui.view">
+        <field name="name">pos.config.tree.view</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_config_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='stock_location_id']" position="after">
+                <field name="shop_address_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_config_search_for_shop" model="ir.ui.view">
+        <field name="name">pos.config.search.view</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_config_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='stock_location_id']" position="after">
+                <field name="shop_address_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_pos_pos_inherit_extend_for_shop">
+        <field name="name">pos.order.extend.shop</field>
+        <field name="model">pos.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form" />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="shop_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="loyalty_inherited_res_users_form" model="ir.ui.view">
+        <field name="name">res.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="point_of_sale.res_users_view_form"/>
+        <field name="arch" type="xml">
+            <field name="pos_security_pin" position="after">
+                <field  name="ticket_name" />
+            </field>
+        </field>
+     </record>
+
+    <record id="pos_receipt_inheirt_account_journal_form" model="ir.ui.view">
+        <field name="name">pos_receipt.account.journal.form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="point_of_sale.view_account_journal_pos_user_form"/>
+        <field name="arch" type="xml">
+            <field name="journal_user" position="after">
+                <field name="print_journal_name"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

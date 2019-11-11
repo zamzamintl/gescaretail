@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend='ClientLine'>
+        <t t-jquery='.client-line' t-operation='append'>
+            <td class="loyalty_amounts">
+                <t t-esc='widget.format_currency_no_symbol(partner.loyalty_amounts || 0.00)' />
+            </td>
+        </t>
+    </t>
+
+    <t t-extend='ClientDetails'>
+        <t t-jquery='.client-details-right' t-operation='prepend'>
+            <div class='client-detail'>
+                <span class='label'>Amounts</span>
+                <span class='detail client-loyalty-amounts'>
+                    <t t-esc='widget.format_currency_no_symbol(partner.loyalty_amounts || 0.00)' />
+                </span>
+            </div>
+        </t>
+    </t>
+
+    <t t-extend='ClientListScreenWidget'>
+        <t t-jquery='.client-list thead tr' t-operation='append'>
+            <th class="loyalty_amounts">Loyalty Amounts</th>
+        </t>
+    </t>
+
+    <!-- REDEEM POINT -->
+    <t t-name="RedeemPointPopup">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput pos_popup_background" style="height: 253px !important;">
+                <p class="title pos_popup_title_background">Enter Redeem Point Information</p>
+                <table style="font-size:14px !important;">
+                    <tr>
+                        <td style="padding: 10px;">Remaining Amount: </td>
+                        <td style="padding: 10px;">
+                            <span class="remain_redeem_input"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Amounts: </td>
+                        <td style="padding: 10px;">
+                            <input type="text" name="redeem_barcode_amt" id="redeem_barcode_amt" value=""/>
+                        </td>
+                        <td style="padding: 5px;"></td>
+                    </tr>
+                </table>
+                <div class="footer">
+                    <div class="button confirm pos_popup_footer_button">
+                        OK
+                    </div>
+                    <div class="button cancel pos_popup_footer_button">
+                        Cancel 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-extend="PaymentScreenWidget">
+        <t t-jquery="div.payment-buttons > .js_set_customer" t-operation="after">
+            <div class='button js_redeem' t-if="widget.pos.config.enable_loyalty">
+                <i class="fa fa-trophy" aria-hidden="true"></i>
+                Redeem Amounts
+                <span class='js_redeem_point_name client_loyalty_amounts'>
+                   <t t-esc="widget.format_currency(0)"/>
+                </span>
+            </div>
+        </t>
+    </t>
+
+</templates>

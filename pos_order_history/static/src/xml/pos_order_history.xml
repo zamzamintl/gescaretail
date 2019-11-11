@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="OrderHistoryButton">
+        <t t-if="widget.pos.config.enable_pos_reorder">
+           <div class='control-button' title="Order History">
+                <span class="icon-button">
+                    <i class="fa fa-list-alt" aria-hidden="true"></i>
+                </span>
+                <div class="icon-btn-str">History</div>
+           </div>
+        </t>
+    </t>
+
+    <t t-name="OrderHistoryPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup">
+                <p class='title'>
+                    <t t-esc="widget.title"/>
+                </p>
+                <div>
+                    <div class="client-detail receipt_ref_container">
+                        <span id="receipt_ref_lbl" class='label input_label'>Receipt Ref: </span>
+                        <input type="textbox" id="receipt_ref_txt" class="textbox" style="width: 65%;"/><br/>
+                    </div>
+                </div>
+                <div class="footer"> 
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                    <div class="button ok">
+                        Ok
+                    </div>
+                    <div class="button paste">
+                        paste
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="OrderListScreenWidget">
+        <div class="orderlist-screen list-screen screen">
+            <div class="screen-content">
+                <section class="top-content">
+                    <span class='button back'>
+                        <i class='fa fa-angle-double-left'></i>
+                        Back
+                    </span>
+                </section>
+                <section class="full-content">
+                    <div class='window'>
+                        <section class='subwindow'>
+                            <div class='subwindow-container'>
+                                <div class='subwindow-container-fix touch-scrollable scrollable-y order-list-scroll'
+                                     style="height:auto;max-height: 545px !important;">
+                                    <div>
+                                        <table class='list_table order-list'>
+                                            <thead>
+                                                <tr style="text-align: center">
+                                                    <th>Customer</th>
+                                                    <th>Order Date</th>
+                                                    <th>Receipt Ref</th>
+                                                    <th>Order Ref</th>
+                                                    <th>Total</th>
+                                                    <th>Print</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class='order-list-contents'>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="OrderlistLine">
+        <tr class='order-line' t-att-data-id='order.id'>
+            <td><t t-esc='order.partner_id[1]' /></td>
+            <td><t t-esc='order.date_order or ""' /></td>
+            <td t-if="order.pos_reference"><t t-esc='order.pos_reference.split(" ")[1] or ""' /></td>
+            <td t-if="!order.pos_reference"></td>
+            <td><t t-esc='order.name' /></td>
+            <td t-if="order.total_amount"><t t-esc='widget.format_currency(order.total_amount or 0)' /></td>
+            <td t-if="!order.total_amount"><t t-esc='widget.format_currency(order.amount_total or 0)' /></td>
+            <td class="order_operation_button">
+                <span id="print_order" class="fa fa-print" t-att-data-id='order.id'
+                      title="Print Receipt" style="cursor:pointer">
+                </span>
+            </td>
+        </tr>
+    </t>
+
+</templates>

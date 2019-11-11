@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="Product">
+        <t t-jquery=".price-tag" t-operation="replace">
+            <span class="price-tag">
+                <t t-if="!product.to_weight">
+                    <t t-if="widget.pos.config.iface_tax_included == 'total'">
+                        <t t-esc="widget.format_currency(widget.get_tax_incl_price(product,product.get_price(pricelist, 1)),'Product Price')"/>
+                    </t>
+                    <t t-else="0">
+                        <t t-esc="widget.format_currency(product.get_price(pricelist, 1),'Product Price')"/>
+                    </t>
+                </t>
+                <t t-if="product.to_weight">
+                    <t t-if="widget.pos.config.iface_tax_included == 'total'">
+                        <t t-esc="widget.format_currency(widget.get_tax_incl_price(product,product.get_price(pricelist, 1)),'Product Price')+'/'+widget.pos.units_by_id[product.uom_id[0]].name" />
+                    </t>
+                    <t t-else="0">
+                        <t t-esc="widget.format_currency(product.get_price(pricelist, 1),'Product Price')+'/'+widget.pos.units_by_id[product.uom_id[0]].name"/>
+                    </t>
+                </t>
+            </span>
+        </t>
+    </t>
+
+</templates>

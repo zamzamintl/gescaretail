@@ -1,0 +1,3812 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="Chrome">
+        <t t-jquery=".pos-logo" t-operation="replace">
+            <img class="pos-logo" src="/point_of_sale_receipt/static/src/img/accomodata_logo.png" />
+        </t>
+    </t>
+
+    <t t-name="templatebarcode">
+        <table>
+            <tbody>
+                <tr id="barcode1">
+                    <td style='padding:2px 2px 2px 0px;text-align:center;'>
+                        <div id="barcode_div"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </t>
+
+    <t t-name="PosTicket">
+        <t t-if="order.reservation_ticket">
+            <t t-call="PrintReservationPosTicket"/>
+        </t>
+        <t t-if="!order.reservation_ticket">
+            <t t-call="PrintNormalPosTicket"/>
+        </t>
+    </t>
+
+    <t t-name="XmlReceipt">
+        <t t-if="order.reservation_ticket">
+             <t t-call="PrintReservationXmlReceipt"/>
+         </t>
+         <t t-if="!order.reservation_ticket">
+             <t t-call="PrintNormalXmlReceipt"/>
+         </t>
+    </t>
+
+    <t t-name="RePrintXmlReceipt">
+        <t t-if="order.reservation_ticket">
+            <t t-call="RePrintReservationXmlReceipt"/>
+        </t>
+        <t t-if="!order.reservation_ticket">
+            <t t-call="RePrintNormalXmlReceipt"/>
+        </t>
+    </t>
+
+    <t t-name="PrintReservationPosTicket">
+        <div class="pos-sale-ticket">
+            <div class="pos-center-align">
+                <t t-if="!order.reprint_receipt">
+                    <t t-if="receipt.shop_address_id.logo">
+                        <img t-att-src='receipt.shop_address_id.logo' />
+                        <br/>
+                    </t>
+                    <t t-if="!receipt.shop_address_id.logo">
+                         <div><t t-esc="receipt.shop_address_id.name"/></div>
+                    </t>
+                    <t t-if="receipt.shop_address_id.street">
+                        <div> <t t-esc="receipt.shop_address_id.street"/> </div>
+                    </t>
+                    <t t-if='receipt.shop_address_id.street2'>
+                        <div><t t-esc='receipt.shop_address_id.street2' /></div>
+                    </t>
+                    <div t-if="receipt.shop_address_id.zip or receipt.shop_address_id.city">
+                        <t t-if="receipt.shop_address_id.zip">
+                            <t t-esc="receipt.shop_address_id.zip"/>
+                        </t>
+                        <t t-if="receipt.shop_address_id.city">
+                            <t t-esc="receipt.shop_address_id.city"/>
+                        </t>
+                    </div>
+                    <div class="receipt-phone">
+                        Tel: <t t-esc="receipt.shop_address_id.phone || ''"/><br />
+                    </div>
+                    <t t-if='receipt.company.vat'>
+                        <div>VAT:<t t-esc='receipt.company.vat' /></div>
+                    </t>
+                    <t t-if='receipt.company.website'>
+                        <div><t t-esc='receipt.company.website' /></div>
+                    </t>
+                    <t t-if='receipt.shop_address_id.email'>
+                        <div><t t-esc='receipt.shop_address_id.email' /></div>
+                    </t>
+                </t>
+                <t t-if="order.reprint_receipt">
+                    <t t-if="receipt.print_shop_address_id">
+                        <t t-if="receipt.print_shop_address_id.logo">
+                            <img t-att-src='receipt.shop_address_id.logo' />
+                            <br/>
+                        </t>
+                        <t t-if="!receipt.print_shop_address_id.logo">
+                             <div><t t-esc="receipt.print_shop_address_id.name"/></div>
+                        </t>
+                        <t t-if="receipt.print_shop_address_id.street">
+                            <div> <t t-esc="receipt.print_shop_address_id.street"/> </div>
+                        </t>
+                        <t t-if='receipt.print_shop_address_id.street2'>
+                            <div><t t-esc='receipt.print_shop_address_id.street2' /></div>
+                        </t>
+                        <div t-if="receipt.print_shop_address_id.zip or receipt.print_shop_address_id.city">
+                            <t t-if="receipt.print_shop_address_id.zip">
+                                <t t-esc="receipt.print_shop_address_id.zip"/>
+                            </t>
+                            <t t-if="receipt.print_shop_address_id.city">
+                                <t t-esc="receipt.print_shop_address_id.city"/>
+                            </t>
+                        </div>
+                        <div class="receipt-phone">
+                            Tel: <t t-esc="receipt.print_shop_address_id.phone || ''"/><br />
+                        </div>
+                    </t>
+                    <t t-if='receipt.company.vat'>
+                        <div>VAT:<t t-esc='receipt.company.vat' /></div>
+                    </t>
+                    <t t-if='receipt.company.website'>
+                        <div><t t-esc='receipt.company.website' /></div>
+                    </t>
+                    <t t-if="receipt.print_shop_address_id">
+                        <t t-if='receipt.shop_address_id.email'>
+                            <div><t t-esc='receipt.print_shop_address_id.email' /></div>
+                        </t>
+                    </t>
+                </t>
+            </div>
+            <br />
+            <t t-if="receipt.header">
+                <div style='text-align:center'>
+                    <t t-esc="receipt.header" />
+                </div>
+                <br />
+            </t>
+
+            <div>Served by:
+                <t t-if="widget.pos.cashier">
+                    <t t-if="widget.pos.cashier.ticket_name" >
+                        <t t-esc=" widget.pos.cashier.ticket_name"/>
+                    </t>
+                    <t t-else="0">
+                        <t t-esc="widget.pos.cashier.name" />
+                    </t>
+                </t>
+                <t t-else="0">
+                    <t t-if="widget.pos.user.ticket_name" >
+                        <t t-esc=" widget.pos.user.ticket_name"/>
+                    </t>
+                    <t t-else="0">
+                        <t t-esc="widget.pos.user.name" />
+                    </t>
+                </t>
+            </div>
+            <t t-if="order.get_client()">
+                <t t-if="order.get_client()">
+                    <div>Customer: <t t-esc="order.get_client_name()"/></div>
+                </t>
+            </t>
+            <t t-if="order.reprint_receipt">
+                <div>Date: <t t-esc="receipt.print_date_order"/></div>
+            </t>
+            <t t-if="!order.reprint_receipt">
+                <div>Date: <t t-esc="receipt.date_order"/></div>
+            </t>
+
+            <t t-if="!order.get('pos_reference')">
+                <t t-if="order.name.split('Order ') and order.name.split('Order ')[1]">
+                    <div>Order: <t t-esc="order.name.split('Order ')[1]"/></div>
+                </t>
+            </t>
+            <t t-if="order.get('pos_reference')">
+                <t t-if="order.get('pos_reference').split('Order ') and order.get('pos_reference').split('Order ')[1]">
+                    <div>Order: <t t-esc="order.get('pos_reference').split('Order ')[1]"/></div>
+                </t>
+            </t>
+
+            <div class="receipt-delivery-date" t-if="order.reserved_delivery_date">
+                Delivery Date: <t t-esc="order.reserved_delivery_date"/><br />
+            </div>
+            <div class="receipt-delivery-date" t-if="order.internal_reservation">
+                Delivery in:<br /><t t-esc="order.get_destination_name()" /><br />
+                Type: Special Command<br />
+            </div>
+            <div class="receipt-delivery-date" t-if="order.reserved_delivery_date and !order.internal_reservation">
+                Type: Reservation
+            </div>
+            <br/>
+
+            <table class='receipt-orderlines'>
+                <colgroup>
+                    <col width='70%' />
+                    <col width='30%' />
+                </colgroup>
+                <tr style="border-bottom: 1px solid;border-top: 1px solid;font-weight:bold;">
+                    <td>Description</td>
+                    <td class="pos-right-align">Amount</td>
+                </tr>
+                <t t-foreach="orderlines" t-as="orderline">
+                    <t t-if="orderline.advance_pay">
+                        <tr>
+                            <td style="padding: 0px 5px;">
+                                <t t-esc="orderline.get_product().display_name"/>
+                            </td>
+                            <td class="pos-right-align">
+                                <t t-esc="widget.format_currency(orderline.get_display_price() * -1)"/>
+                            </td>
+                        </tr>
+                        <t t-if="orderline.remark and orderline.get_remark()">
+                            <tr>
+                                <td>
+                                    <div class="product-remark"
+                                         style="margin-left: 10px;">
+                                        Remark:
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="product-remark"
+                                         style="margin-left: 10px;">
+                                            <t t-esc="orderline.get_remark()"/>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </t>
+                        <t t-if="orderline.quantity">
+                            <tr>
+                                <td>
+                                    <div style="margin-left: 10px;">
+                                        <t t-esc="orderline.quantity+ ' ' + orderline.get_unit().name + ' at ' + widget.format_currency(orderline.price * -1)"/>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </t>
+                        <t t-if="orderline.get_discount() > 0">
+                            <tr>
+                                <td>
+                                     <div style="margin-left: 10px;">
+                                         Discount: <t t-esc="widget.format_currency(order.get_discount_amount(orderline))"/>(<t t-esc="orderline.get_discount()"/>%)
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </t>
+                    </t>
+                </t>
+            </table>
+            <hr style="border:1px dashed;" />
+            <table class='receipt-total'>
+                <tr width="100%">
+                    <td class="pos-right-align" width="70%">Subtotal: </td>
+                    <td class="pos-right-align" width="30%">
+                        <t t-esc="widget.format_currency(order.get_reservation_total_without_tax() * -1)"/>
+                    </td>
+                </tr>
+                <t t-as="taxdetail" t-foreach="order.get_reservation_tax_details()">
+                    <tr width="100%">
+                        <td class="pos-right-align" width="70%"><t t-esc='taxdetail.name' />: </td>
+                        <td class="pos-right-align" width="30%">
+                            <t t-esc='widget.format_currency(taxdetail.amount * -1)'/>
+                        </td>
+                    </tr>
+                </t>
+                <tr width="100%">
+                    <td class="pos-right-align" width="70%"><t t-esc="'  '"/></td>
+                    <td class="pos-right-align" width="30%"><hr style="border:1px dashed;" /></td>
+                </tr>
+                </table>
+                <table>
+                    <tr width="100%">
+                        <td class="pos-right-align" width="70%">Total: </td>
+                        <td class="pos-right-align" width="30%">
+                            <t t-esc="widget.format_currency(order.get_reservation_total_with_tax() * -1)"/>
+                        </td>
+                    </tr>
+            </table>
+            <br />
+            <t t-if="paymentlines.length != 0 and !order.reprint_receipt">
+                <table class='receipt-paymentlines'>
+                    <t t-foreach="paymentlines" t-as="line">
+                         <t t-if="widget.pos.config.enable_loyalty and
+                                     widget.pos.config.loyalty_journal[0] != line.cashregister.journal_id[0]">
+                            <tr width="100%">
+                                <t t-if="line.print_journal_name">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line.print_journal_name"/>: </td>
+                                </t>
+                                <t t-if="! line.print_journal_name">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line.name"/>: </td>
+                                </t>
+                                <td class="pos-right-align" width="30%"><t t-esc="widget.format_currency(line.get_amount())"/></td>
+                            </tr>
+                         </t>
+                         <t t-if="! widget.pos.config.enable_loyalty">
+                            <tr width="100%">
+                                <t t-if="line.print_journal_name">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line.print_journal_name"/>: </td>
+                                </t>
+                                <t t-if="! line.print_journal_name">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line.name"/>: </td>
+                                </t>
+                                <td class="pos-right-align" width="30%"><t t-esc="widget.format_currency(line.get_amount())"/></td>
+                            </tr>
+                         </t>
+                    </t>
+                </table>
+                <br />
+            </t>
+            <t t-if="order.reprint_receipt and order.get_rjournal()">
+                <table class='receipt-paymentlines'>
+                    <t t-foreach="order.get_rjournal()" t-as="line">
+                        <t t-if="widget.pos.config.enable_loyalty and
+                                     widget.pos.config.loyalty_journal[0] != line.journal_id">
+                            <tr width="100%" t-if ="line['amount'] &gt;0">
+                                <t t-if="line['print_journal_name']">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line['print_journal_name']"/>: </td>
+                                </t>
+                                <t t-if="! line['print_journal_name']">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line['journal']"/>: </td>
+                                </t>
+                                <td class="pos-right-align" width="30%"><t t-esc="widget.format_currency(line['amount'])"/></td>
+                            </tr>
+                        </t>
+                        <t t-if="! widget.pos.config.enable_loyalty">
+                            <tr width="100%" t-if ="line['amount'] &gt;0">
+                                <t t-if="line['print_journal_name']">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line['print_journal_name']"/>: </td>
+                                </t>
+                                <t t-if="! line['print_journal_name']">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line['journal']"/>: </td>
+                                </t>
+                                <td class="pos-right-align" width="30%"><t t-esc="widget.format_currency(line['amount'])"/></td>
+                            </tr>
+                        </t>
+                    </t>
+                </table>
+                <br />
+            </t>
+
+            <br/><br/>
+            <b>Advance payment for: </b>
+            <br/><br/>
+
+            <table class='receipt-orderlines'>
+                <colgroup>
+                    <col width='70%' />
+                    <col width='30%' />
+                </colgroup>
+                <tr style="border-bottom: 1px solid;border-top: 1px solid;font-weight:bold;">
+                    <td>Description</td>
+                    <td class="pos-right-align">Amount</td>
+                </tr>
+                <t t-foreach="orderlines" t-as="orderline">
+                    <t t-if="! orderline.zero_charges and ! orderline.advance_pay">
+                        <tr>
+                            <td style="padding: 0px 5px;">
+                                <t t-esc="orderline.get_product().display_name"/>
+                            </td>
+                            <td class="pos-right-align">
+                                <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                            </td>
+                        </tr>
+                        <t t-if="orderline.remark and orderline.get_remark()">
+                            <tr>
+                                <td>
+                                    <div class="product-remark"
+                                         style="margin-left: 10px;">
+                                        Remark:
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="product-remark"
+                                         style="margin-left: 10px;">
+                                            <t t-esc="orderline.get_remark()"/>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </t>
+                        <t t-if="orderline.quantity">
+                            <tr>
+                                <td>
+                                    <div style="margin-left: 10px;">
+                                        <t t-esc="orderline.quantity + ' ' + orderline.get_unit().name + ' at ' + widget.format_currency(orderline.price)"/>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </t>
+                        <t t-if="orderline.get_discount() > 0">
+                            <tr>
+                                <td>
+                                     <div style="margin-left: 10px;">
+                                         Discount: <t t-esc="widget.format_currency(order.get_discount_amount(orderline))"/>(<t t-esc="orderline.get_discount()"/>%)
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </t>
+                    </t>
+                </t>
+            </table>
+            <hr style="border:1px dashed;" />
+            <table class='receipt-total'>
+                <tr width="100%">
+                    <td class="pos-right-align" width="70%">Subtotal: </td>
+                    <td class="pos-right-align" width="30%">
+                        <t t-esc="widget.format_currency(order.get_without_reservation_total_without_tax())"/>
+                    </td>
+                </tr>
+                <t t-foreach="order.get_without_reservation_tax_details()" t-as="taxdetail">
+                    <tr width="100%">
+                        <td class="pos-right-align" width="70%"><t t-esc="taxdetail.name" />: </td>
+                        <td class="pos-right-align" width="30%">
+                            <t t-esc="widget.format_currency(taxdetail.amount)" />
+                        </td>
+                    </tr>
+                </t>
+                <tr width="100%">
+                    <td class="pos-right-align" width="70%"><t t-esc="'  '"/></td>
+                    <td class="pos-right-align" width="30%"><hr style="border:1px dashed;" /></td>
+                </tr>
+                </table>
+                <table>
+                    <tr width="100%">
+                        <td class="pos-right-align" width="70%">Total: </td>
+                        <td class="pos-right-align" width="30%">
+                            <t t-esc="widget.format_currency(order.get_without_reservation_total_with_tax())"/>
+                        </td>
+                    </tr>
+                    <t t-if="order.get_new_total().is_loyalty_payment">
+                        <tr width="100%">
+                             <td class="pos-right-align" width="70%">Loyalty used: </td>
+                             <td class="pos-right-align" width="30%">
+                                 <t t-esc="widget.format_currency(order.get_new_total().total_loyalty_used * -1)"/>
+                             </td>
+                         </tr>
+                         <tr width="100%">
+                            <td class="pos-right-align" width="70%"><t t-esc="'  '"/></td>
+                            <td class="pos-right-align" width="30%"><hr style="border:1px dashed;" /></td>
+                         </tr>
+                         <tr width="100%">
+                             <td class="pos-right-align" width="70%">New Total: </td>
+                             <td class="pos-right-align" width="30%">
+                                 <t t-esc="widget.format_currency(order.get_new_total().new_total)"/>
+                             </td>
+                         </tr>
+                    </t>
+            </table>
+            <br />
+            <table class='receipt-change'>
+                <!-- <tr width="100%">
+                    <td class="pos-right-align" width="70%">Change: </td>
+                    <td class="pos-right-align" width="30%" t-if="!order.reprint_receipt"><t t-esc="widget.format_currency(order.get_change())"/></td>
+                    <td class="pos-right-align" width="30%" t-if="order.reprint_receipt"><t t-esc="widget.format_currency(order.get_amount_return())"/></td>
+                </tr> -->
+                <t t-if="! order.reprint_receipt and order.get_rdue() &gt;0">
+                    <tr width="100%">
+                        <td class="pos-right-align" width="70%">Remaning: </td>
+                        <td class="pos-right-align" width="30%" ><t t-esc="widget.format_currency(order.get_rdue())"/></td>
+                    </tr>
+                </t>
+                <t t-if="order.reprint_receipt and (order.get_remaning() &gt;0 )">
+                    <tr width="100%">
+                        <td class="pos-right-align" width="70%">Remaning: </td>
+                        <td class="pos-right-align" width="30%" t-if="order.reprint_receipt"><t t-esc="widget.format_currency(order.get_remaning())"/></td>
+                    </tr>
+                </t>
+            </table>
+            <div class='loyalty' t-if="order.reprint_receipt and
+                  (order.print_won_amount or order.print_redeem_amount or order.total_loyalty_amounts)">
+                <br/>
+                <table class='receipt-total'>
+                    <t t-if='(order.print_won_amount or order.print_redeem_amount) and order.total_loyalty_amounts and order.get_total_loyalty_amounts()'>
+                        <tr width="100%">
+                            <td class="pos-right-align" width="70%">
+                                Loyalty Amounts:
+                            </td>
+                            <td class="pos-right-align" width="30%">
+                                <t t-esc='widget.format_currency(order.get_total_loyalty_amounts())' />
+                            </td>
+                        </tr>
+                    </t>
+
+                </table>
+            </div>
+            <div class='loyalty' t-if="!order.reprint_receipt and (order.won_loyalty_amounts or order.redeem_loyalty_amount or order.total_loyalty_amounts)">
+                <br/>
+                <table class='receipt-total'>
+                    <t t-if='(order.won_loyalty_amounts or order.redeem_loyalty_amount) and order.total_loyalty_amounts and order.get_total_loyalty_amounts()'>
+                        <tr width="100%">
+                            <td class="pos-right-align" width="70%">
+                                Loyalty Amounts:
+                            </td>
+                            <td class="pos-right-align" width="30%">
+                                <t t-esc='widget.format_currency(order.get_total_loyalty_amounts())' />
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+            </div>
+            <br/>
+            <table>
+                <tbody>
+                    <tr id="barcode1" align="center">
+                        <td style='padding:2px 2px 2px 0px; text-align:center;'>
+                            <img t-att-src="receipt.barcode_src" id="barcode_img"/>
+                        </td>
+                    </tr>
+                    <tr id="barcode_val" align="center">
+                        <td t-if="receipt.barcode_src and receipt.barcode_val">
+                            <t t-esc="receipt.barcode_val"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--  Gift Card Ticket -->
+            <t t-if="receipt.gift_card_details">
+                <t t-foreach="receipt.gift_card_details" t-as="gift_card_detail">
+                    <t t-if="gift_card_detail and
+                             receipt.gift_card_details[gift_card_detail] and
+                             receipt.gift_card_details[gift_card_detail]['data']">
+                        <br />
+                        <div>
+                            ------------------------------------------
+                            <div style="text-align:center;"> Card Details </div>
+                            ------------------------------------------
+                            <table>
+                                <t t-foreach="receipt.gift_card_details[gift_card_detail]['data']" t-as="giftcard">
+                                    <tr>
+                                        <td>Card No.:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="giftcard['giftcard_card_no']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Expire Date:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="giftcard['giftcard_expire_date_format']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Card Balance:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="widget.format_currency(giftcard['giftcard_amount'])" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr align="center" t-if="receipt.gift_card_details[gift_card_detail]['src']">
+                                    <td style='text-align:center;'>
+                                        <img style='text-align:center;'
+                                             t-att-src="receipt.gift_card_details[gift_card_detail]['src']"
+                                             id="gift_barcode_img"/>
+                                    </td>
+                                    <tr t-if="receipt.gift_card_details[gift_card_detail]['card_no']"
+                                        id="gift_card_val"
+                                        align="center">
+                                        <td>
+                                            <t t-esc="receipt.gift_card_details[gift_card_detail]['card_no']"/>
+                                        </td>
+                                    </tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                </t>
+            </t>
+            <!--  Redeem Gift Card Ticket -->
+            <t t-if="receipt.redeem_giftcard_details">
+                <t t-foreach="receipt.redeem_giftcard_details" t-as="redeem_giftcard_detail">
+                    <t t-if="redeem_giftcard_detail and
+                             receipt.redeem_giftcard_details[redeem_giftcard_detail] and
+                             receipt.redeem_giftcard_details[redeem_giftcard_detail]['data']">
+                        <br />
+                        <div>
+                            ------------------------------------------
+                            <div style="text-align:center;"> Card Details </div>
+                            ------------------------------------------
+                            <table>
+                                <t t-foreach="receipt.redeem_giftcard_details[redeem_giftcard_detail]['data']" t-as="redeem">
+                                    <tr>
+                                        <td>Card No.:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="redeem['redeem_card']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Card Balance:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr align="center" t-if="receipt.redeem_giftcard_details[redeem_giftcard_detail]['src']">
+                                    <td style='text-align:center;'>
+                                        <img style='text-align:center;'
+                                             t-att-src="receipt.redeem_giftcard_details[redeem_giftcard_detail]['src']"
+                                             id="redeem_barcode_img"/>
+                                    </td>
+                                    <tr t-if="receipt.redeem_giftcard_details[redeem_giftcard_detail]['card_no']"
+                                        id="redeem_giftcard_val"
+                                        align="center">
+                                        <td>
+                                            <t t-esc="receipt.redeem_giftcard_details[redeem_giftcard_detail]['card_no']"/>
+                                        </td>
+                                    </tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                </t>
+            </t>
+            <!--  Credit Voucher Ticket -->
+            <t t-if="receipt.credit_voucher_details">
+                <t t-foreach="receipt.credit_voucher_details" t-as="credit_voucher_detail">
+                    <t t-if="credit_voucher_detail and
+                             receipt.credit_voucher_details[credit_voucher_detail] and
+                             receipt.credit_voucher_details[credit_voucher_detail]['data']">
+                        <br />
+                        <div>
+                            ------------------------------------------
+                            <div style="text-align:center;"> Credit Voucher Details </div>
+                            ------------------------------------------
+                            <table>
+                                <t t-foreach="receipt.credit_voucher_details[credit_voucher_detail]['data']" t-as="creditvoucher">
+                                    <t t-if="creditvoucher['credit_voucher_customer_name']">
+                                        <tr>
+                                            <td>Customer:</td>
+                                            <td class="pos-right-align">
+                                                <t t-esc="creditvoucher['credit_voucher_customer_name']" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td>Voucher No.:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="creditvoucher['credit_voucher_no']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Expire Date:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="creditvoucher['credit_voucher_expire_format']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Balance:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="widget.format_currency(creditvoucher['credit_voucher_amount'])" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr align="center" t-if="receipt.credit_voucher_details[credit_voucher_detail]['src']">
+                                    <td style='text-align:center;'>
+                                        <img style='text-align:center;'
+                                             t-att-src="receipt.credit_voucher_details[credit_voucher_detail]['src']"
+                                             id="credit_voucher_barcode_img"/>
+                                    </td>
+                                    <tr t-if="receipt.credit_voucher_details[credit_voucher_detail]['voucher_no']"
+                                        id="credit_voucher_val"
+                                        align="center">
+                                        <td>
+                                            <t t-esc="receipt.credit_voucher_details[credit_voucher_detail]['voucher_no']"/>
+                                        </td>
+                                    </tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                </t>
+            </t>
+            <!--  Redeem Credit Voucher Ticket -->
+            <t t-if="receipt.redeem_credit_voucher_details">
+                <t t-foreach="receipt.redeem_credit_voucher_details" t-as="redeem_credit_voucher_detail">
+                    <t t-if="redeem_credit_voucher_detail and
+                             receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail] and
+                             receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['data']">
+                        <br />
+                        <div>
+                            ------------------------------------------
+                            <div style="text-align:center;"> Credit Voucher Details </div>
+                            ------------------------------------------
+                            <table>
+                                <t t-foreach="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['data']" t-as="redeem">
+                                    <tr>
+                                        <td>Customer:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="redeem['customer_name']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Voucher No.:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="redeem['redeem_credit_voucher']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Balance:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr align="center" t-if="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['src']">
+                                    <td style='text-align:center;'>
+                                        <img style='text-align:center;'
+                                             t-att-src="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['src']"
+                                             id="redeem_barcode_img"/>
+                                    </td>
+                                    <tr t-if="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['voucher_no']"
+                                        id="redeem_credit_voucher_val"
+                                        align="center">
+                                        <td>
+                                            <t t-esc="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['voucher_no']"/>
+                                        </td>
+                                    </tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                </t>
+            </t>
+            <t t-if="receipt.footer">
+                <hr style="border:1px solid black;" />
+                <br />
+                <div style='text-align:center'>
+                     <b><t t-esc="receipt.footer" /></b>
+                </div>
+            </t>
+         <!--    <div class="pos-center-align">
+                <t t-esc="order." /><br/>
+            </div> -->
+        </div>
+    </t>
+
+    <t t-name="PrintNormalPosTicket">
+        <div class="pos-sale-ticket">
+            <div class="pos-center-align">
+                <t t-if="!order.reprint_receipt">
+                    <t t-if="receipt.shop_address_id.logo">
+                        <img t-att-src='receipt.shop_address_id.logo' />
+                        <br/>
+                    </t>
+                    <t t-if="!receipt.shop_address_id.logo">
+                         <div><t t-esc="receipt.shop_address_id.name"/></div>
+                    </t>
+                    <t t-if="receipt.shop_address_id.street">
+                        <div> <t t-esc="receipt.shop_address_id.street"/> </div>
+                    </t>
+                    <t t-if='receipt.shop_address_id.street2'>
+                        <div><t t-esc='receipt.shop_address_id.street2' /></div>
+                    </t>
+                    <div t-if="receipt.shop_address_id.zip or receipt.shop_address_id.city">
+                        <t t-if="receipt.shop_address_id.zip">
+                            <t t-esc="receipt.shop_address_id.zip"/>
+                        </t>
+                        <t t-if="receipt.shop_address_id.city">
+                            <t t-esc="receipt.shop_address_id.city"/>
+                        </t>
+                    </div>
+                    <div class="receipt-phone">
+                        Tel: <t t-esc="receipt.shop_address_id.phone || ''"/><br />
+                    </div>
+                    <t t-if='receipt.company.vat'>
+                        <div>VAT:<t t-esc='receipt.company.vat' /></div>
+                    </t>
+                    <t t-if='receipt.company.website'>
+                        <div><t t-esc='receipt.company.website' /></div>
+                    </t>
+                    <t t-if='receipt.shop_address_id.email'>
+                        <div><t t-esc='receipt.shop_address_id.email' /></div>
+                    </t>
+                </t>
+                <t t-if="order.reprint_receipt">
+                    <t t-if="receipt.print_shop_address_id">
+                        <t t-if="receipt.print_shop_address_id.logo">
+                            <img t-att-src='receipt.shop_address_id.logo' />
+                            <br/>
+                        </t>
+                        <t t-if="!receipt.print_shop_address_id.logo">
+                             <div><t t-esc="receipt.print_shop_address_id.name"/></div>
+                        </t>
+                        <t t-if="receipt.print_shop_address_id.street">
+                            <div> <t t-esc="receipt.print_shop_address_id.street"/> </div>
+                        </t>
+                        <t t-if='receipt.print_shop_address_id.street2'>
+                            <div><t t-esc='receipt.print_shop_address_id.street2' /></div>
+                        </t>
+                        <div t-if="receipt.print_shop_address_id.zip or receipt.print_shop_address_id.city">
+                            <t t-if="receipt.print_shop_address_id.zip">
+                                <t t-esc="receipt.print_shop_address_id.zip"/>
+                            </t>
+                            <t t-if="receipt.print_shop_address_id.city">
+                                <t t-esc="receipt.print_shop_address_id.city"/>
+                            </t>
+                        </div>
+                        <div class="receipt-phone">
+                            Tel: <t t-esc="receipt.print_shop_address_id.phone || ''"/><br />
+                        </div>
+                    </t>
+                    <t t-if='receipt.company.vat'>
+                        <div>VAT:<t t-esc='receipt.company.vat' /></div>
+                    </t>
+                    <t t-if='receipt.company.website'>
+                        <div><t t-esc='receipt.company.website' /></div>
+                    </t>
+                    <t t-if="receipt.print_shop_address_id">
+                        <t t-if='receipt.shop_address_id.email'>
+                            <div><t t-esc='receipt.print_shop_address_id.email' /></div>
+                        </t>
+                    </t>
+                </t>
+            </div>
+            <br />
+            <t t-if="receipt.header">
+                <div style='text-align:center'>
+                    <t t-esc="receipt.header" />
+                </div>
+                <br />
+            </t>
+
+            <div>Served by:
+                <t t-if="widget.pos.cashier">
+                    <t t-if="widget.pos.cashier.ticket_name" >
+                        <t t-esc=" widget.pos.cashier.ticket_name"/>
+                    </t>
+                    <t t-else="0">
+                        <t t-esc="widget.pos.cashier.name" />
+                    </t>
+                </t>
+                <t t-else="0">
+                    <t t-if="widget.pos.user.ticket_name" >
+                        <t t-esc=" widget.pos.user.ticket_name"/>
+                    </t>
+                    <t t-else="0">
+                        <t t-esc="widget.pos.user.name" />
+                    </t>
+                </t>
+            </div>
+            <t t-if="order.get_client()">
+                <t t-if="order.get_client()">
+                    <div>Customer: <t t-esc="order.get_client_name()"/></div>
+                </t>
+            </t>
+            <t t-if="order.reprint_receipt">
+                <div>Date: <t t-esc="receipt.print_date_order"/></div>
+            </t>
+            <t t-if="!order.reprint_receipt">
+                <div>Date: <t t-esc="receipt.date_order"/></div>
+            </t>
+
+            <t t-if="!order.get('pos_reference')">
+                <t t-if="order.name.split('Order ') and order.name.split('Order ')[1]">
+                    <div>Order: <t t-esc="order.name.split('Order ')[1]"/></div>
+                </t>
+            </t>
+            <t t-if="order.get('pos_reference')">
+                <t t-if="order.get('pos_reference').split('Order ') and order.get('pos_reference').split('Order ')[1]">
+                    <div>Order: <t t-esc="order.get('pos_reference').split('Order ')[1]"/></div>
+                </t>
+            </t>
+
+            <div class="receipt-delivery-date" t-if="order.reserved_delivery_date">
+                Delivery Date: <t t-esc="order.reserved_delivery_date"/><br />
+            </div>
+            <div class="receipt-delivery-date" t-if="order.internal_reservation">
+                Delivery in:<br /><t t-esc="order.get_destination_name()" /><br />
+                Type: Special Command<br />
+            </div>
+            <div class="receipt-delivery-date" t-if="order.reserved_delivery_date and !order.internal_reservation">
+                Type: Reservation
+            </div>
+            <br/>
+            <table class='receipt-orderlines'>
+                <colgroup>
+                    <col width='70%' />
+                    <col width='30%' />
+                </colgroup>
+                <tr style="border-bottom: 1px solid;border-top: 1px solid;font-weight:bold;">
+                    <td>Description</td>
+                    <td class="pos-right-align">Amount</td>
+                </tr>
+                <t t-foreach="orderlines" t-as="orderline">
+                    <t t-if="! orderline.zero_charges">
+                        <tr>
+                            <td style="padding: 0px 5px;">
+                                <t t-esc="orderline.get_product().display_name"/>
+                            </td>
+                            <td class="pos-right-align">
+                                <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                            </td>
+                        </tr>
+                        <t t-if="orderline.remark and orderline.get_remark()">
+                            <tr>
+                                <td>
+                                    <div class="product-remark"
+                                         style="margin-left: 10px;">
+                                        Remark:
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="product-remark"
+                                         style="margin-left: 10px;">
+                                            <t t-esc="orderline.get_remark()"/>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </t>
+                        <t t-if="orderline.quantity">
+                            <tr>
+                                <td>
+                                    <div style="margin-left: 10px;">
+                                        <t t-esc="orderline.quantity + ' ' + orderline.get_unit().name + ' at ' + widget.format_currency(orderline.price)"/>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </t>
+                        <t t-if="orderline.get_discount() > 0">
+                            <tr>
+                                <td>
+                                     <div style="margin-left: 10px;">
+                                         Discount: <t t-esc="widget.format_currency(order.get_discount_amount(orderline))"/>(<t t-esc="orderline.get_discount()"/>%)
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </t>
+                    </t>
+                </t>
+            </table>
+            <hr style="border:1px dashed;" />
+            <table class='receipt-total'>
+                <tr width="100%">
+                    <td class="pos-right-align" width="70%">Subtotal: </td>
+                    <td class="pos-right-align" width="30%">
+                        <t t-esc="widget.format_currency(order.get_total_without_tax())"/>
+                    </td>
+                </tr>
+                <t t-foreach="order.get_tax_details()" t-as="taxdetail">
+                    <tr width="100%">
+                        <td class="pos-right-align" width="70%"><t t-esc="taxdetail.name" />: </td>
+                        <td class="pos-right-align" width="30%">
+                            <t t-esc="widget.format_currency(taxdetail.amount)" />
+                        </td>
+                    </tr>
+                </t>
+                <tr width="100%">
+                    <td class="pos-right-align" width="70%"><t t-esc="'  '"/></td>
+                    <td class="pos-right-align" width="30%"><hr style="border:1px dashed;" /></td>
+                </tr>
+                </table>
+                <table>
+                    <tr width="100%">
+                        <td class="pos-right-align" width="70%">Total: </td>
+                        <td class="pos-right-align" width="30%">
+                            <t t-esc="widget.format_currency(order.get_total_with_tax())"/>
+                        </td>
+                    </tr>
+                    <t t-if="order.get_new_total().is_loyalty_payment">
+                        <tr width="100%">
+                             <td class="pos-right-align" width="70%">Loyalty used: </td>
+                             <td class="pos-right-align" width="30%">
+                                 <t t-esc="widget.format_currency(order.get_new_total().total_loyalty_used * -1)"/>
+                             </td>
+                         </tr>
+                         <tr width="100%">
+                            <td class="pos-right-align" width="70%"><t t-esc="'  '"/></td>
+                            <td class="pos-right-align" width="30%"><hr style="border:1px dashed;" /></td>
+                         </tr>
+                         <tr width="100%">
+                             <td class="pos-right-align" width="70%">New Total: </td>
+                             <td class="pos-right-align" width="30%">
+                                 <t t-esc="widget.format_currency(order.get_new_total().new_total)"/>
+                             </td>
+                         </tr>
+                    </t>
+            </table>
+            <br />
+            <t t-if="paymentlines.length != 0 and !order.reprint_receipt">
+                <table class='receipt-paymentlines'>
+                    <t t-foreach="paymentlines" t-as="line">
+                        <t t-if="widget.pos.config.enable_loyalty and
+                                     widget.pos.config.loyalty_journal[0] != line.cashregister.journal_id[0]">
+                            <tr width="100%">
+                                <t t-if="line.print_journal_name">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line.print_journal_name"/>: </td>
+                                </t>
+                                <t t-if="! line.print_journal_name">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line.name"/>: </td>
+                                </t>
+                                <td class="pos-right-align" width="30%"><t t-esc="widget.format_currency(line.get_amount())"/></td>
+                            </tr>
+                        </t>
+                        <t t-if="! widget.pos.config.enable_loyalty">
+                            <tr width="100%">
+                                <t t-if="line.print_journal_name">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line.print_journal_name"/>: </td>
+                                </t>
+                                <t t-if="! line.print_journal_name">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line.name"/>: </td>
+                                </t>
+                                <td class="pos-right-align" width="30%"><t t-esc="widget.format_currency(line.get_amount())"/></td>
+                            </tr>
+                        </t>
+                    </t>
+                </table>
+                <br />
+            </t>
+            <t t-if="order.reprint_receipt and order.get_journal()">
+                <table class='receipt-paymentlines'>
+                    <t t-foreach="order.get_journal()" t-as="line">
+                        <t t-if="widget.pos.config.enable_loyalty and
+                                     widget.pos.config.loyalty_journal[0] != line.journal_id">
+                            <tr width="100%" t-if ="line['amount'] &gt;0">
+                                <t t-if="line['print_journal_name']">
+                                     <td class="pos-right-align" width="70%"><t t-esc="line['print_journal_name']"/>: </td>
+                                </t>
+                                <t t-if="! line['print_journal_name']">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line['journal']"/>: </td>
+                                </t>
+                                <td class="pos-right-align" width="30%"><t t-esc="widget.format_currency(line['amount'])"/></td>
+                            </tr>
+                        </t>
+                        <t t-if="! widget.pos.config.enable_loyalty">
+                            <tr width="100%" t-if ="line['amount'] &gt;0">
+                                <t t-if="line['print_journal_name']">
+                                     <td class="pos-right-align" width="70%"><t t-esc="line['print_journal_name']"/>: </td>
+                                </t>
+                                <t t-if="! line['print_journal_name']">
+                                    <td class="pos-right-align" width="70%"><t t-esc="line['journal']"/>: </td>
+                                </t>
+                                <td class="pos-right-align" width="30%"><t t-esc="widget.format_currency(line['amount'])"/></td>
+                            </tr>
+                        </t>
+                    </t>
+                </table>
+                <br />
+            </t>
+
+            <table class='receipt-change'>
+                <tr width="100%">
+                    <td class="pos-right-align" width="70%">Change: </td>
+                    <td class="pos-right-align" width="30%" t-if="!order.reprint_receipt"><t t-esc="widget.format_currency(order.get_change())"/></td>
+                    <td class="pos-right-align" width="30%" t-if="order.reprint_receipt"><t t-esc="widget.format_currency(order.get_amount_return())"/></td>
+                </tr>
+                <t t-if="order.get_due() &gt;0 and ! order.reprint_receipt">
+                    <tr width="100%">
+                        <td class="pos-right-align" width="70%">Remaning: </td>
+                        <td class="pos-right-align" width="30%" ><t t-esc="widget.format_currency(order.get_due())"/></td>
+                    </tr>
+                </t>
+                <t t-if="order.reprint_receipt and (order.get_remaning() &gt;0)">
+                    <tr width="100%">
+                        <td class="pos-right-align" width="70%">Remaning: </td>
+                        <td class="pos-right-align" width="30%" t-if="order.reprint_receipt"><t t-esc="widget.format_currency(order.get_remaning())"/></td>
+                    </tr>
+                </t>
+            </table>
+            <div class='loyalty' t-if="order.reprint_receipt and
+                  (order.print_won_amount or order.print_redeem_amount or order.total_loyalty_amounts)">
+                <br/>
+                <table class='receipt-total'>
+                    <t t-if='(order.print_won_amount or order.print_redeem_amount) and order.total_loyalty_amounts and order.get_total_loyalty_amounts()'>
+                        <tr width="100%">
+                            <td class="pos-right-align" width="70%">
+                                Loyalty Amounts:
+                            </td>
+                            <td class="pos-right-align" width="30%">
+                                <t t-esc='widget.format_currency(order.get_total_loyalty_amounts())' />
+                            </td>
+                        </tr>
+                    </t>
+
+                </table>
+            </div>
+            <div class='loyalty' t-if="!order.reprint_receipt and (order.won_loyalty_amounts or order.redeem_loyalty_amount or order.total_loyalty_amounts)">
+                <br/>
+                <table class='receipt-total'>
+                    <t t-if='(order.won_loyalty_amounts or order.redeem_loyalty_amount) and order.total_loyalty_amounts and order.get_total_loyalty_amounts()'>
+                        <tr width="100%">
+                            <td class="pos-right-align" width="70%">
+                                Loyalty Amounts:
+                            </td>
+                            <td class="pos-right-align" width="30%">
+                                <t t-esc='widget.format_currency(order.get_total_loyalty_amounts())' />
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+            </div>
+            <br/>
+            <table>
+                <tbody>
+                    <tr id="barcode1" align="center">
+                        <td style='padding:2px 2px 2px 0px; text-align:center;'>
+                            <img t-att-src="receipt.barcode_src" id="barcode_img"/>
+                        </td>
+                    </tr>
+                    <tr id="barcode_val" align="center">
+                        <td t-if="receipt.barcode_src and receipt.barcode_val">
+                            <t t-esc="receipt.barcode_val"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--  Gift Card Ticket -->
+            <t t-if="receipt.gift_card_details">
+                <t t-foreach="receipt.gift_card_details" t-as="gift_card_detail">
+                    <t t-if="gift_card_detail and
+                             receipt.gift_card_details[gift_card_detail] and
+                             receipt.gift_card_details[gift_card_detail]['data']">
+                        <br />
+                        <div>
+                            ------------------------------------------
+                            <div style="text-align:center;"> Card Details </div>
+                            ------------------------------------------
+                            <table>
+                                <t t-foreach="receipt.gift_card_details[gift_card_detail]['data']" t-as="giftcard">
+                                    <tr>
+                                        <td>Card No.:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="giftcard['giftcard_card_no']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Expire Date:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="giftcard['giftcard_expire_date_format']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Card Balance:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="widget.format_currency(giftcard['giftcard_amount'])" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr align="center" t-if="receipt.gift_card_details[gift_card_detail]['src']">
+                                    <td style='text-align:center;'>
+                                        <img style='text-align:center;'
+                                             t-att-src="receipt.gift_card_details[gift_card_detail]['src']"
+                                             id="gift_barcode_img"/>
+                                    </td>
+                                    <tr t-if="receipt.gift_card_details[gift_card_detail]['card_no']"
+                                        id="gift_card_val"
+                                        align="center">
+                                        <td>
+                                            <t t-esc="receipt.gift_card_details[gift_card_detail]['card_no']"/>
+                                        </td>
+                                    </tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                </t>
+            </t>
+            <!--  Redeem Gift Card Ticket -->
+            <t t-if="receipt.redeem_giftcard_details">
+                <t t-foreach="receipt.redeem_giftcard_details" t-as="redeem_giftcard_detail">
+                    <t t-if="redeem_giftcard_detail and
+                             receipt.redeem_giftcard_details[redeem_giftcard_detail] and
+                             receipt.redeem_giftcard_details[redeem_giftcard_detail]['data']">
+                        <br />
+                        <div>
+                            ------------------------------------------
+                            <div style="text-align:center;"> Card Details </div>
+                            ------------------------------------------
+                            <table>
+                                <t t-foreach="receipt.redeem_giftcard_details[redeem_giftcard_detail]['data']" t-as="redeem">
+                                    <tr>
+                                        <td>Card No.:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="redeem['redeem_card']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Card Balance:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr align="center" t-if="receipt.redeem_giftcard_details[redeem_giftcard_detail]['src']">
+                                    <td style='text-align:center;'>
+                                        <img style='text-align:center;'
+                                             t-att-src="receipt.redeem_giftcard_details[redeem_giftcard_detail]['src']"
+                                             id="redeem_barcode_img"/>
+                                    </td>
+                                    <tr t-if="receipt.redeem_giftcard_details[redeem_giftcard_detail]['card_no']"
+                                        id="redeem_giftcard_val"
+                                        align="center">
+                                        <td>
+                                            <t t-esc="receipt.redeem_giftcard_details[redeem_giftcard_detail]['card_no']"/>
+                                        </td>
+                                    </tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                </t>
+            </t>
+            <!--  Credit Voucher Ticket -->
+            <t t-if="receipt.credit_voucher_details">
+                <t t-foreach="receipt.credit_voucher_details" t-as="credit_voucher_detail">
+                    <t t-if="credit_voucher_detail and
+                             receipt.credit_voucher_details[credit_voucher_detail] and
+                             receipt.credit_voucher_details[credit_voucher_detail]['data']">
+                        <br />
+                        <div>
+                            ------------------------------------------
+                            <div style="text-align:center;"> Credit Voucher Details </div>
+                            ------------------------------------------
+                            <table>
+                                <t t-foreach="receipt.credit_voucher_details[credit_voucher_detail]['data']" t-as="creditvoucher">
+                                    <t t-if="creditvoucher['credit_voucher_customer_name']">
+                                        <tr>
+                                            <td>Customer:</td>
+                                            <td class="pos-right-align">
+                                                <t t-esc="creditvoucher['credit_voucher_customer_name']" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td>Voucher No.:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="creditvoucher['credit_voucher_no']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Expire Date:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="creditvoucher['credit_voucher_expire_format']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Balance:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="widget.format_currency(creditvoucher['credit_voucher_amount'])" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr align="center" t-if="receipt.credit_voucher_details[credit_voucher_detail]['src']">
+                                    <td style='text-align:center;'>
+                                        <img style='text-align:center;'
+                                             t-att-src="receipt.credit_voucher_details[credit_voucher_detail]['src']"
+                                             id="credit_voucher_barcode_img"/>
+                                    </td>
+                                    <tr t-if="receipt.credit_voucher_details[credit_voucher_detail]['voucher_no']"
+                                        id="credit_voucher_val"
+                                        align="center">
+                                        <td>
+                                            <t t-esc="receipt.credit_voucher_details[credit_voucher_detail]['voucher_no']"/>
+                                        </td>
+                                    </tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                </t>
+            </t>
+            <!--  Redeem Credit Voucher Ticket -->
+            <t t-if="receipt.redeem_credit_voucher_details">
+                <t t-foreach="receipt.redeem_credit_voucher_details" t-as="redeem_credit_voucher_detail">
+                    <t t-if="redeem_credit_voucher_detail and
+                             receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail] and
+                             receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['data']">
+                        <br />
+                        <div>
+                            ------------------------------------------
+                            <div style="text-align:center;"> Credit Voucher Details </div>
+                            ------------------------------------------
+                            <table>
+                                <t t-foreach="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['data']" t-as="redeem">
+                                    <tr>
+                                        <td>Customer:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="redeem['customer_name']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Voucher No.:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="redeem['redeem_credit_voucher']" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Balance:</td>
+                                        <td class="pos-right-align">
+                                            <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                        <br/>
+                        <table>
+                            <tbody>
+                                <tr align="center" t-if="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['src']">
+                                    <td style='text-align:center;'>
+                                        <img style='text-align:center;'
+                                             t-att-src="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['src']"
+                                             id="redeem_barcode_img"/>
+                                    </td>
+                                    <tr t-if="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['voucher_no']"
+                                        id="redeem_credit_voucher_val"
+                                        align="center">
+                                        <td>
+                                            <t t-esc="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['voucher_no']"/>
+                                        </td>
+                                    </tr>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                </t>
+            </t>
+            <t t-if="receipt.footer">
+                <hr style="border:1px solid black;" />
+                <br />
+                <div style='text-align:center'>
+                     <b><t t-esc="receipt.footer" /></b>
+                </div>
+            </t>
+         <!--    <div class="pos-center-align">
+                <t t-esc="order." /><br/>
+            </div> -->
+        </div>
+    </t>
+
+    <t t-name="XmlReceiptWrappedProductNameOrderLines">
+        <t t-foreach="orderline.generate_wrapped_orderline_product_name().slice(1)" t-as="wrapped_line">
+            <line>
+                <left>
+                    <t t-esc="wrapped_line"/>
+                </left>
+            </line>
+        </t>
+    </t>
+
+     <t t-name="XmlReceiptWrappedProductAttributeNameOrderLines">
+        <t t-foreach="orderline.generate_wrapped_orderline_attributes().slice(1)" t-as="wrapped_line">
+            <line indent="1">
+                <left>
+                    <t t-esc="wrapped_line"/>
+                </left>
+            </line>
+        </t>
+    </t>
+
+    <t t-name="PrintNormalXmlReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <t t-if='receipt.shop_address_id.logo'>
+                <img t-att-src='receipt.shop_address_id.logo' />
+                <br/>
+            </t>
+            <t t-if="!receipt.shop_address_id.logo">
+                <div><t t-esc="receipt.shop_address_id.name"/></div>
+                <br/>
+            </t>
+            <div font='b'>
+                <t t-if='receipt.shop_address_id.street'>
+                    <div><t t-esc='receipt.shop_address_id.street' /></div>
+                </t>
+                <t t-if='receipt.shop_address_id.street2'>
+                    <div><t t-esc='receipt.shop_address_id.street2' /></div>
+                </t>
+                <div t-if="receipt.shop_address_id.zip or receipt.shop_address_id.city">
+                    <t t-if='receipt.shop_address_id.zip'>
+                        <t t-esc='receipt.shop_address_id.zip' />
+                    </t>
+                    <t t-if='receipt.shop_address_id.city'>
+                        <t t-esc='receipt.shop_address_id.city' />
+                    </t>
+                </div>
+                <t t-if='receipt.shop_address_id.phone'>
+                    <div>Tel:<t t-esc='receipt.shop_address_id.phone' /></div>
+                </t>
+                <t t-if='receipt.company.vat'>
+                    <div>VAT:<t t-esc='receipt.company.vat' /></div>
+                </t>
+                <t t-if='receipt.company.website'>
+                    <div><t t-esc='receipt.company.website' /></div>
+                </t>
+                <t t-if='receipt.shop_address_id.email'>
+                    <div><t t-esc='receipt.shop_address_id.email' /></div>
+                </t>
+                <t t-if='!receipt.header_xml and receipt.header'>
+                    <div><t t-esc='receipt.header' /></div>
+                </t>
+                <t t-if='receipt.cashier'>
+                    <div font="a">
+                        <div line-ratio='2.6'>
+                        <br/>
+                            <t t-if='receipt.cashier_name'>
+                                <line>
+                                    <left>
+                                        <div>Served by: <t t-esc='receipt.cashier_name' /></div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="order.get_client()">
+                                <line>
+                                    <left>
+                                        <div>Customer: <t t-esc="order.get_client_name()"/></div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if='receipt.date_order'>
+                                <line>
+                                    <left>
+                                        <div>Date: <t t-esc='receipt.date_order' /></div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="!order.get('pos_reference')">
+                                <t t-if="order.name.split('Order ') and order.name.split('Order ')[1]">
+                                    <line>
+                                        <left>
+                                            <div>Order: <t t-esc="order.name.split('Order ')[1]"/></div>
+                                        </left>
+                                    </line>
+                                 </t>
+                            </t>
+                            <t t-if="order.get('pos_reference')">
+                                <t t-if="order.get('pos_reference').split('Order ') and order.get('pos_reference').split('Order ')[1]">
+                                    <line>
+                                        <left>
+                                            <div>Order: <t t-esc="order.get('pos_reference').split('Order ')[1]"/></div>
+                                        </left>
+                                    </line>
+                                </t>
+                            </t>
+
+                            <t t-if="order.reserved_delivery_date">
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-date">
+                                            Delivery Date: <t t-esc="order.reserved_delivery_date"/><br />
+                                        </div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="order.internal_reservation">
+                                <line>
+                                    <left>
+                                        <div>
+                                            Delivery in:
+                                        </div>
+                                    </left>
+                                </line>
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-address">
+                                            <t t-esc="order.get_destination_name()" /><br />
+                                        </div>
+                                    </left>
+                                </line>
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-date">
+                                            Type: Special Command
+                                        </div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="order.reserved_delivery_date and !order.internal_reservation">
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-date">
+                                            Type: Reservation
+                                        </div>
+                                    </left>
+                                </line>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </div>
+
+            <!-- Orderlines -->
+
+            <div class='orderlines' line-ratio='0.6'>
+                 <line>
+                     <left>
+                         <t t-esc="'________________________'"/>
+                     </left>
+                     <right>
+                         <t t-esc="'________________________'"/>
+                     </right>
+                 </line>
+                 <line bold="on">
+                     <left>
+                         <div>Description</div>
+                     </left>
+                    <right>Amount </right>
+                </line>
+                <line>
+                    <left>
+                        <t t-esc="'________________________'"/>
+                    </left>
+                    <right>
+                        <t t-esc="'________________________'"/>
+                    </right>
+                </line>
+                <t t-as="orderline" t-foreach="orderlines">
+                    <t t-if="! orderline.zero_charges">
+                        <line>
+                            <left style="padding: 5px;">
+                                <t t-esc='orderline.generate_wrapped_orderline_product_name()[0]' />
+                            </left>
+                            <right >
+                                <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                            </right>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductNameOrderLines"/>
+                        <line indent="1">
+                            <left>
+                                <t t-esc='orderline.generate_wrapped_orderline_attributes()[0]' />
+                            </left>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductAttributeNameOrderLines"/>
+                    </t>
+                </t>
+                <line>
+                    <left>
+                        <t t-esc="'------------------------'"/>
+                    </left>
+                    <right>
+                        <t t-esc="'------------------------'"/>
+                    </right>
+                </line>
+            </div>
+
+            <!-- Subtotal -->
+            <div line-ratio='0.1'>
+                <line>
+                    <right>Subtotal: <t t-esc="widget.format_currency(order.get_total_without_tax())"/></right>
+                </line>
+            </div>
+            <t t-as="taxdetail" t-foreach="order.get_tax_details()">
+                <div line-ratio='0.1'>
+                    <line>
+                        <right><t t-esc='taxdetail.name' />: <t t-esc='widget.format_currency(taxdetail.amount)'/></right>
+                    </line>
+                </div>
+            </t>
+            <line>
+                <right>
+                    <t t-esc="'------------------------'"/>
+                </right>
+            </line>
+
+            <!-- Total -->
+
+            <div line-ratio='0.1'>
+                <line>
+                    <right>Total:  <t t-esc="widget.format_currency(order.get_total_with_tax())"/></right>
+                </line>
+                <t t-if="order.get_new_total().is_loyalty_payment">
+                    <line>
+                        <right>Loyalty used: <t t-esc="widget.format_currency(order.get_new_total().total_loyalty_used * -1)"/></right>
+                    </line>
+                    <line>
+                        <right>
+                            <t t-esc="'------------------------'"/>
+                        </right>
+                    </line>
+                    <line>
+                        <right>New Total: <t t-esc="widget.format_currency(order.get_new_total().new_total)"/></right>
+                    </line>
+                 </t>
+            </div>
+            <br/><br/>
+
+            <!-- Payment Lines -->
+
+            <t t-foreach='paymentlines' t-as='line'>
+                <t t-if="widget.pos.config.enable_loyalty and
+                                     widget.pos.config.loyalty_journal[0] != line.cashregister.journal_id[0]">
+                    <div line-ratio='0.1'>
+                        <line >
+                            <right>
+                                <b>
+                                    <t t-if="line.print_journal_name">
+                                        <t t-esc='line.print_journal_name' />: <t t-esc="widget.format_currency(line.get_amount())"/>
+                                    </t>
+                                    <t t-if="! line.print_journal_name">
+                                        <t t-esc='line.name' />: <t t-esc="widget.format_currency(line.get_amount())"/>
+                                    </t>
+                                </b>
+                            </right>
+                        </line>
+                    </div>
+                </t>
+                <t t-if="! widget.pos.config.enable_loyalty">
+                    <div line-ratio='0.1'>
+                        <line >
+                            <right>
+                                <b>
+                                    <t t-if="line.print_journal_name">
+                                        <t t-esc='line.print_journal_name' />: <t t-esc="widget.format_currency(line.get_amount())"/>
+                                    </t>
+                                    <t t-if="! line.print_journal_name">
+                                        <t t-esc='line.name' />: <t t-esc="widget.format_currency(line.get_amount())"/>
+                                    </t>
+                                </b>
+                            </right>
+                        </line>
+                    </div>
+                </t>
+            </t>
+            <br/>
+
+            <t t-if="receipt.change != 0">
+                <div line-ratio='0.1'>
+                    <line>
+                        <right>CHANGE: <t t-esc='widget.format_currency(receipt.change)' /></right>
+                    </line>
+                </div>
+            </t>
+
+            <br/>
+
+            <!-- Extra Payment Info -->
+
+           <div line-ratio='0.1'>
+               <t t-if="order.get_due() &gt;0 and ! order.reprint_receipt">
+                    <line>
+                        <right>Remaning: <t t-esc="widget.format_currency(order.get_due())"/></right>
+                    </line>
+                </t>
+                <t t-if='(order.redeem_loyalty_amount or order.won_loyalty_amounts) and order.total_loyalty_amounts and order.get_total_loyalty_amounts()'>
+                    <line>
+                        <right>Loyalty Amounts: <t t-esc='widget.format_currency(order.get_total_loyalty_amounts())' /></right>
+                    </line>
+                </t>
+           </div>
+
+            <t t-if='receipt.barcode_src'>
+                <br/>
+                <img t-att-src="receipt.barcode_src"/>
+                <div t-if="receipt.barcode_val" align='center'>
+                    <t t-esc="receipt.barcode_val"/>
+                </div>
+            </t>
+
+            <!--  Gift Card Ticket -->
+            <t t-if="receipt.gift_card_details">
+                <t t-foreach="receipt.gift_card_details" t-as="gift_card_detail">
+                    <t t-if="gift_card_detail and
+                             receipt.gift_card_details[gift_card_detail] and
+                             receipt.gift_card_details[gift_card_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Card Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.gift_card_details[gift_card_detail]['data']" t-as="giftcard">
+                                <line>
+                                    <left>Card No.:</left>
+                                    <right>
+                                        <t t-esc="giftcard['giftcard_card_no']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Expire Date:</left>
+                                    <right>
+                                        <t t-esc="giftcard['giftcard_expire_date_format']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Card Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(giftcard['giftcard_amount'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.gift_card_details[gift_card_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.gift_card_details[gift_card_detail]['src']"/>
+                            <div t-if="receipt.gift_card_details[gift_card_detail]['card_no']" align='center'>
+                                <t t-esc="receipt.gift_card_details[gift_card_detail]['card_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <!--  Redeem Gift Card Ticket -->
+            <t t-if="receipt.redeem_giftcard_details">
+                <t t-foreach="receipt.redeem_giftcard_details" t-as="redeem_giftcard_detail">
+                    <t t-if="redeem_giftcard_detail and
+                             receipt.redeem_giftcard_details[redeem_giftcard_detail] and
+                             receipt.redeem_giftcard_details[redeem_giftcard_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Card Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.redeem_giftcard_details[redeem_giftcard_detail]['data']" t-as="redeem">
+                                <line>
+                                    <left>Card No.:</left>
+                                    <right>
+                                        <t t-esc="redeem['redeem_card']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Card Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.redeem_giftcard_details[redeem_giftcard_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.redeem_giftcard_details[redeem_giftcard_detail]['src']"/>
+                            <div t-if="receipt.redeem_giftcard_details[redeem_giftcard_detail]['card_no']" align='center'>
+                                <t t-esc="receipt.redeem_giftcard_details[redeem_giftcard_detail]['card_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <!--  Credit Voucher Ticket -->
+            <t t-if="receipt.credit_voucher_details">
+                <t t-foreach="receipt.credit_voucher_details" t-as="credit_voucher_detail">
+                    <t t-if="credit_voucher_detail and
+                             receipt.credit_voucher_details[credit_voucher_detail] and
+                             receipt.credit_voucher_details[credit_voucher_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Credit Voucher Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.credit_voucher_details[credit_voucher_detail]['data']" t-as="creditvoucher">
+                                <t t-if="creditvoucher['credit_voucher_customer_name']">
+                                    <line>
+                                        <left>Customer:</left>
+                                        <right>
+                                            <t t-esc="creditvoucher['credit_voucher_customer_name']" />
+                                        </right>
+                                    </line>
+                                </t>
+                                <line>
+                                    <left>Voucher No.:</left>
+                                    <right>
+                                        <t t-esc="creditvoucher['credit_voucher_no']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Expire Date:</left>
+                                    <right>
+                                        <t t-esc="creditvoucher['credit_voucher_expire_format']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(creditvoucher['credit_voucher_amount'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.credit_voucher_details[credit_voucher_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.credit_voucher_details[credit_voucher_detail]['src']"/>
+                            <div t-if="receipt.credit_voucher_details[credit_voucher_detail]['voucher_no']" align='center'>
+                                <t t-esc="receipt.credit_voucher_details[credit_voucher_detail]['voucher_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <!--  Redeem Credit Voucher Ticket -->
+            <t t-if="receipt.redeem_credit_voucher_details">
+                <t t-foreach="receipt.redeem_credit_voucher_details" t-as="redeem_credit_voucher_detail">
+                    <t t-if="redeem_credit_voucher_detail and
+                             receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail] and
+                             receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Credit Voucher Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['data']" t-as="redeem">
+                                <line>
+                                    <left>Customer:</left>
+                                    <right>
+                                        <t t-esc="redeem['customer_name']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Voucher No.:</left>
+                                    <right>
+                                        <t t-esc="redeem['redeem_credit_voucher']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['src']"/>
+                            <div t-if="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['voucher_no']" align='center'>
+                                <t t-esc="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['voucher_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <div class='before-footer' />
+
+            <!-- Footer -->
+
+            <t t-if='!receipt.footer_xml and receipt.footer'>
+                <line>
+                     <left>
+                         <t t-esc="'________________________'"/>
+                     </left>
+                     <right>
+                         <t t-esc="'________________________'"/>
+                     </right>
+                 </line>
+                <br/>
+                <t t-esc='receipt.footer' />
+                <br/>
+            </t>
+
+            <div class='after-footer' />
+
+        </receipt>
+    </t>
+
+    <t t-name="RePrintNormalXmlReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <t t-if='receipt.print_shop_address_id and receipt.print_shop_address_id.logo'>
+                <img t-att-src='receipt.print_shop_address_id.logo' />
+                <br/>
+            </t>
+            <t t-if="receipt.print_shop_address_id and !receipt.print_shop_address_id.logo">
+                <div><t t-esc="receipt.print_shop_address_id.name"/></div>
+                <br/>
+            </t>
+            <div font='b'>
+                <t t-if="receipt.print_shop_address_id">
+                     <t t-if='receipt.print_shop_address_id.street'>
+                        <div><t t-esc='receipt.print_shop_address_id.street' /></div>
+                    </t>
+                    <t t-if='receipt.print_shop_address_id.street2'>
+                        <div><t t-esc='receipt.print_shop_address_id.street2' /></div>
+                    </t>
+                    <div t-if="receipt.print_shop_address_id.zip or receipt.print_shop_address_id.city">
+                        <t t-if='receipt.print_shop_address_id.zip'>
+                            <t t-esc='receipt.print_shop_address_id.zip' />
+                        </t>
+                        <t t-if='receipt.print_shop_address_id.city'>
+                            <t t-esc='receipt.print_shop_address_id.city' />
+                        </t>
+                    </div>
+                    <t t-if='receipt.print_shop_address_id.phone'>
+                        <div>Tel:<t t-esc='receipt.print_shop_address_id.phone' /></div>
+                    </t>
+                </t>
+                <t t-if='receipt.company.vat'>
+                    <div>VAT:<t t-esc='receipt.company.vat' /></div>
+                </t>
+                <t t-if='receipt.company.website'>
+                    <div><t t-esc='receipt.company.website' /></div>
+                </t>
+                <t t-if="receipt.print_shop_address_id">
+                    <t t-if='receipt.print_shop_address_id.email'>
+                        <div><t t-esc='receipt.print_shop_address_id.email' /></div>
+                    </t>
+                </t>
+                <t t-if='!receipt.header_xml and receipt.header'>
+                    <div><t t-esc='receipt.header' /></div>
+                </t>
+                <t t-if='receipt.cashier'>
+                    <div font="a">
+                        <div line-ratio='2.6'>
+                        <br/>
+                            <t t-if='receipt.cashier'>
+                                <line>
+                                    <left>
+                                        <div>Served by: <t t-esc='receipt.cashier_name' /></div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="order.get_client()">
+                                <line>
+                                    <left>
+                                        <div>Customer: <t t-esc="order.get_client_name()"/></div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if='receipt.print_date_order'>
+                                <line>
+                                    <left>
+                                        <div>Date: <t t-esc='receipt.print_date_order' /></div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="!order.get('pos_reference')">
+                                <t t-if="order.name.split('Order ') and order.name.split('Order ')[1]">
+                                    <line>
+                                        <left>
+                                            <div>Order: <t t-esc="order.name.split('Order ')[1]"/></div>
+                                        </left>
+                                    </line>
+                                 </t>
+                            </t>
+                            <t t-if="order.get('pos_reference')">
+                                <t t-if="order.get('pos_reference').split('Order ') and order.get('pos_reference').split('Order ')[1]">
+                                    <line>
+                                        <left>
+                                            <div>Order: <t t-esc="order.get('pos_reference').split('Order ')[1]"/></div>
+                                        </left>
+                                    </line>
+                                </t>
+                            </t>
+
+                            <t t-if="order.reserved_delivery_date">
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-date">
+                                            Delivery Date: <t t-esc="order.reserved_delivery_date"/><br />
+                                        </div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="order.internal_reservation">
+                                <line>
+                                    <left>
+                                        <div>
+                                            Delivery in:
+                                        </div>
+                                    </left>
+                                </line>
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-address">
+                                            <t t-esc="order.get_destination_name()" /><br />
+                                        </div>
+                                    </left>
+                                </line>
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-date">
+                                            Type: Special Command
+                                        </div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="order.reserved_delivery_date and !order.internal_reservation">
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-date">
+                                            Type: Reservation
+                                        </div>
+                                    </left>
+                                </line>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </div>
+
+            <!-- Orderlines -->
+
+            <div class='orderlines' line-ratio='0.6'>
+                 <line>
+                     <left>
+                         <t t-esc="'________________________'"/>
+                     </left>
+                     <right>
+                         <t t-esc="'________________________'"/>
+                     </right>
+                 </line>
+                 <line bold="on">
+                     <left>
+                         <div>Description</div>
+                     </left>
+                    <right>Amount </right>
+                </line>
+                <line>
+                    <left>
+                        <t t-esc="'________________________'"/>
+                    </left>
+                    <right>
+                        <t t-esc="'________________________'"/>
+                    </right>
+                </line>
+                <t t-as="orderline" t-foreach="orderlines">
+                    <t t-if="! orderline.zero_charges">
+                        <line>
+                            <left>
+                                <t t-esc='orderline.generate_wrapped_orderline_product_name()[0]' />
+                            </left>
+                            <right >
+                                <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                            </right>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductNameOrderLines"/>
+                        <line indent="1">
+                            <left>
+                                <t t-esc='orderline.generate_wrapped_orderline_attributes()[0]' />
+                            </left>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductAttributeNameOrderLines"/>
+                    </t>
+                </t>
+                <line>
+                    <left>
+                        <t t-esc="'------------------------'"/>
+                    </left>
+                    <right>
+                        <t t-esc="'------------------------'"/>
+                    </right>
+                </line>
+            </div>
+
+            <!-- Subtotal -->
+            <div line-ratio='0.1'>
+                <line>
+                    <right>Subtotal: <t t-esc="widget.format_currency(order.get_total_without_tax())"/></right>
+                </line>
+            </div>
+            <t t-as="taxdetail" t-foreach="order.get_tax_details()">
+                <div line-ratio='0.1'>
+                    <line>
+                        <right><t t-esc='taxdetail.name' />: <t t-esc='widget.format_currency(taxdetail.amount)'/></right>
+                    </line>
+                </div>
+            </t>
+            <line>
+                <right>
+                    <t t-esc="'------------------------'"/>
+                </right>
+            </line>
+
+            <!-- Total -->
+
+            <div line-ratio='0.1'>
+                <line>
+                    <right>Total:  <t t-esc="widget.format_currency(order.get_total_with_tax())"/></right>
+                </line>
+                 <t t-if="order.get_new_total().is_loyalty_payment">
+                    <line>
+                        <right>Loyalty used: <t t-esc="widget.format_currency(order.get_new_total().total_loyalty_used * -1)"/></right>
+                    </line>
+                    <line>
+                        <right>
+                            <t t-esc="'------------------------'"/>
+                        </right>
+                    </line>
+                    <line>
+                        <right>New Total: <t t-esc="widget.format_currency(order.get_new_total().new_total)"/></right>
+                    </line>
+                 </t>
+            </div>
+            <br/><br/>
+
+            <!-- Payment Lines -->
+
+            <t t-foreach='order.get_journal()' t-as='line'>
+                 <t t-if="widget.pos.config.enable_loyalty and
+                                     widget.pos.config.loyalty_journal[0] != line.journal_id">
+                    <div line-ratio='0.1' t-if ="line['amount'] &gt;0">
+                        <line >
+                             <right>
+                                 <b>
+                                    <t t-if="line['print_journal_name']">
+                                         <t t-esc="line['print_journal_name']" />: <t t-esc="widget.format_currency(line['amount'])"/>
+                                    </t>
+                                    <t t-if="! line['print_journal_name']">
+                                        <t t-esc="line['journal']" />: <t t-esc="widget.format_currency(line['amount'])"/>
+                                    </t>
+                                </b>
+                            </right>
+                        </line>
+                    </div>
+                </t>
+                <t t-if="!widget.pos.config.enable_loyalty">
+                    <div line-ratio='0.1' t-if ="line['amount'] &gt;0">
+                        <line >
+                             <right>
+                                 <b>
+                                    <t t-if="line['print_journal_name']">
+                                         <t t-esc="line['print_journal_name']" />: <t t-esc="widget.format_currency(line['amount'])"/>
+                                    </t>
+                                    <t t-if="! line['print_journal_name']">
+                                        <t t-esc="line['journal']" />: <t t-esc="widget.format_currency(line['amount'])"/>
+                                    </t>
+                                </b>
+                            </right>
+                        </line>
+                    </div>
+                </t>
+            </t>
+            <br/>
+
+            <t t-if="order.get_amount_return()">
+                <div line-ratio='0.1'>
+                    <line>
+                        <right>CHANGE: <t t-esc='widget.format_currency(order.get_amount_return())' /></right>
+                    </line>
+                </div>
+            </t>
+            <br/>
+
+            <!-- Extra Payment Info -->
+
+           <div line-ratio='0.1'>
+               <t t-if="order.get_remaning() &gt;0">
+                    <line>
+                        <right>Remaning: <t t-esc="widget.format_currency(order.get_remaning())"/></right>
+                    </line>
+                </t>
+                <t t-if='(order.print_redeem_amount or order.print_won_amount) and order.total_loyalty_amounts and order.get_total_loyalty_amounts()'>
+                    <line>
+                        <right>Loyalty Amounts: <t t-esc='widget.format_currency(order.get_total_loyalty_amounts())' /></right>
+                    </line>
+                </t>
+           </div>
+
+            <t t-if='receipt.barcode_src'>
+                <br/>
+                <img t-att-src="receipt.barcode_src"/>
+                <div t-if="receipt.barcode_val" align='center'>
+                    <t t-esc="receipt.barcode_val"/>
+                </div>
+            </t>
+
+            <!--  Gift Card Ticket -->
+            <t t-if="receipt.gift_card_details">
+                <t t-foreach="receipt.gift_card_details" t-as="gift_card_detail">
+                    <t t-if="gift_card_detail and
+                             receipt.gift_card_details[gift_card_detail] and
+                             receipt.gift_card_details[gift_card_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Card Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.gift_card_details[gift_card_detail]['data']" t-as="giftcard">
+                                <line>
+                                    <left>Card No.:</left>
+                                    <right>
+                                        <t t-esc="giftcard['giftcard_card_no']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Expire Date:</left>
+                                    <right>
+                                        <t t-esc="giftcard['giftcard_expire_date_format']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Card Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(giftcard['giftcard_amount'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.gift_card_details[gift_card_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.gift_card_details[gift_card_detail]['src']"/>
+                            <div t-if="receipt.gift_card_details[gift_card_detail]['card_no']" align='center'>
+                                <t t-esc="receipt.gift_card_details[gift_card_detail]['card_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <!--  Redeem Gift Card Ticket -->
+            <t t-if="receipt.redeem_giftcard_details">
+                <t t-foreach="receipt.redeem_giftcard_details" t-as="redeem_giftcard_detail">
+                    <t t-if="redeem_giftcard_detail and
+                             receipt.redeem_giftcard_details[redeem_giftcard_detail] and
+                             receipt.redeem_giftcard_details[redeem_giftcard_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Card Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.redeem_giftcard_details[redeem_giftcard_detail]['data']" t-as="redeem">
+                                <line>
+                                    <left>Card No.:</left>
+                                    <right>
+                                        <t t-esc="redeem['redeem_card']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Card Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.redeem_giftcard_details[redeem_giftcard_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.redeem_giftcard_details[redeem_giftcard_detail]['src']"/>
+                            <div t-if="receipt.redeem_giftcard_details[redeem_giftcard_detail]['card_no']" align='center'>
+                                <t t-esc="receipt.redeem_giftcard_details[redeem_giftcard_detail]['card_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <!--  Credit Voucher Ticket -->
+            <t t-if="receipt.credit_voucher_details">
+                <t t-foreach="receipt.credit_voucher_details" t-as="credit_voucher_detail">
+                    <t t-if="credit_voucher_detail and
+                             receipt.credit_voucher_details[credit_voucher_detail] and
+                             receipt.credit_voucher_details[credit_voucher_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Credit Voucher Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.credit_voucher_details[credit_voucher_detail]['data']" t-as="creditvoucher">
+                                <t t-if="creditvoucher['credit_voucher_customer_name']">
+                                    <line>
+                                        <left>Customer:</left>
+                                        <right>
+                                            <t t-esc="creditvoucher['credit_voucher_customer_name']" />
+                                        </right>
+                                    </line>
+                                </t>
+                                <line>
+                                    <left>Voucher No.:</left>
+                                    <right>
+                                        <t t-esc="creditvoucher['credit_voucher_no']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Expire Date:</left>
+                                    <right>
+                                        <t t-esc="creditvoucher['credit_voucher_expire_format']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(creditvoucher['credit_voucher_amount'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.credit_voucher_details[credit_voucher_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.credit_voucher_details[credit_voucher_detail]['src']"/>
+                            <div t-if="receipt.credit_voucher_details[credit_voucher_detail]['voucher_no']" align='center'>
+                                <t t-esc="receipt.credit_voucher_details[credit_voucher_detail]['voucher_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <!--  Redeem Credit Voucher Ticket -->
+            <t t-if="receipt.redeem_credit_voucher_details">
+                <t t-foreach="receipt.redeem_credit_voucher_details" t-as="redeem_credit_voucher_detail">
+                    <t t-if="redeem_credit_voucher_detail and
+                             receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail] and
+                             receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Credit Voucher Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['data']" t-as="redeem">
+                                <line>
+                                    <left>Customer:</left>
+                                    <right>
+                                        <t t-esc="redeem['customer_name']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Voucher No.:</left>
+                                    <right>
+                                        <t t-esc="redeem['redeem_credit_voucher']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['src']"/>
+                            <div t-if="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['voucher_no']" align='center'>
+                                <t t-esc="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['voucher_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <div class='before-footer' />
+
+            <!-- Footer -->
+
+            <t t-if='!receipt.footer_xml and receipt.footer'>
+                <line>
+                     <left>
+                         <t t-esc="'________________________'"/>
+                     </left>
+                     <right>
+                         <t t-esc="'________________________'"/>
+                     </right>
+                 </line>
+                <br/>
+                <t t-esc='receipt.footer' />
+                <br/>
+            </t>
+
+            <div class='after-footer' />
+
+        </receipt>
+    </t>
+
+    <t t-name="RePrintReservationXmlReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <t t-if='receipt.print_shop_address_id and receipt.print_shop_address_id.logo'>
+                <img t-att-src='receipt.print_shop_address_id.logo' />
+                <br/>
+            </t>
+            <t t-if="receipt.print_shop_address_id and !receipt.print_shop_address_id.logo">
+                <div><t t-esc="receipt.print_shop_address_id.name"/></div>
+                <br/>
+            </t>
+            <div font='b'>
+                <t t-if="receipt.print_shop_address_id">
+                     <t t-if='receipt.print_shop_address_id.street'>
+                        <div><t t-esc='receipt.print_shop_address_id.street' /></div>
+                    </t>
+                    <t t-if='receipt.print_shop_address_id.street2'>
+                        <div><t t-esc='receipt.print_shop_address_id.street2' /></div>
+                    </t>
+                    <div t-if="receipt.print_shop_address_id.zip or receipt.print_shop_address_id.city">
+                        <t t-if='receipt.print_shop_address_id.zip'>
+                            <t t-esc='receipt.print_shop_address_id.zip' />
+                        </t>
+                        <t t-if='receipt.print_shop_address_id.city'>
+                            <t t-esc='receipt.print_shop_address_id.city' />
+                        </t>
+                    </div>
+                    <t t-if='receipt.print_shop_address_id.phone'>
+                        <div>Tel:<t t-esc='receipt.print_shop_address_id.phone' /></div>
+                    </t>
+                </t>
+                <t t-if='receipt.company.vat'>
+                    <div>VAT:<t t-esc='receipt.company.vat' /></div>
+                </t>
+                <t t-if='receipt.company.website'>
+                    <div><t t-esc='receipt.company.website' /></div>
+                </t>
+                <t t-if="receipt.print_shop_address_id">
+                    <t t-if='receipt.print_shop_address_id.email'>
+                        <div><t t-esc='receipt.print_shop_address_id.email' /></div>
+                    </t>
+                </t>
+                <t t-if='!receipt.header_xml and receipt.header'>
+                    <div><t t-esc='receipt.header' /></div>
+                </t>
+                <t t-if='receipt.cashier'>
+                    <div font="a">
+                        <div line-ratio='2.6'>
+                        <br/>
+                            <t t-if='receipt.cashier'>
+                                <line>
+                                    <left>
+                                        <div>Served by: <t t-esc='receipt.cashier_name' /></div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="order.get_client()">
+                                <line>
+                                    <left>
+                                        <div>Customer: <t t-esc="order.get_client_name()"/></div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if='receipt.print_date_order'>
+                                <line>
+                                    <left>
+                                        <div>Date: <t t-esc='receipt.print_date_order' /></div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="!order.get('pos_reference')">
+                                <t t-if="order.name.split('Order ') and order.name.split('Order ')[1]">
+                                    <line>
+                                        <left>
+                                            <div>Order: <t t-esc="order.name.split('Order ')[1]"/></div>
+                                        </left>
+                                    </line>
+                                 </t>
+                            </t>
+                            <t t-if="order.get('pos_reference')">
+                                <t t-if="order.get('pos_reference').split('Order ') and order.get('pos_reference').split('Order ')[1]">
+                                    <line>
+                                        <left>
+                                            <div>Order: <t t-esc="order.get('pos_reference').split('Order ')[1]"/></div>
+                                        </left>
+                                    </line>
+                                </t>
+                            </t>
+
+                            <t t-if="order.reserved_delivery_date">
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-date">
+                                            Delivery Date: <t t-esc="order.reserved_delivery_date"/><br />
+                                        </div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="order.internal_reservation">
+                                <line>
+                                    <left>
+                                        <div>
+                                            Delivery in:
+                                        </div>
+                                    </left>
+                                </line>
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-address">
+                                            <t t-esc="order.get_destination_name()" /><br />
+                                        </div>
+                                    </left>
+                                </line>
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-date">
+                                            Type: Special Command
+                                        </div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="order.reserved_delivery_date and !order.internal_reservation">
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-date">
+                                            Type: Reservation
+                                        </div>
+                                    </left>
+                                </line>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </div>
+
+            <!-- Orderlines -->
+
+            <div class='orderlines' line-ratio='0.6'>
+                 <line>
+                     <left>
+                         <t t-esc="'________________________'"/>
+                     </left>
+                     <right>
+                         <t t-esc="'________________________'"/>
+                     </right>
+                 </line>
+                 <line bold="on">
+                     <left>
+                         <div>Description</div>
+                     </left>
+                    <right>Amount </right>
+                </line>
+                <line>
+                    <left>
+                        <t t-esc="'________________________'"/>
+                    </left>
+                    <right>
+                        <t t-esc="'________________________'"/>
+                    </right>
+                </line>
+                <t t-as="orderline" t-foreach="orderlines">
+                    <t t-if="orderline.advance_pay">
+                        <line>
+                            <left>
+                                <t t-esc='orderline.generate_wrapped_orderline_product_name()[0]' />
+                            </left>
+                            <right >
+                                <t t-esc="widget.format_currency(orderline.get_display_price() * -1)"/>
+                            </right>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductNameOrderLines"/>
+                        <line indent="1">
+                            <left>
+                                <t t-esc='orderline.generate_wrapped_orderline_attributes()[0]' />
+                            </left>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductAttributeNameOrderLines"/>
+                    </t>
+                </t>
+                <line>
+                    <left>
+                        <t t-esc="'------------------------'"/>
+                    </left>
+                    <right>
+                        <t t-esc="'------------------------'"/>
+                    </right>
+                </line>
+            </div>
+
+            <!-- Subtotal -->
+            <div line-ratio='0.1'>
+                <line>
+                    <right>Subtotal: <t t-esc="widget.format_currency(order.get_reservation_total_without_tax() * -1 )"/></right>
+                </line>
+            </div>
+            <t t-as="taxdetail" t-foreach="order.get_reservation_tax_details()">
+                <div line-ratio='0.1'>
+                    <line>
+                        <right><t t-esc='taxdetail.name' />: <t t-esc='widget.format_currency(taxdetail.amount * -1)'/></right>
+                    </line>
+                </div>
+            </t>
+            <line>
+                <right>
+                    <t t-esc="'------------------------'"/>
+                </right>
+            </line>
+
+            <!-- Total -->
+
+            <div line-ratio='0.1'>
+                <line>
+                    <right>Total: <t t-esc="widget.format_currency(order.get_reservation_total_with_tax() * -1)"/></right>
+                </line>
+            </div>
+            <br/><br/>
+
+            <!-- Payment Lines -->
+
+            <t t-foreach='order.get_rjournal()' t-as='line'>
+                 <t t-if="widget.pos.config.enable_loyalty and
+                                     widget.pos.config.loyalty_journal[0] != line.journal_id">
+                    <div line-ratio='0.1' t-if ="line['amount'] &gt;0">
+                         <line >
+                             <right>
+                                <b>
+                                    <t t-if="line['print_journal_name']">
+                                        <t t-esc="line['print_journal_name']" />: <t t-esc="widget.format_currency(line['amount'])"/>
+                                    </t>
+                                    <t t-if="!line['print_journal_name']">
+                                        <t t-esc="line['journal']" />: <t t-esc="widget.format_currency(line['amount'])"/>
+                                    </t>
+                                </b>
+                            </right>
+                        </line>
+                    </div>
+                </t>
+                <t t-if="! widget.pos.config.enable_loyalty">
+                    <div line-ratio='0.1' t-if ="line['amount'] &gt;0">
+                         <line >
+                             <right>
+                                <b>
+                                    <t t-if="line['print_journal_name']">
+                                        <t t-esc="line['print_journal_name']" />: <t t-esc="widget.format_currency(line['amount'])"/>
+                                    </t>
+                                    <t t-if="!line['print_journal_name']">
+                                        <t t-esc="line['journal']" />: <t t-esc="widget.format_currency(line['amount'])"/>
+                                    </t>
+                                </b>
+                            </right>
+                        </line>
+                    </div>
+                </t>
+            </t>
+
+            <br/><br/>
+            <div line-ratio='0.6'>
+                <line bold="on">
+                     <left>Advance payment for: </left>
+                </line>
+            </div>
+            <br/>
+
+            <div class='orderlines' line-ratio='0.6'>
+                 <line>
+                     <left>
+                         <t t-esc="'________________________'"/>
+                     </left>
+                     <right>
+                         <t t-esc="'________________________'"/>
+                     </right>
+                 </line>
+                 <line bold="on">
+                     <left>
+                         <div>Description</div>
+                     </left>
+                    <right>Amount </right>
+                </line>
+                <line>
+                    <left>
+                        <t t-esc="'________________________'"/>
+                    </left>
+                    <right>
+                        <t t-esc="'________________________'"/>
+                    </right>
+                </line>
+                <t t-as="orderline" t-foreach="orderlines">
+                    <t t-if="! orderline.zero_charges and ! orderline.advance_pay">
+                        <line>
+                            <left>
+                                <t t-esc='orderline.generate_wrapped_orderline_product_name()[0]' />
+                            </left>
+                            <right >
+                                <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                            </right>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductNameOrderLines"/>
+                        <line indent="1">
+                            <left>
+                                <t t-esc='orderline.generate_wrapped_orderline_attributes()[0]' />
+                            </left>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductAttributeNameOrderLines"/>
+                    </t>
+                </t>
+                <line>
+                    <left>
+                        <t t-esc="'------------------------'"/>
+                    </left>
+                    <right>
+                        <t t-esc="'------------------------'"/>
+                    </right>
+                </line>
+            </div>
+            <!-- Subtotal -->
+            <div line-ratio='0.1'>
+                <line>
+                    <right>Subtotal: <t t-esc="widget.format_currency(order.get_without_reservation_total_without_tax())"/></right>
+                </line>
+            </div>
+            <t t-as="taxdetail" t-foreach="order.get_without_reservation_tax_details()">
+                <div line-ratio='0.1'>
+                    <line>
+                        <right><t t-esc='taxdetail.name' />: <t t-esc='widget.format_currency(taxdetail.amount)'/></right>
+                    </line>
+                </div>
+            </t>
+            <line>
+                <right>
+                    <t t-esc="'------------------------'"/>
+                </right>
+            </line>
+
+            <!-- Total -->
+
+            <div line-ratio='0.1'>
+                <line>
+                    <right>Total:  <t t-esc="widget.format_currency(order.get_without_reservation_total_with_tax())"/></right>
+                </line>
+                 <t t-if="order.get_new_total().is_loyalty_payment">
+                    <line>
+                        <right>Loyalty used: <t t-esc="widget.format_currency(order.get_new_total().total_loyalty_used * -1)"/></right>
+                    </line>
+                    <line>
+                        <right>
+                            <t t-esc="'------------------------'"/>
+                        </right>
+                    </line>
+                    <line>
+                        <right>New Total: <t t-esc="widget.format_currency(order.get_new_total().new_total)"/></right>
+                    </line>
+                 </t>
+            </div>
+            <br/><br/>
+
+
+            <!-- Extra Payment Info -->
+
+           <div line-ratio='0.1'>
+               <t t-if="order.get_remaning() &gt;0 ">
+                    <line>
+                        <right>Remaning: <t t-esc="widget.format_currency(order.get_remaning())"/></right>
+                    </line>
+                </t>
+                <t t-if='(order.print_redeem_amount or order.print_won_amount) and order.total_loyalty_amounts and order.get_total_loyalty_amounts()'>
+                    <line>
+                        <right>Loyalty Amounts: <t t-esc='widget.format_currency(order.get_total_loyalty_amounts())' /></right>
+                    </line>
+                </t>
+           </div>
+
+            <t t-if='receipt.barcode_src'>
+                <br/>
+                <img t-att-src="receipt.barcode_src"/>
+                <div t-if="receipt.barcode_val" align='center'>
+                    <t t-esc="receipt.barcode_val"/>
+                </div>
+            </t>
+
+            <!--  Gift Card Ticket -->
+            <t t-if="receipt.gift_card_details">
+                <t t-foreach="receipt.gift_card_details" t-as="gift_card_detail">
+                    <t t-if="gift_card_detail and
+                             receipt.gift_card_details[gift_card_detail] and
+                             receipt.gift_card_details[gift_card_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Card Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.gift_card_details[gift_card_detail]['data']" t-as="giftcard">
+                                <line>
+                                    <left>Card No.:</left>
+                                    <right>
+                                        <t t-esc="giftcard['giftcard_card_no']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Expire Date:</left>
+                                    <right>
+                                        <t t-esc="giftcard['giftcard_expire_date_format']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Card Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(giftcard['giftcard_amount'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.gift_card_details[gift_card_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.gift_card_details[gift_card_detail]['src']"/>
+                            <div t-if="receipt.gift_card_details[gift_card_detail]['card_no']" align='center'>
+                                <t t-esc="receipt.gift_card_details[gift_card_detail]['card_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <!--  Redeem Gift Card Ticket -->
+            <t t-if="receipt.redeem_giftcard_details">
+                <t t-foreach="receipt.redeem_giftcard_details" t-as="redeem_giftcard_detail">
+                    <t t-if="redeem_giftcard_detail and
+                             receipt.redeem_giftcard_details[redeem_giftcard_detail] and
+                             receipt.redeem_giftcard_details[redeem_giftcard_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Card Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.redeem_giftcard_details[redeem_giftcard_detail]['data']" t-as="redeem">
+                                <line>
+                                    <left>Card No.:</left>
+                                    <right>
+                                        <t t-esc="redeem['redeem_card']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Card Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.redeem_giftcard_details[redeem_giftcard_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.redeem_giftcard_details[redeem_giftcard_detail]['src']"/>
+                            <div t-if="receipt.redeem_giftcard_details[redeem_giftcard_detail]['card_no']" align='center'>
+                                <t t-esc="receipt.redeem_giftcard_details[redeem_giftcard_detail]['card_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <!--  Credit Voucher Ticket -->
+            <t t-if="receipt.credit_voucher_details">
+                <t t-foreach="receipt.credit_voucher_details" t-as="credit_voucher_detail">
+                    <t t-if="credit_voucher_detail and
+                             receipt.credit_voucher_details[credit_voucher_detail] and
+                             receipt.credit_voucher_details[credit_voucher_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Credit Voucher Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.credit_voucher_details[credit_voucher_detail]['data']" t-as="creditvoucher">
+                                <t t-if="creditvoucher['credit_voucher_customer_name']">
+                                    <line>
+                                        <left>Customer:</left>
+                                        <right>
+                                            <t t-esc="creditvoucher['credit_voucher_customer_name']" />
+                                        </right>
+                                    </line>
+                                </t>
+                                <line>
+                                    <left>Voucher No.:</left>
+                                    <right>
+                                        <t t-esc="creditvoucher['credit_voucher_no']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Expire Date:</left>
+                                    <right>
+                                        <t t-esc="creditvoucher['credit_voucher_expire_format']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(creditvoucher['credit_voucher_amount'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.credit_voucher_details[credit_voucher_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.credit_voucher_details[credit_voucher_detail]['src']"/>
+                            <div t-if="receipt.credit_voucher_details[credit_voucher_detail]['voucher_no']" align='center'>
+                                <t t-esc="receipt.credit_voucher_details[credit_voucher_detail]['voucher_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <!--  Redeem Credit Voucher Ticket -->
+            <t t-if="receipt.redeem_credit_voucher_details">
+                <t t-foreach="receipt.redeem_credit_voucher_details" t-as="redeem_credit_voucher_detail">
+                    <t t-if="redeem_credit_voucher_detail and
+                             receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail] and
+                             receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Credit Voucher Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['data']" t-as="redeem">
+                                <line>
+                                    <left>Customer:</left>
+                                    <right>
+                                        <t t-esc="redeem['customer_name']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Voucher No.:</left>
+                                    <right>
+                                        <t t-esc="redeem['redeem_credit_voucher']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['src']"/>
+                            <div t-if="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['voucher_no']" align='center'>
+                                <t t-esc="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['voucher_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <div class='before-footer' />
+
+            <!-- Footer -->
+
+            <t t-if='!receipt.footer_xml and receipt.footer'>
+                <line>
+                     <left>
+                         <t t-esc="'________________________'"/>
+                     </left>
+                     <right>
+                         <t t-esc="'________________________'"/>
+                     </right>
+                 </line>
+                <br/>
+                <t t-esc='receipt.footer' />
+                <br/>
+            </t>
+
+            <div class='after-footer' />
+
+        </receipt>
+    </t>
+
+    <t t-name="PrintReservationXmlReceipt">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <t t-if='receipt.shop_address_id.logo'>
+                <img t-att-src='receipt.shop_address_id.logo' />
+                <br/>
+            </t>
+            <t t-if="!receipt.shop_address_id.logo">
+                <div><t t-esc="receipt.shop_address_id.name"/></div>
+                <br/>
+            </t>
+            <div font='b'>
+                <t t-if='receipt.company.contact_address'>
+                    <div><t t-esc='receipt.company.contact_address' /></div>
+                </t>
+                <t t-if='receipt.shop_address_id.street'>
+                    <div><t t-esc='receipt.shop_address_id.street' /></div>
+                </t>
+                <t t-if='receipt.shop_address_id.street2'>
+                    <div><t t-esc='receipt.shop_address_id.street2' /></div>
+                </t>
+                <div t-if="receipt.shop_address_id.zip or receipt.shop_address_id.city">
+                     <t t-if='receipt.shop_address_id.zip'>
+                        <t t-esc='receipt.shop_address_id.zip' />
+                    </t>
+                    <t t-if='receipt.shop_address_id.city'>
+                        <t t-esc='receipt.shop_address_id.city' />
+                    </t>
+                </div>
+                <t t-if='receipt.shop_address_id.phone'>
+                    <div>Tel:<t t-esc='receipt.shop_address_id.phone' /></div>
+                </t>
+                <t t-if='receipt.company.vat'>
+                    <div>VAT:<t t-esc='receipt.company.vat' /></div>
+                </t>
+                <t t-if='receipt.company.website'>
+                    <div><t t-esc='receipt.company.website' /></div>
+                </t>
+                <t t-if='receipt.shop_address_id.email'>
+                    <div><t t-esc='receipt.shop_address_id.email' /></div>
+                </t>
+                <t t-if='!receipt.header_xml and receipt.header'>
+                    <div><t t-esc='receipt.header' /></div>
+                </t>
+                <t t-if='receipt.cashier'>
+                    <div font="a">
+                        <div line-ratio='2.6'>
+                        <br/>
+                            <t t-if='receipt.cashier'>
+                                <line>
+                                    <left>
+                                        <div>Served by: <t t-esc='receipt.cashier_name' /></div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="order.get_client()">
+                                <line>
+                                    <left>
+                                        <div>Customer: <t t-esc="order.get_client_name()"/></div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if='receipt.date_order'>
+                                <line>
+                                    <left>
+                                        <div>Date: <t t-esc='receipt.date_order' /></div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="!order.get('pos_reference')">
+                                <t t-if="order.name.split('Order ') and order.name.split('Order ')[1]">
+                                    <line>
+                                        <left>
+                                            <div>Order: <t t-esc="order.name.split('Order ')[1]"/></div>
+                                        </left>
+                                    </line>
+                                 </t>
+                            </t>
+                            <t t-if="order.get('pos_reference')">
+                                <t t-if="order.get('pos_reference').split('Order ') and order.get('pos_reference').split('Order ')[1]">
+                                    <line>
+                                        <left>
+                                            <div>Order: <t t-esc="order.get('pos_reference').split('Order ')[1]"/></div>
+                                        </left>
+                                    </line>
+                                </t>
+                            </t>
+
+                            <t t-if="order.reserved_delivery_date">
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-date">
+                                            Delivery Date: <t t-esc="order.reserved_delivery_date"/><br />
+                                        </div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="order.internal_reservation">
+                                <line>
+                                    <left>
+                                        <div>
+                                            Delivery in:
+                                        </div>
+                                    </left>
+                                </line>
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-address">
+                                            <t t-esc="order.get_destination_name()" /><br />
+                                        </div>
+                                    </left>
+                                </line>
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-date">
+                                            Type: Special Command
+                                        </div>
+                                    </left>
+                                </line>
+                            </t>
+                            <t t-if="order.reserved_delivery_date and !order.internal_reservation">
+                                <line>
+                                    <left>
+                                        <div class="receipt-delivery-date">
+                                            Type: Reservation
+                                        </div>
+                                    </left>
+                                </line>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </div>
+
+            <!-- Orderlines -->
+
+            <div class='orderlines' line-ratio='0.6'>
+                 <line>
+                     <left>
+                         <t t-esc="'________________________'"/>
+                     </left>
+                     <right>
+                         <t t-esc="'________________________'"/>
+                     </right>
+                 </line>
+                 <line bold="on">
+                     <left>
+                         <div>Description</div>
+                     </left>
+                    <right>Amount </right>
+                </line>
+                <line>
+                    <left>
+                        <t t-esc="'________________________'"/>
+                    </left>
+                    <right>
+                        <t t-esc="'________________________'"/>
+                    </right>
+                </line>
+                <t t-as="orderline" t-foreach="orderlines">
+                    <t t-if="orderline.advance_pay">
+                        <line>
+                            <left>
+                                <t t-esc='orderline.generate_wrapped_orderline_product_name()[0]' />
+                            </left>
+                            <right >
+                                <t t-esc="widget.format_currency(orderline.get_display_price() * -1 )"/>
+                            </right>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductNameOrderLines"/>
+                        <line indent="1">
+                            <left>
+                                <t t-esc='orderline.generate_wrapped_orderline_attributes()[0]' />
+                            </left>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductAttributeNameOrderLines"/>
+                    </t>
+                </t>
+                <line>
+                    <left>
+                        <t t-esc="'------------------------'"/>
+                    </left>
+                    <right>
+                        <t t-esc="'------------------------'"/>
+                    </right>
+                </line>
+            </div>
+
+            <!-- Subtotal -->
+            <div line-ratio='0.1'>
+                <line>
+                    <right>Subtotal: <t t-esc="widget.format_currency(order.get_reservation_total_without_tax() * -1)"/></right>
+                </line>
+            </div>
+            <t t-as="taxdetail" t-foreach="order.get_reservation_tax_details()">
+                <div line-ratio='0.1'>
+                    <line>
+                        <right><t t-esc='taxdetail.name' />: <t t-esc='widget.format_currency(taxdetail.amount * -1)'/></right>
+                    </line>
+                </div>
+            </t>
+            <line>
+                <right>
+                    <t t-esc="'------------------------'"/>
+                </right>
+            </line>
+
+            <!-- Total -->
+
+            <div line-ratio='0.1'>
+                <line>
+                    <right>Total: <t t-esc="widget.format_currency(order.get_reservation_total_with_tax() * -1)"/></right>
+                </line>
+            </div>
+            <br/><br/>
+
+            <!-- Payment Lines -->
+
+            <t t-foreach='paymentlines' t-as='line'>
+                <t t-if="widget.pos.config.enable_loyalty and
+                                     widget.pos.config.loyalty_journal[0] != line.cashregister.journal_id[0]">
+                    <div line-ratio='0.1'>
+                        <line >
+                            <right>
+                                <b>
+                                     <t t-if="line.print_journal_name">
+                                            <t t-esc='line.print_journal_name' />: <t t-esc="widget.format_currency(line.get_amount())"/>
+                                     </t>
+                                     <t t-if="! line.print_journal_name">
+                                        <t t-esc='line.name' />: <t t-esc="widget.format_currency(line.get_amount())"/>
+                                     </t>
+                                </b>
+                            </right>
+                        </line>
+                    </div>
+                </t>
+                <t t-if="!widget.pos.config.enable_loyalty">
+                    <div line-ratio='0.1'>
+                         <line >
+                             <right>
+                                 <b>
+                                     <t t-if="line.print_journal_name">
+                                            <t t-esc='line.print_journal_name' />: <t t-esc="widget.format_currency(line.get_amount())"/>
+                                     </t>
+                                     <t t-if="! line.print_journal_name">
+                                         <t t-esc='line.name' />: <t t-esc="widget.format_currency(line.get_amount())"/>
+                                    </t>
+                                </b>
+                            </right>
+                        </line>
+                    </div>
+                </t>
+            </t>
+
+            <br/><br/>
+            <div line-ratio='0.6'>
+                <line bold="on">
+                     <left>Advance payment for: </left>
+                </line>
+            </div>
+            <br/>
+
+            <div class='orderlines' line-ratio='0.6'>
+                 <line>
+                     <left>
+                         <t t-esc="'________________________'"/>
+                     </left>
+                     <right>
+                         <t t-esc="'________________________'"/>
+                     </right>
+                 </line>
+                 <line bold="on">
+                     <left>
+                         <div>Description</div>
+                     </left>
+                    <right>Amount </right>
+                </line>
+                <line>
+                    <left>
+                        <t t-esc="'________________________'"/>
+                    </left>
+                    <right>
+                        <t t-esc="'________________________'"/>
+                    </right>
+                </line>
+                <t t-as="orderline" t-foreach="orderlines">
+                    <t t-if="! orderline.zero_charges and ! orderline.advance_pay">
+                        <line>
+                            <left>
+                                <t t-esc='orderline.generate_wrapped_orderline_product_name()[0]' />
+                            </left>
+                            <right >
+                                <t t-esc="widget.format_currency(orderline.get_display_price())"/>
+                            </right>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductNameOrderLines"/>
+                        <line indent="1">
+                            <left>
+                                <t t-esc='orderline.generate_wrapped_orderline_attributes()[0]' />
+                            </left>
+                        </line>
+                        <t t-call="XmlReceiptWrappedProductAttributeNameOrderLines"/>
+                    </t>
+                </t>
+                <line>
+                    <left>
+                        <t t-esc="'------------------------'"/>
+                    </left>
+                    <right>
+                        <t t-esc="'------------------------'"/>
+                    </right>
+                </line>
+            </div>
+            <!-- Subtotal -->
+            <div line-ratio='0.1'>
+                <line>
+                    <right>Subtotal: <t t-esc="widget.format_currency(order.get_without_reservation_total_without_tax())"/></right>
+                </line>
+            </div>
+            <t t-as="taxdetail" t-foreach="order.get_without_reservation_tax_details()">
+                <div line-ratio='0.1'>
+                    <line>
+                        <right><t t-esc='taxdetail.name' />: <t t-esc='widget.format_currency(taxdetail.amount)'/></right>
+                    </line>
+                </div>
+            </t>
+            <line>
+                <right>
+                    <t t-esc="'------------------------'"/>
+                </right>
+            </line>
+
+            <!-- Total -->
+
+            <div line-ratio='0.1'>
+                <line>
+                    <right>Total:  <t t-esc="widget.format_currency(order.get_without_reservation_total_with_tax())"/></right>
+                </line>
+                <t t-if="order.get_new_total().is_loyalty_payment">
+                    <line>
+                        <right><b>Loyalty used: <t t-esc="widget.format_currency(order.get_new_total().total_loyalty_used * -1)"/></b></right>
+                    </line>
+                    <line>
+                        <right>
+                            <t t-esc="'------------------------'"/>
+                        </right>
+                    </line>
+                    <line>
+                        <right>New Total: <t t-esc="widget.format_currency(order.get_new_total().new_total)"/></right>
+                    </line>
+                 </t>
+            </div>
+            <br/><br/>
+
+            <!-- Extra Payment Info -->
+
+           <div line-ratio='0.1'>
+               <t t-if="order.get_rdue() &gt;0 and ! order.reprint_receipt">
+                    <line>
+                        <right>Remaning: <t t-esc="widget.format_currency(order.get_rdue())"/></right>
+                    </line>
+                </t>
+                <t t-if='(order.redeem_loyalty_amount or order.won_loyalty_amounts) and order.total_loyalty_amounts and order.get_total_loyalty_amounts()'>
+                    <line>
+                        <right>Loyalty Amounts: <t t-esc='widget.format_currency(order.get_total_loyalty_amounts())' /></right>
+                    </line>
+                </t>
+           </div>
+
+            <t t-if='receipt.barcode_src'>
+                <br/>
+                <img t-att-src="receipt.barcode_src"/>
+                <div t-if="receipt.barcode_val" align='center'>
+                    <t t-esc="receipt.barcode_val"/>
+                </div>
+            </t>
+
+            <!--  Gift Card Ticket -->
+            <t t-if="receipt.gift_card_details">
+                <t t-foreach="receipt.gift_card_details" t-as="gift_card_detail">
+                    <t t-if="gift_card_detail and
+                             receipt.gift_card_details[gift_card_detail] and
+                             receipt.gift_card_details[gift_card_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Card Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.gift_card_details[gift_card_detail]['data']" t-as="giftcard">
+                                <line>
+                                    <left>Card No.:</left>
+                                    <right>
+                                        <t t-esc="giftcard['giftcard_card_no']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Expire Date:</left>
+                                    <right>
+                                        <t t-esc="giftcard['giftcard_expire_date_format']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Card Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(giftcard['giftcard_amount'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.gift_card_details[gift_card_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.gift_card_details[gift_card_detail]['src']"/>
+                            <div t-if="receipt.gift_card_details[gift_card_detail]['card_no']" align='center'>
+                                <t t-esc="receipt.gift_card_details[gift_card_detail]['card_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <!--  Redeem Gift Card Ticket -->
+            <t t-if="receipt.redeem_giftcard_details">
+                <t t-foreach="receipt.redeem_giftcard_details" t-as="redeem_giftcard_detail">
+                    <t t-if="redeem_giftcard_detail and
+                             receipt.redeem_giftcard_details[redeem_giftcard_detail] and
+                             receipt.redeem_giftcard_details[redeem_giftcard_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Card Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.redeem_giftcard_details[redeem_giftcard_detail]['data']" t-as="redeem">
+                                <line>
+                                    <left>Card No.:</left>
+                                    <right>
+                                        <t t-esc="redeem['redeem_card']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Card Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.redeem_giftcard_details[redeem_giftcard_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.redeem_giftcard_details[redeem_giftcard_detail]['src']"/>
+                            <div t-if="receipt.redeem_giftcard_details[redeem_giftcard_detail]['card_no']" align='center'>
+                                <t t-esc="receipt.redeem_giftcard_details[redeem_giftcard_detail]['card_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <!--  Credit Voucher Ticket -->
+            <t t-if="receipt.credit_voucher_details">
+                <t t-foreach="receipt.credit_voucher_details" t-as="credit_voucher_detail">
+                    <t t-if="credit_voucher_detail and
+                             receipt.credit_voucher_details[credit_voucher_detail] and
+                             receipt.credit_voucher_details[credit_voucher_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Credit Voucher Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.credit_voucher_details[credit_voucher_detail]['data']" t-as="creditvoucher">
+                                <t t-if="creditvoucher['credit_voucher_customer_name']">
+                                    <line>
+                                        <left>Customer:</left>
+                                        <right>
+                                            <t t-esc="creditvoucher['credit_voucher_customer_name']" />
+                                        </right>
+                                    </line>
+                                </t>
+                                <line>
+                                    <left>Voucher No.:</left>
+                                    <right>
+                                        <t t-esc="creditvoucher['credit_voucher_no']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Expire Date:</left>
+                                    <right>
+                                        <t t-esc="creditvoucher['credit_voucher_expire_format']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(creditvoucher['credit_voucher_amount'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.credit_voucher_details[credit_voucher_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.credit_voucher_details[credit_voucher_detail]['src']"/>
+                            <div t-if="receipt.credit_voucher_details[credit_voucher_detail]['voucher_no']" align='center'>
+                                <t t-esc="receipt.credit_voucher_details[credit_voucher_detail]['voucher_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <!--  Redeem Credit Voucher Ticket -->
+            <t t-if="receipt.redeem_credit_voucher_details">
+                <t t-foreach="receipt.redeem_credit_voucher_details" t-as="redeem_credit_voucher_detail">
+                    <t t-if="redeem_credit_voucher_detail and
+                             receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail] and
+                             receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['data']">
+                        <br />
+                        <div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <div style="text-align:center;"> Credit Voucher Details </div>
+                            <line>
+                                <left>
+                                    <t t-esc="'------------------------'"/>
+                                </left>
+                                <right>
+                                    <t t-esc="'------------------------'"/>
+                                </right>
+                            </line>
+                            <t t-foreach="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['data']" t-as="redeem">
+                                <line>
+                                    <left>Customer:</left>
+                                    <right>
+                                        <t t-esc="redeem['customer_name']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Voucher No.:</left>
+                                    <right>
+                                        <t t-esc="redeem['redeem_credit_voucher']" />
+                                    </right>
+                                </line>
+                                <line>
+                                    <left>Balance:</left>
+                                    <right>
+                                        <t t-esc="widget.format_currency(redeem['redeem_remaining'])" />
+                                    </right>
+                                </line>
+                            </t>
+                        </div>
+                        <t t-if="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['src']">
+                            <br/>
+                            <img t-att-src="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['src']"/>
+                            <div t-if="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['voucher_no']" align='center'>
+                                <t t-esc="receipt.redeem_credit_voucher_details[redeem_credit_voucher_detail]['voucher_no']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+
+            <div class='before-footer' />
+
+            <!-- Footer -->
+
+            <t t-if='!receipt.footer_xml and receipt.footer'>
+                <line>
+                     <left>
+                         <t t-esc="'________________________'"/>
+                     </left>
+                     <right>
+                         <t t-esc="'________________________'"/>
+                     </right>
+                 </line>
+                <br/>
+                <t t-esc='receipt.footer' />
+                <br/>
+            </t>
+
+            <div class='after-footer' />
+
+        </receipt>
+    </t>
+
+    <t t-name="SaleDetailsReport">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <t t-if='pos.company_logo_base64'>
+                <img t-att-src='pos.company_logo_base64' />
+                <br/>
+            </t>
+            <t t-if='!pos.company_logo_base64'>
+                <h1><t t-esc='company.name' /></h1>
+                <br/>
+            </t>
+            <br /><br />
+
+            <line>
+                <left>Payments:</left>
+            </line>
+            <line t-foreach='payments' t-as='payment'>
+                <left><t t-esc='payment.name' /></left>
+                <right>
+                    <t t-esc='widget.format_currency_no_symbol(payment.total)'/>
+                </right>
+            </line>
+
+            <br/>
+            <line><left>------------------------</left></line>
+            <br/>
+
+            <line>
+                <left>Taxes:</left>
+            </line>
+            <line t-foreach='taxes' t-as='taxe'>
+                <left><t t-esc='taxe.name' /></left>
+                <right>
+                    <t t-esc='widget.format_currency_no_symbol(taxe.total)'/>
+                </right>
+            </line>
+
+            <br/>
+            <line><left>------------------------</left></line>
+            <br/>
+
+            <line>
+                <left>Total:</left>
+                <right>
+                    <t t-esc='widget.format_currency_no_symbol(total_paid)'/>
+                </right>
+            </line>
+
+            <br/>
+            <div font='b'>
+                <div><t t-esc='date' /></div>
+            </div>
+
+        </receipt>
+    </t>
+
+</templates>

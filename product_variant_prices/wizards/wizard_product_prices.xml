@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="princess_variant_prices_product_prices_wizard_form" model="ir.ui.view">
+        <field name="name">princess.variant.prices.product.prices.wizard.form</field>
+        <field name="model">wizard.product.prices</field>
+        <field name="arch" type="xml">
+            <form string="Product Prices">
+                <group>
+                    <field name="pricelist_id"/>
+                    <field name="filter_search"/>
+                    <field name="product_prices_ids" widget="one2many_list">
+                        <tree editable="bottom" edit="1" create="1" delete="1">
+                            <field name="attribute_ids" widget="many2many_tags"
+                                   invisible="1"/>
+                            <field name="attribute_view_ids" widget="many2many_tags"
+                                   readonly="1"/>
+                            <field name="sales_price"/>
+                            <field name="purchase_price"/>
+                            <field name="margin" readonly="1"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button string="Save" name="save_changes" type="object" class="btn-primary" default_focus="1"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <act_window id="wizard_product_prices_action"
+                name="Manage Prices"
+                multi="False"
+                res_model="wizard.product.prices"
+                src_model="product.template"
+                view_mode="form"
+                target="new"
+                view_type="form"
+    />
+</odoo>

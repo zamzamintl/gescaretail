@@ -1,0 +1,121 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_barcode_generator
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0e+e-latest_20180501-072020-UTC-devel\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-25 12:58+0000\n"
+"PO-Revision-Date: 2018-06-25 12:58+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_barcode_generator
+#: model:ir.model.fields,field_description:product_barcode_generator.field_ir_sequence_barcode_sequence
+msgid "Barcode Sequence"
+msgstr "Barcode Reeks"
+
+#. module: product_barcode_generator
+#: model:ir.ui.view,arch_db:product_barcode_generator.product_product_barcode_popup_view
+msgid "Cancel"
+msgstr "Annuleren"
+
+#. module: product_barcode_generator
+#: model:ir.model,name:product_barcode_generator.model_res_company
+msgid "Companies"
+msgstr "Bedrijven"
+
+#. module: product_barcode_generator
+#: model:ir.model.fields,field_description:product_barcode_generator.field_product_product_barcodegen_create_uid
+msgid "Created by"
+msgstr "Gemaakt door"
+
+#. module: product_barcode_generator
+#: model:ir.model.fields,field_description:product_barcode_generator.field_product_product_barcodegen_create_date
+msgid "Created on"
+msgstr "Gemaakt op"
+
+#. module: product_barcode_generator
+#: model:ir.model.fields,field_description:product_barcode_generator.field_product_product_barcodegen_display_name
+msgid "Display Name"
+msgstr "Schermnaam"
+
+#. module: product_barcode_generator
+#: model:ir.model.fields,field_description:product_barcode_generator.field_product_category_ean_sequence_id
+#: model:ir.model.fields,field_description:product_barcode_generator.field_product_product_ean_sequence_id
+#: model:ir.model.fields,field_description:product_barcode_generator.field_res_company_ean_sequence_id
+msgid "Ean Sequence"
+msgstr "Ean Reeks"
+
+#. module: product_barcode_generator
+#: model:ir.model,name:product_barcode_generator.model_product_product_barcodegen
+msgid "Export invoices to factoring import files"
+msgstr "Export invoices to factoring import files"
+
+#. module: product_barcode_generator
+#: model:ir.ui.view,arch_db:product_barcode_generator.product_product_barcode_popup_view
+msgid "Generate"
+msgstr "Genereer"
+
+#. module: product_barcode_generator
+#: model:ir.actions.act_window,name:product_barcode_generator.action_product_product_barcodegen
+#: model:ir.ui.view,arch_db:product_barcode_generator.product_product_barcode_popup_view
+msgid "Generate Barcodes"
+msgstr "Genereer Barcodes"
+
+#. module: product_barcode_generator
+#: model:ir.ui.view,arch_db:product_barcode_generator.view_product_simple_ean_form
+msgid "Generate the EAN13"
+msgstr "Genereer EAN13"
+
+#. module: product_barcode_generator
+#: model:ir.model.fields,field_description:product_barcode_generator.field_product_product_barcodegen_id
+msgid "ID"
+msgstr "ID"
+
+#. module: product_barcode_generator
+#: model:ir.model.fields,field_description:product_barcode_generator.field_product_product_barcodegen___last_update
+msgid "Last Modified on"
+msgstr "Laatst Aangepast op"
+
+#. module: product_barcode_generator
+#: model:ir.model.fields,field_description:product_barcode_generator.field_product_product_barcodegen_write_uid
+msgid "Last Updated by"
+msgstr "Laatst bijgewerkt door"
+
+#. module: product_barcode_generator
+#: model:ir.model.fields,field_description:product_barcode_generator.field_product_product_barcodegen_write_date
+msgid "Last Updated on"
+msgstr "Laatst bijgewerkt op"
+
+#. module: product_barcode_generator
+#: model:ir.model,name:product_barcode_generator.model_product_product
+msgid "Product"
+msgstr "Product"
+
+#. module: product_barcode_generator
+#: model:ir.model,name:product_barcode_generator.model_product_category
+msgid "Product Category"
+msgstr "Productcategorie"
+
+#. module: product_barcode_generator
+#: model:ir.ui.view,arch_db:product_barcode_generator.product_product_barcode_popup_view
+msgid "The selected products will be given a new barcode."
+msgstr "De geselecteerde producten zullen een nieuwe barcode krijgen."
+
+#. module: product_barcode_generator
+#: code:addons/product_barcode_generator/models/product.py:37
+#, python-format
+msgid "There next sequence is upper than 12 characters. This can't work. You will have to redefine the sequence or create a new one"
+msgstr "Volgende reeks is groter dan 12 karakters. Dit zal niet werken, de reeks zal aangepast of een nieuwe zal gecreëerd moeten worden."
+
+#. module: product_barcode_generator
+#: model:ir.model,name:product_barcode_generator.model_ir_sequence
+msgid "ir.sequence"
+msgstr "ir.sequence"
+

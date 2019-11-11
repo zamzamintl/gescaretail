@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_stock_grid">
+        <div class="page">
+            <div class="row">
+                <div class='oe_measurestockview'>
+                    <t t-set="data" t-value="docs.retrieve_data_stock_grid(doc_ids.ids)" />
+                    <table class="table-grid scr">
+                        <thead>
+                            <tr>
+                                <th>
+                                </th>
+                                <t t-foreach="data.get('measures')" t-as="measure">
+                                    <th>
+                                        <strong><t t-esc="measure"/></strong>
+                                    </th>
+                                </t>
+                                <th><strong>Total</strong></th>
+                            </tr>
+                        </thead>
+                        <t t-foreach="data.get('colors')" t-as="color">
+                            <tbody>
+                                <tr t-if="color!=''">
+                                    <td>
+                                        <strong><span t-esc="color"/></strong>
+                                    </td>
+                                    <t t-foreach="data.get('measures')" t-as="measure">
+                                        <td><strong><t t-esc="measure"/></strong></td>
+                                    </t>
+                                    <td><strong>Total</strong></td>
+                                </tr>
+                                <t t-foreach="data['locations']" t-as="loc">
+                                    <tr>
+                                        <td style="padding-right:10px;padding-left:10px;">
+                                            <t t-esc="loc"/>
+                                        </td>
+                                        <t t-foreach="data.get('measures')" t-as="measure">
+                                            <td>
+                                                <span>
+                                                    <t t-if="data[color].get('rows').get(loc).get(measure)!=0">
+                                                        <t t-esc="data[color].get('rows').get(loc).get(measure)"/>
+                                                    </t>
+                                                    <t t-else="0"><![CDATA[&nbsp;]]></t>
+                                                </span>
+                                            </td>
+                                        </t>
+                                        <td>
+                                            <span>
+                                                <t t-if="data[color].get('rows').get(loc).get('total')!=0">
+                                                    <t t-esc="data[color].get('rows').get(loc).get('total')"/>
+                                                </t>
+                                                <t t-else="0"><![CDATA[&nbsp;]]></t>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td>
+                                        <span>Total</span>
+                                    </td>
+                                    <t t-foreach="data.get('measures')" t-as="measure">
+                                        <td>
+                                            <span>
+                                                <t t-if="data[color]['totals'].get(measure)!=0">
+                                                    <t t-esc="data[color]['totals'].get(measure)"/>
+                                                </t>
+                                                <t t-else="0"><![CDATA[&nbsp;]]></t>
+                                            </span>
+                                        </td>
+                                    </t>
+                                    <td>
+                                        <span>
+                                            <t t-if="data[color]['totals'].get('total')!=0">
+                                                <t t-esc="data[color]['totals'].get('total')"/>
+                                            </t>
+                                            <t t-else="0"><![CDATA[&nbsp;]]></t>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </t>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </template>
+    <template id="report_stock_grid_doc">
+        <t t-call="product_stock_grid.report_stock_grid"/>
+    </template>
+    <report
+            id="print_stock_by_grid"
+            model="product.template"
+            string="Stock quants|value|Grid"
+            report_type="qweb-pdf"
+            name="product_stock_grid.report_stock_grid_doc"
+            attachment_use="False"
+            file="product_stock_grid.report_stock_grid_doc"
+    />
+</odoo>

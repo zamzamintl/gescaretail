@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="o4f_product_labels_report_assets_" name="O4F Product Labels Report Assets"
+              inherit_id="web.report_assets_common">
+        <xpath expr="link[last()]" position="after">
+            <link href="/o4f_product_labels/static/css/style.css" rel="stylesheet" type="text/css"/>
+        </xpath>
+    </template>
+    <template id="o4f_product_labels_report_assets_pdf" name="O4F Product Labels Report Assets"
+              inherit_id="web.report_assets_pdf">
+        <xpath expr="link[last()]" position="after">
+            <link href="/o4f_product_labels/static/css/style.css" rel="stylesheet" type="text/css"/>
+        </xpath>
+    </template>
+</odoo>

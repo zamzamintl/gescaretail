@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ProductTemplateButton">
+        <div class='control-button' title="Product View">
+            <span class="icon-button">
+                <i class="fa fa-th" aria-hidden="true"></i>
+            </span>
+            <div class="icon-btn-str">Product view</div>
+        </div>
+    </t>
+    <t t-name="ProductTemplatePopupWidget">
+        <div class="modal-dialog" >
+            <div class="popup popup-textinput product_view pos_popup_background"  style='height: 85%;width: 50%; background: white;' >
+                <p class="title pos_popup_title_background pos_margin_bottam">Prooduct View</p>
+                <div t-if="widget.prod"  >
+                    <div id="product_template_view_id"></div>
+                </div>
+                <div class="footer">
+                    <div class="button cancel commonbutton pos_popup_footer_button">
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

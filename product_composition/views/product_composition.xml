@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_product_composition_tag_search" model="ir.ui.view">
+        <field name="name">view.product.composition.tag.search</field>
+        <field name="model">product.composition.tag</field>
+        <field name="arch" type="xml">
+            <search string="Composition Tags">
+                <field name="name" string="Composition name"/>
+            </search>
+        </field>
+    </record>
+    <record id="view_product_composition_tag_form" model="ir.ui.view">
+        <field name="name">view.product.composition.tag.form</field>
+        <field name="model">product.composition.tag</field>
+        <field name="arch" type="xml">
+            <form string="Composition Tag">
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="view_product_composition_tag_tree" model="ir.ui.view">
+        <field name="name">view.product.composition.tag.tree</field>
+        <field name="model">product.composition.tag</field>
+        <field name="arch" type="xml">
+            <tree string="Composition Tags">
+                <field name="name" class="oe_inline"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_product_composition_tag_form" model="ir.actions.act_window">
+        <field name="name">Composition Tag</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.composition.tag</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_product_composition_tag_search"/>
+        <field name="view_id" ref="view_product_composition_tag_tree"/>
+    </record>
+    <menuitem name="Composition Tags" id="menu_product_composition_tag" parent="sale.prod_config_main" action="action_product_composition_tag_form"/>
+</odoo>

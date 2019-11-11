@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <template id="product_details_grid" inherit_id="website_sale.product"
+                  active="True" customize_show="False">
+            <xpath expr="//div[@id='product_details']/form" position="attributes" >
+                <attribute name="t-if">product._is_add_to_cart_possible() and product.product_variant_count == 1</attribute>
+            </xpath>
+            <xpath expr="//div[@id='product_details']/form" position="after" >
+                <p t-elif="product._is_add_to_cart_possible() and product.product_variant_count &gt; 1" class="alert alert-info">
+                    Please fill out your desired quantities in the grid under the product pictures.
+                </p>
+            </xpath>
+            <xpath expr="//section[@id='product_detail']" position="inside">
+                <div class="row" t-if="product.product_variant_count &gt; 1">
+                    <div class="col-md-12" id="product_details_grid"
+                         t-if="product._is_add_to_cart_possible()">
+                        <t t-set="product_matrix" t-value="product.get_product_matrix()"/>
+                        <t t-set="colors" t-value="product_matrix['colors']"/>
+                        <t t-set="sizes" t-value="product_matrix['sizes']"/>
+                        <t t-set="matrix" t-value="product_matrix['matrix']"/>
+                        <div class="flex-grid">
+                            <div class="flex-grid-row title">
+                                <!-- color -->
+                                <div class="flex-grid-col"></div>
+                                <div t-foreach="sizes" t-as="size" class="flex-grid-col">
+                                    <span t-field="size.name"/>
+                                </div>
+                            </div>
+                            <div t-foreach="matrix" t-as="color_sizes"
+                                 t-attf-class="flex-grid-row {{ color_sizes_parity }}">
+                                <t t-if="colors">
+                                    <t t-set="color" t-value="colors[color_sizes_index]" />
+                                </t>
+                                <div class="flex-grid-col title">
+                                    <t t-if="color">
+                                        <div class="color-circle" t-if="not color.html_color" />
+                                        <div class="color-circle" t-if="color.html_color" t-attf-style="background: {{ color.html_color }};" />
+                                        <span t-field="color.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span/>
+                                    </t>
+                                </div>
+                                <div t-foreach="color_sizes" t-as="size" class="flex-grid-col">
+                                    <div t-if="not size" class="flex-grid-empty" ></div>
+                                    <t t-if="size">
+                                        <t t-set="variant" t-value="size['obj']"/>
+                                        <div class="flex-grid-cell">
+                                            <div class="flex-grid-cell-part">
+                                                <span t-esc="variant.price"
+                                                      t-options='{
+                                                        "widget": "monetary",
+                                                        "display_currency": website.get_current_pricelist().currency_id,
+                                                      }'/>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grid-cell">
+                                            <div class="flex-grid-cell-part half">
+                                                <input class="product-variant-input" t-attf-data-product-id="{{ variant.id }}" type="number" value="0" min="0"/>
+                                            </div>
+                                            <div class="flex-grid-cell-part half">
+                                                <span t-field="variant.qty_available" t-if="variant.qty_available &lt; 10" />
+                                                <span t-if="variant.qty_available &gt;= 10">10+</span>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-grid-row footer">
+                            <div class="flex-grid-col fit-content-size">
+                                <a role="button" class="btn btn-primary btn-lg mt8 js_check_product a-submit" href="#">Add to Cart</a>
+                            </div>
+                            <div class="flex-grid-col fit-content-size mt8" id="multi-variant-error" style="display:none;">
+                                <div  class="text-center alert alert-danger mb0">
+                                    <span>No product will be selected</span>
+                                </div>
+                            </div>
+                            <div class="flex-grid-col fit-content-size mt8" id="multi-variant-info" style="display:none;">
+                                <div  class="text-center alert alert-info mb0">
+                                    <span>Products added to cart</span>
+                                </div>
+                            </div>
+                            <div class="flex-grid-col fit-content-size mt8" id="multi-variant-warning" style="display:none;">
+                                <div class="alert alert-warning mb0">
+                                    <span>Some items couldn't be added to the cart</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

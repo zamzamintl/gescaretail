@@ -1,0 +1,43 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_models
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stock_models\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-22 15:41+0000\n"
+"PO-Revision-Date: 2015-09-22 17:43+0100\n"
+"Last-Translator: \n"
+"Language-Team: Accomodata <info@accomodata.be>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"Language: nl\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#. module: stock_models
+#: view:website:stock.report_picking
+msgid "Name"
+msgstr "Naam"
+
+#. module: stock_models
+#: view:website:stock.report_picking
+msgid "Not applicable"
+msgstr "Niet van toepassing"
+
+#. module: stock_models
+#: model:ir.model,name:stock_models.model_stock_picking
+msgid "Picking List"
+msgstr "Pickinglijst"
+
+#. module: stock_models
+#: model:ir.model,name:stock_models.model_stock_move
+msgid "Stock Move"
+msgstr "Voorraadbeweging"
+
+#. module: stock_models
+#: view:website:stock.report_picking
+msgid "Total quantity"
+msgstr "Totaal Aantal"

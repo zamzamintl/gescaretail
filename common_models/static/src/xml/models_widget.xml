@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="O4FWidget">
+        <div class="oe_model">
+                <div class="oe_models_quick_create">
+                    <h1>Model Quick Create</h1>
+                        <label for="qc_model_name">
+                            Name:
+                        </label>
+                    <input type="text" name="qc_model_name" id="qc_model_name" placeholder="Product name"/>
+                    <div id="qc_name_error" class="error">
+
+                    </div>
+
+                    <label for="qc_model_brand">
+                        Brand:
+                    </label>
+                    <div id="qc_model_brand"></div>
+                    <div id="qc_brand_error" class="error"></div>
+
+                    <label for="qc_model_collection">
+                        Collection:
+                    </label>
+                    <div id="qc_model_collection"></div>
+                    <div id="qc_collection_error" class="error"></div>
+                     <label for="qc_model_size_attribute">Sizes:</label>
+                    <div id="qc_model_size_attribute"></div>
+                    <div id="qc_attribute_error" class="error">
+
+                    </div>
+                    <label for="qc_model_color_attribute">Colors:</label>
+                    <div id="qc_model_color_attribute"></div>
+                    <div id="qc_attribute_error" class="error">
+
+                    </div>
+                    <br/>
+                    <label for="qc_model_price">
+                        Sales price:
+                    </label>
+                    <input type="number" name="qc_model_price" id="qc_model_price" value="0.00"/>
+                    <br/>
+                    <label for="qc_model_cost">
+                        Purchase cost:
+                    </label>
+                    <input type="number" name="qc_model_cost" id="qc_model_cost" value="0.00"/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <button id="save_qc_copy" class="oe_highlight btn btn-primary btn-sm o_form_button_save">
+                        Create and copy Model
+                    </button>
+                    <button id="save_qc" class="oe_highlight btn btn-primary btn-sm o_form_button_save">
+                        Create Model
+                    </button>
+                    <button id="close_qc" class="oe_highlight btn btn-primary btn-sm o_form_button_save">
+                        Close
+                    </button>
+                </div>
+                <div class="product_id_field o_m2o_field">
+
+                </div>
+                <div class="btn-group oe_models_add_row">
+                    <t t-if="widget.state=='edit' and widget.edit_states.indexOf(widget.docstate)>-1">
+                        <button id="add_row" class="oe_highlight btn btn-primary btn-sm o_form_button_save">Add Model</button>
+                        <button id="show_quick_create" class="oe_highlight btn btn-primary btn-sm o_form_button_save">
+                            Quick Create Model
+                        </button>
+                     </t>
+                </div>
+                <t t-if="widget.models">
+                    <t t-foreach="widget.models" t-as="bar">
+                        <div class="oe_model_row">
+                            <div class="bar-header row">
+                                <div class="col-md-4 model-cont">
+                                    <t t-if="bar.image!=''">
+                                        <image t-attf-src="data:image/png;base64,{{ bar.image }}" style="width:auto;height:64px;"/>
+                                    </t>
+                                    <h4>
+                                        <a t-attf-href="#id={{bar.id}}&amp;model=product.template" t-attf-data-id="{{bar.id}}" class="o_form_uri">
+                                            <t t-esc="bar.name"/>
+                                        </a>
+                                    </h4>
+                                    <div class="comment-block">
+                                        <t t-if="widget.state=='edit' and widget.edit_states.indexOf(widget.docstate)>-1">
+                                            <label for="model-comment">
+                                                Note:
+                                            </label>
+                                            <t t-if="bar.comment!='false' or bar.comment">
+                                                <input type="text" name="model-comment"
+                                                       t-attf-value="{{bar.comment or ''}}"
+                                                       t-attf-class="o4f_comment modelbar-{{ bar.order_model_id }} oe-product-input-field form-control"/>
+                                            </t>
+                                            <t t-else="0">
+                                                <input type="text" name="model-comment"
+                                                       t-attf-class="o4f_comment modelbar-{{ bar.order_model_id }} oe-product-input-field form-control"/>
+                                            </t>
+
+                                        </t>
+                                        <t t-else="0">
+                                            <label for="model-comment">
+                                                Note:
+                                            </label>
+                                            <t t-if="bar.comment">
+                                                <t t-esc="bar.comment"/>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="discount-block form-group" style="display:inline-block;">
+                                        <t t-if="widget.model_line_discount_name!='no'">
+                                            <t t-if="widget.state=='edit' and widget.edit_states.indexOf(widget.docstate)>-1">
+                                                <label for="model-discount">
+                                                    Discount (%):
+                                                </label>
+                                                <input type="number" name="model-discount" t-attf-value="{{bar.discount}}"
+                                                       t-attf-class="o4f_discount discount-{{ bar.order_model_id }} oe-product-input-field form-control"/>
+
+                                            </t>
+                                            <t t-else="0">
+                                                <label for="model-discount">
+                                                    Discount:
+                                                </label>
+                                                <span>
+                                                    <t t-esc="bar.discount"/>
+                                                    %
+                                                </span>
+
+                                            </t>
+                                        </t>
+                                    </div>
+                                    <div class="model-price-block form-group">
+                                        <t t-if="widget.state=='edit' and widget.edit_states.indexOf(widget.docstate)>-1">
+                                            <label for="model-price">
+                                                Model Price:
+                                            </label>
+                                            <input type="number" name="model-price"
+                                                   t-attf-class="producttemplate-{{ bar.order_model_id }} oe-product-input-field form-control"/>
+                                            <button class="oe_highlight btn btn-primary btn-sm o_form_button_save o4f_model_price">
+                                                Update
+                                            </button>
+
+                                        </t>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3 model_total_container">
+                                    <table t-attf-class="modelbar-{{ bar.id }} total-measures">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">
+                                                    Total Quantity
+                                                </th>
+                                                <th class="text-center">
+                                                    Total Price
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="oe_total_quantity text-center">
+                                                    <span t-esc="widget.formatValues(bar.total_quantity)"/>
+                                                </td>
+                                                <td class="oe_total_price text-center">
+                                                    <span t-esc="widget.formatValues(bar.total_price)"/>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div style="clear:both;"></div>
+                                </div>
+                                <div clas="col-md-1">
+                                     <t t-if="widget.state=='edit' and widget.edit_states.indexOf(widget.docstate)>-1">
+                                        <div class="row_delete" style="display:inline-block;">
+                                            <button class="oe_i" type="button">
+                                                <span class="fa fa-trash-o"></span>
+                                            </button>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                            <table t-attf-class="oe_measurebar_table bar-{{ bar.order_model_id }} table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+
+
+                                        </th>
+
+                                        <t t-if="bar.attributes[0][0]!=0 and bar.attributes[0].length>1">
+                                            <th t-foreach="bar.attributes[0]" t-as="value" class="text-center">
+                                                <span t-esc="value.name"/>
+                                            </th>
+                                        </t>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="bar.attributes[1]" t-as="value">
+                                        <td class="color-cell">
+                                            <div class="text-center">
+                                                <span t-esc="value.name"/>
+                                            </div>
+                                        </td>
+                                        <t t-foreach="products[value_index]" t-as="product">
+                                            <td t-if="!product.line" class="hatch"/>
+
+
+                                            <t t-if="widget.state=='edit' and widget.edit_states.indexOf(widget.docstate)>-1">
+                                                <td t-if="product.line"
+                                                    class="oe-input-field text-center measure-cell">
+                                                    <input type="number" min="0"
+                                                           t-att-value="product.data.quantity"
+                                                           t-attf-class="oe_product_cell product-{{ product.line.product_id }} oe-product-input-field"/>
+                                                    <br/>
+
+                                                    <span t-attf-class="text-center product_price product-{{ product.line.product_id }} ">
+                                                        <t t-esc="widget.formatValues(product.line.price_unit)"/>
+                                                    </span>
+                                                    <t t-if="widget.model_warehouse_name!='no'">
+                                                        <span class='text-center stock'>
+                                                            <t t-esc="product.data.stock"/>
+                                                        </span>
+                                                    </t>
+                                                </td>
+                                            </t>
+                                            <t t-else="0">
+                                                    <td t-if="product.line" class="text-center measure-cell">
+                                                    <span t-esc="product.data.quantity"
+                                                          t-attf-class="product-{{ product.line.product_id }}"/>
+                                                    <br/>
+                                                    <span t-attf-class="text-center product_price product-{{ product.line.product_id }} ">
+                                                        <t t-esc="widget.formatValues(product.line.price_unit)"/>
+                                                    </span>
+                                                    <t t-if="widget.model_warehouse_name!='no'">
+                                                        <span class='text-center stock'>
+                                                            <t t-esc="product.data.stock"/>
+                                                        </span>
+                                                     </t>
+                                                </td>
+                                            </t>
+                                        </t>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+        </div>
+    </t>
+</templates>

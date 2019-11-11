@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_pos_config_chat_form_inherit" model="ir.ui.view">
+         <field name="name">pos.config.form.view.inherit</field>
+         <field name="model">pos.config</field>
+         <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+         <field name="arch" type="xml">
+             <xpath expr="//div[@id='posbox_reference']" position="after">
+                 <h2>Pos Chat</h2>
+                 <div class="row mt16 o_settings_container">
+                      <div class="col-xs-12 col-md-6 o_setting_box">
+                         <div class="o_setting_left_pane">
+                             <field name="enable_pos_chat"/>
+                         </div>
+                         <div class="o_setting_right_pane">
+                             <label for="enable_pos_chat"/>
+                             <div class="text-muted">
+                                Display chat icon on pos
+                            </div>
+                        </div>
+                     </div>
+                 </div>
+            </xpath>
+         </field>
+    </record>
+
+</odoo>

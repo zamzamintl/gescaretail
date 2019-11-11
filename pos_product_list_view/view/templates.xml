@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_product_list_view/static/src/lib/Guriddo_jqGrid_JS_5_3_X_demo/js/trirand/i18n/grid.locale-en.js"/>
+            <script type="text/javascript" src="/pos_product_list_view/static/src/lib/Guriddo_jqGrid_JS_5_3_X_demo/js/trirand/jquery.jqGrid.min.js"/>
+            <script type="text/javascript" src="/pos_product_list_view/static/src/lib/Guriddo_jqGrid_JS_5_3_X_demo/js/trirand/jquery.jqGrid.min.js"/>
+            <script type="text/javascript" src="/pos_product_list_view/static/src/js/pos_product_list_view.js"/>
+        </xpath>
+        <xpath expr="//link[@id='pos-stylesheet']" position="after">
+            <link rel="stylesheet" type="text/css" media="screen" href="/pos_product_list_view/static/src/lib/Guriddo_jqGrid_JS_5_3_X_demo/css/base_boostrap.css"/>
+            <link rel="stylesheet" type="text/css" media="screen" href="/pos_product_list_view/static/src/lib/Guriddo_jqGrid_JS_5_3_X_demo/css/trirand/ui.jqgrid-bootstrap.css"/>
+            <link rel="stylesheet" href="/pos_product_list_view/static/src/css/pos_product_list_view.css"/>
+        </xpath>
+    </template>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/pos_product_list_view/static/src/js/new_window_action.js"></script>
+        </xpath>
+    </template>
+</odoo>

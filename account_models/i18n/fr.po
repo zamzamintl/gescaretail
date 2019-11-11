@@ -1,0 +1,58 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_models
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: account_models\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-06-11 14:00+0000\n"
+"PO-Revision-Date: 2015-09-22 15:14+0100\n"
+"Last-Translator: \n"
+"Language-Team: Accomodata <info@accomodata.be>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#. module: account_models
+#: view:website:account_models.report_invoice_document
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: account_models
+#: view:website:account_models.report_invoice_document
+msgid "Unit Price"
+msgstr "Prix Unitaire"
+
+#. module: account_models
+#: view:website:account_models.report_invoice_document
+msgid "Discount %"
+msgstr "Remise %"
+
+#. module: account_models
+#: view:website:account_models.report_invoice_document
+msgid "Price"
+msgstr "Prix"
+
+#. module: account_models
+#: view:website:account_models.report_invoice_document
+msgid "Name"
+msgstr "Nom"
+
+#. module: account_models
+#: view:website:account_models.report_invoice_document
+msgid "Total quantity"
+msgstr "Quantité totale"
+
+#. module: account_models
+#: view:website:account_models.report_invoice_document
+msgid "Note"
+msgstr "Remarque"
+
+#. module: account_models
+#: view:website:account_models.report_invoice_document
+msgid "Total price"
+msgstr "Prix total"

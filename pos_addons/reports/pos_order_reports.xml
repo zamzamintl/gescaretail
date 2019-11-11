@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <report 
+         id="action_report_pos_order_overview"
+         string="Pos order overview"
+         model="pos.config"
+         report_type="qweb-pdf" 
+         name="pos_addons.report_pos_overview"
+         file="pos_addons.report_pos_overview"
+         menu="False"/>
+</odoo>
